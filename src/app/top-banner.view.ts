@@ -43,11 +43,13 @@ export class TopBannerView implements VirtualDOM {
                                 title: 'Presentation',
                                 topic$,
                             }),
-                            /*new Button({
+                            new Button({
                                 icon: 'fas fa-search',
+                                target: 'Browse',
                                 title: 'Browse packages',
                                 topic$,
                             }),
+                            /*
                             new Button({
                                 icon: 'fas fa-upload',
                                 title: 'Publish package',
@@ -77,7 +79,7 @@ class Button implements VirtualDOM {
         fontWeight: 'bold',
     }
     public readonly children: VirtualDOM[]
-
+    public readonly onclick: (ev: MouseEvent) => void
     constructor(params: {
         icon: string
         target: Topic
@@ -105,5 +107,6 @@ class Button implements VirtualDOM {
                 innerText: params.title,
             },
         ]
+        this.onclick = () => params.topic$.next(params.target)
     }
 }
