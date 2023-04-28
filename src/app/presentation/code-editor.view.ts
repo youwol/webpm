@@ -166,6 +166,7 @@ export class EditorBannerView implements VirtualDOM {
             },
             { class: 'flex-grow-1' },
             {
+                class: 'fv-text-focus',
                 style: {
                     fontSize: '1.3rem',
                     fontWeight: 'bolder',
@@ -177,7 +178,7 @@ export class EditorBannerView implements VirtualDOM {
             },
             { class: 'mx-3' },
             {
-                class: 'd-flex align-items-center p-1 px-2 fv-pointer fv-text-focus fv-bg-background fv-hover-x-lighter',
+                class: 'd-flex align-items-center p-1 px-2 fv-pointer fv-text-focus fv-bg-background fv-hover-x-lighter fv-border-primary',
                 children: [
                     {
                         class: attr$(this.state.mode$, (mode) =>
