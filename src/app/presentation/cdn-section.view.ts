@@ -19,17 +19,14 @@ export class CdnSectionView {
             { class: 'my-3' },
             {
                 class: 'text',
-                innerText:
+                innerHTML:
                     'Unlike regular CDNs that only provide access to specific isolated resources, W3Swarm offers a ' +
                     'proper dependencies resolution and linking feature. In fact, just like in a node environment, ' +
-                    'different versions of a particular library may co-exist in the runtime. ' +
+                    'different versions of a particular library may co-exist in the runtime and linked to the appropriate consumer. ' +
                     'This versatility can be leveraged by applications to enable powerful custom code injection, ' +
-                    'making it particularly valuable for plugin-based architectures and fields like numerical science.',
-            },
-            {
-                class: 'text',
-                innerText:
-                    "Curious about the libraries powering this page? Check out the 'source' panel of your browser's dev-tool for an inside look",
+                    'making it particularly valuable for plugin-based architectures and fields like numerical science. ' +
+                    'By-the-way, all applications are expose through a simple URL:' +
+                    '<pre> w3swarm/applications/{name-of-package}/{semver-query}</pre>',
             },
         ]
     }
