@@ -19,14 +19,14 @@ class State {
     public readonly run$ = new Subject()
     public readonly result$: Observable<unknown>
     public readonly mode$ = new BehaviorSubject<'code' | 'view'>('code')
-
+    public readonly message$ = new Subject()
     constructor() {
         this.result$ = this.run$.pipe(
             withLatestFrom(this.ideState.updates$['./main']),
             mergeMap(([, file]) => {
                 try {
                     const fct = new Function(file.content)()
-                    const result = fct(cdnClient)
+                    const result = fct(cdnClient, this.message$)
                     return from(result).pipe(
                         catchError((err) => {
                             console.log('Got an error 0', err)
@@ -95,6 +95,7 @@ export class CodeEditorView implements VirtualDOM {
         })
         this.children = [
             new EditorBannerView({ state: this.state }),
+            child$(this.state.message$, (message) => new MessageView(message)),
             {
                 class: attr$(this.state.mode$, (mode) =>
                     mode == 'code' ? 'flex-grow-1' : 'd-none',
@@ -118,6 +119,26 @@ export class CodeEditorView implements VirtualDOM {
                         (example) => example.description,
                     ),
                 ],
+            },
+        ]
+    }
+}
+
+export class MessageView implements VirtualDOM {
+    public readonly tag = 'pre'
+    public readonly class = 'd-flex align-items-center fv-text-primary'
+    public readonly children: VirtualDOM[]
+
+    constructor(message) {
+        if (message == 'done') {
+            return
+        }
+        this.children = [
+            {
+                class: 'fas fa-spinner fa-spin mx-2',
+            },
+            {
+                innerText: message,
             },
         ]
     }
