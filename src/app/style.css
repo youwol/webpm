@@ -1,0 +1,47 @@
+
+.search-input{
+    background: none;
+    font-family: 'Fira Mono', 'Andale Mono', 'Consolas', monospace;
+    font-size: 16px;
+    letter-spacing: 0;
+    border: none;
+    outline: unset;
+    height: 40px;
+    padding-left: 10px;
+    border-radius: 0;
+    width: calc(100% - 10px);
+}
+
+.background{
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image:   linear-gradient( 90deg, rgba(0, 0, 0, 0.7)0%, rgba(0, 0, 0, 0.8)35%, rgba(0, 0, 0, 0.8)65%, rgba(0, 0, 0, 0.7)100% ), url("../../assets/background-img.png");
+}
+
+.CodeMirror.cm-s-default {
+    height: 100%;
+}
+
+.title {
+    font-size: 2.5rem;
+}
+.sub-title {
+    font-style: italic;
+    font-size: 1.3rem;
+}
+.text{
+    text-align: justify;
+    font-size: 1.2rem
+}
+@media only screen and (max-width: 600px) {
+    .title {
+        font-size: 3rem;
+    }
+    .sub-title {
+        font-size: 1rem;
+    }
+    .text{
+        font-size: 1rem
+    }
+}
