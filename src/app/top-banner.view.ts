@@ -38,7 +38,7 @@ export class TopBannerView implements VirtualDOM {
                         class: 'w-50 flex-grow-1 d-flex justify-content-around mx-auto',
                         children: [
                             new Button({
-                                icon: 'fas fa-search',
+                                icon: '',
                                 target: 'Presentation',
                                 title: 'Presentation',
                                 topic$,
