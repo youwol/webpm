@@ -2,7 +2,9 @@ export const examples = [
     {
         title: 'C++ and Javascript hand to hand',
         src: `return async (cdnClient) => {
-
+    //-----------------------------------------------------------------------------
+    // cdnClient.install is what W3Swarm allows: simple install from semver queries
+    //-----------------------------------------------------------------------------
     const {PMP, FV, THREE} = await cdnClient.install({
         modules:[
             '@youwol/vsf-pmp#^0.1.0',
@@ -15,8 +17,14 @@ export const examples = [
         }
     })
     const circle = new THREE.TorusKnotGeometry()
+    //-------------------------------------------------------------------------------------------------
+    // The library @youwol/vsf-pmp use the C++ Polygon Mesh Processing library compiled to Web-Assembly
+    //-------------------------------------------------------------------------------------------------
     const remeshed = await PMP.UniformRemeshing.remesh(circle, {edgeFactor:0.3})
     
+    //-----------------------------------------
+    // Below is simple rendering using three.js
+    //-----------------------------------------
     const mesh = new THREE.Mesh(
         remeshed,
         new THREE.MeshPhongMaterial({ color: "#8AC", wireframe:true})
@@ -61,6 +69,10 @@ export const examples = [
             FV: '@youwol/flux-view'
         }
     })
+    //------------------------------------------------------------
+    // The current run time can be accessed using 'cdnClient.State'
+    //------------------------------------------------------------
+    const importedBundles = cdnClient.State.importedBundles
     return FV.render({
         tag:'pre',
         class:'h-100 w-100 fv-text-primary',
@@ -88,6 +100,9 @@ export const examples = [
             {
                 module: "@youwol/cdn-pyodide-loader#^0.1.2",
                 installInputs: {
+    //---------------------------------------------------------------------------
+    // Pure python wheels from pipy or ported C packages from pyodide can be used
+    //---------------------------------------------------------------------------
                     modules: [ "numpy" ],
                     exportedPyodideInstanceName: "PY",
                     onEvent: (ev) => message$.next(ev.text),
@@ -96,7 +111,14 @@ export const examples = [
         ]
     })
     message$.next('done')
+    //----------------------------------------------
+    // Expose a javascript module in python run-time
+    //----------------------------------------------
     PY.registerJsModule('jsModule', { count: 10000 })
+    
+    //---------------------------------------------------
+    // Approximation of PI using a probabilistic approach
+    //---------------------------------------------------
     const pi = PY.runPython(\`
     import numpy as np
     from jsModule import count 
