@@ -1,8 +1,7 @@
 export const examples = [
     {
         title: 'C++ and Javascript hand to hand',
-        src: `
-return async (cdnClient) => {
+        src: `return async (cdnClient) => {
 
     const {PMP, FV, THREE} = await cdnClient.install({
         modules:[
@@ -43,8 +42,7 @@ return async (cdnClient) => {
             elem.appendChild(renderer.domElement);
         }
     })
-} 
-`,
+}`,
         description: {
             innerHTML:
                 'This example shows the seaming less coupling between C++ and javascript. It uses the C++ ' +
@@ -53,8 +51,7 @@ return async (cdnClient) => {
     },
     {
         title: 'Display current run-time',
-        src: `
-return async (cdnClient) => {
+        src: `return async (cdnClient) => {
 
     const {PMP, FV, THREE} = await cdnClient.install({
         modules:[
@@ -71,12 +68,53 @@ return async (cdnClient) => {
             return { innerText: k + ': ' + v }
         })
     })
-} 
-`,
+}`,
         description: {
             innerHTML:
                 'Libraries are installed as distinct entities and not included in applications. ' +
                 'This snippet presents the state of the CDN client: the modules installed.',
+        },
+    },
+    {
+        title: 'Python + Js + C++',
+        src: `return async (cdnClient, message$) => {
+    // First execution can take a bit of time for python & numpy to be downloaded.
+    // Latter executions use the browser's cache.
+    message$.next('start installing python env.')
+    const {PY, FV} = await cdnClient.install({
+        modules: ['@youwol/flux-view'],
+        aliases: { FV: "@youwol/flux-view" },
+        customInstallers: [
+            {
+                module: "@youwol/cdn-pyodide-loader#^0.1.2",
+                installInputs: {
+                    modules: [ "numpy" ],
+                    exportedPyodideInstanceName: "PY",
+                    onEvent: (ev) => message$.next(ev.text),
+                }
+            }
+        ]
+    })
+    message$.next('done')
+    PY.registerJsModule('jsModule', { count: 10000 })
+    const pi = PY.runPython(\`
+    import numpy as np
+    from jsModule import count 
+
+    def calc_pi(n):
+        data = np.random.uniform(-0.5, 0.5, size=(n, 2))
+        norms = np.linalg.norm(data, axis=1)
+        return len(np.argwhere(norms<0.5)) / n * 4
+        
+    calc_pi(count)\`)
+    
+    return FV.render({ innerText: 'PI approximation: '+pi})
+}`,
+        description: {
+            innerHTML:
+                'A custom installer allows to install python modules and run them using Pyodide. ' +
+                'Note that numpy use C++ code. ' +
+                "For more info see for instance <a href='https://l.youwol.com/doc/@youwol/python-playground'>Py-play</a>. ",
         },
     },
 ]
