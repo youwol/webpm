@@ -1,10 +1,13 @@
 export const examples = [
     {
-        title: 'C++ and Javascript hand to hand',
-        src: `return async (cdnClient) => {
-    //-----------------------------------------------------------------------------
-    // cdnClient.install is what W3Swarm allows: simple install from semver queries
-    //-----------------------------------------------------------------------------
+        title: 'Real world',
+        description: {
+            innerHTML:
+                'Somewhow more complex example using <a href="https://threejs.org">Three.js</a> for 3D visualization ' +
+                ' and the C++ <a href="https://www.pmp-library.org/">PMP</a> library for remeshing ' +
+                '(compiled to <a href="https://webassembly.org/">WebAssembly</a>).',
+        },
+        src: `return async (cdnClient, message$) => {
     const {PMP, FV, THREE} = await cdnClient.install({
         modules:[
             '@youwol/vsf-pmp#^0.1.0',
@@ -14,17 +17,13 @@ export const examples = [
         aliases:{ 
             PMP:'@youwol/vsf-pmp', 
             FV: '@youwol/flux-view'
-        }
+        },
+        onEvent: (ev) => message$.next(ev.targetName)
     })
-    const circle = new THREE.TorusKnotGeometry()
-    //-------------------------------------------------------------------------------------------------
-    // The library @youwol/vsf-pmp use the C++ Polygon Mesh Processing library compiled to Web-Assembly
-    //-------------------------------------------------------------------------------------------------
-    const remeshed = await PMP.UniformRemeshing.remesh(circle, {edgeFactor:0.3})
+    message$.next('done')
+    const geom = new THREE.TorusKnotGeometry()
+    const remeshed = await PMP.UniformRemeshing.remesh(geom, {edgeFactor:0.3})
     
-    //-----------------------------------------
-    // Below is simple rendering using three.js
-    //-----------------------------------------
     const mesh = new THREE.Mesh(
         remeshed,
         new THREE.MeshPhongMaterial({ color: "#8AC", wireframe:true})
@@ -35,7 +34,7 @@ export const examples = [
     const renderer = new THREE.WebGLRenderer();
         
     return FV.render({
-        class:'h-100 w-100',
+        style:{ 'height': '800px', width:'800px'},
         connectedCallback:(elem) => {
             const camera = new THREE.PerspectiveCamera(75, elem.clientWidth / elem.clientHeight, 0.1, 1000);
             camera.position.z = 4;      
@@ -51,14 +50,14 @@ export const examples = [
         }
     })
 }`,
-        description: {
-            innerHTML:
-                'This example shows the seaming less coupling between C++ and javascript. It uses the C++ ' +
-                ' <a href="https://www.pmp-library.org/">PMP</a> library to execute the remeshing step.',
-        },
     },
     {
         title: 'Display current run-time',
+        description: {
+            innerHTML:
+                'Libraries installed comes as individual entities. ' +
+                'This snippet presents the state of the CDN client: the modules installed so far.',
+        },
         src: `return async (cdnClient) => {
 
     const {PMP, FV, THREE} = await cdnClient.install({
@@ -81,14 +80,14 @@ export const examples = [
         })
     })
 }`,
-        description: {
-            innerHTML:
-                'Libraries are installed as distinct entities and not included in applications. ' +
-                'This snippet presents the state of the CDN client: the modules installed.',
-        },
     },
     {
-        title: 'Python + Js + C++',
+        title: 'Hello Python',
+        description: {
+            innerHTML:
+                'A custom installer allows to install python modules and run them using  <a href="https://pyodide.org/en/stable/">Pyodide</a>. ' +
+                "The package 'numpy' use C++ code, hence Javascript, Python & C++ are running hand to hand.",
+        },
         src: `return async (cdnClient, message$) => {
     // First execution can take a bit of time for python & numpy to be downloaded.
     // Latter executions use the browser's cache.
@@ -100,9 +99,7 @@ export const examples = [
             {
                 module: "@youwol/cdn-pyodide-loader#^0.1.2",
                 installInputs: {
-    //---------------------------------------------------------------------------
-    // Pure python wheels from pipy or ported C packages from pyodide can be used
-    //---------------------------------------------------------------------------
+    // Pure python wheels from pypi or ported C packages from pyodide can be used
                     modules: [ "numpy" ],
                     exportedPyodideInstanceName: "PY",
                     onEvent: (ev) => message$.next(ev.text),
@@ -111,14 +108,10 @@ export const examples = [
         ]
     })
     message$.next('done')
-    //----------------------------------------------
     // Expose a javascript module in python run-time
-    //----------------------------------------------
     PY.registerJsModule('jsModule', { count: 10000 })
     
-    //---------------------------------------------------
     // Approximation of PI using a probabilistic approach
-    //---------------------------------------------------
     const pi = PY.runPython(\`
     import numpy as np
     from jsModule import count 
@@ -132,11 +125,5 @@ export const examples = [
     
     return FV.render({ innerText: 'PI approximation: '+pi})
 }`,
-        description: {
-            innerHTML:
-                'A custom installer allows to install python modules and run them using Pyodide. ' +
-                'Note that numpy use C++ code. ' +
-                "For more info see for instance <a href='https://l.youwol.com/doc/@youwol/python-playground'>Py-play</a>. ",
-        },
     },
 ]
