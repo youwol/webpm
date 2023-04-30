@@ -73,11 +73,7 @@ class State {
 
 export class CodeEditorView implements VirtualDOM {
     public readonly state = new State()
-    public readonly style = {
-        width: '800px',
-        height: '800px',
-    }
-    public readonly class = 'd-flex flex-column p-3 rounded'
+    public readonly class = 'w-100 d-flex flex-column p-3 rounded'
     public readonly children: VirtualDOM[]
 
     constructor() {
@@ -111,15 +107,6 @@ export class CodeEditorView implements VirtualDOM {
                 children: [child$(this.state.result$, (vDom) => vDom)],
             },
             { class: 'my-2' },
-            {
-                class: 'fv-text-primary text-center w-75 mx-auto',
-                children: [
-                    child$(
-                        this.state.currentExample$,
-                        (example) => example.description,
-                    ),
-                ],
-            },
         ]
     }
 }
@@ -156,59 +143,83 @@ export class EditorBannerView implements VirtualDOM {
             {
                 class: attr$(
                     this.state.currentExample$,
-                    (ex): string => (examples.indexOf(ex) > 0 ? '' : 'd-none'),
+                    (ex): string =>
+                        examples.indexOf(ex) > 0
+                            ? 'fv-text-focus fv-pointer fv-hover-x-lighter'
+                            : 'fv-text-disabled fv-xx-darker',
                     {
-                        wrapper: (d) =>
-                            `${d} fas fa-step-backward fa-2x fv-pointer`,
+                        wrapper: (d) => `${d} fas fa-step-backward fa-2x`,
                     },
                 ),
                 onclick: () => this.state.prev(),
             },
-            { class: 'flex-grow-1' },
             {
-                class: 'fv-text-focus',
-                style: {
-                    fontSize: '1.3rem',
-                    fontWeight: 'bolder',
-                },
-                innerText: attr$(
-                    this.state.currentExample$,
-                    (example) => example.title,
-                ),
-            },
-            { class: 'mx-3' },
-            {
-                class: 'd-flex align-items-center p-1 px-2 fv-pointer fv-text-focus fv-bg-background fv-hover-x-lighter fv-border-primary',
+                class: 'flex-grow-1 d-flex flex-column',
                 children: [
                     {
-                        class: attr$(this.state.mode$, (mode) =>
-                            mode == 'code' ? 'fas fa-play' : 'fas fa-pen',
-                        ),
+                        class: 'w-100 d-flex align-items-center',
+                        children: [
+                            { class: 'flex-grow-1 fv-border-primary mx-2' },
+                            {
+                                class: 'fv-text-focus',
+                                style: {
+                                    fontSize: '1.3rem',
+                                    fontWeight: 'bolder',
+                                },
+                                innerText: attr$(
+                                    this.state.currentExample$,
+                                    (example) => example.title,
+                                ),
+                            },
+                            { class: 'mx-3' },
+                            {
+                                class: 'd-flex align-items-center p-1 px-2 fv-pointer fv-text-focus fv-bg-background fv-hover-x-lighter fv-border-primary',
+                                children: [
+                                    {
+                                        class: attr$(this.state.mode$, (mode) =>
+                                            mode == 'code'
+                                                ? 'fas fa-play'
+                                                : 'fas fa-pen',
+                                        ),
+                                    },
+                                    { class: 'mx-1' },
+                                    {
+                                        innerText: attr$(
+                                            this.state.mode$,
+                                            (mode) =>
+                                                mode == 'code' ? 'run' : 'edit',
+                                        ),
+                                    },
+                                ],
+                                onclick: () => {
+                                    this.state.mode$.value == 'code'
+                                        ? this.state.execute()
+                                        : this.state.mode$.next('code')
+                                },
+                            },
+                            { class: 'flex-grow-1 fv-border-primary mx-2' },
+                        ],
                     },
-                    { class: 'mx-1' },
                     {
-                        innerText: attr$(this.state.mode$, (mode) =>
-                            mode == 'code' ? 'run' : 'edit',
-                        ),
+                        class: 'px-3 text-center py-1',
+                        children: [
+                            child$(
+                                this.state.currentExample$,
+                                (example) => example.description,
+                            ),
+                        ],
                     },
                 ],
-                onclick: () => {
-                    this.state.mode$.value == 'code'
-                        ? this.state.execute()
-                        : this.state.mode$.next('code')
-                },
             },
-            { class: 'flex-grow-1' },
             {
                 class: attr$(
                     this.state.currentExample$,
                     (ex): string =>
                         examples.indexOf(ex) < examples.length - 1
-                            ? ''
-                            : 'd-none',
+                            ? 'fv-text-focus fv-pointer fv-hover-x-lighter'
+                            : 'fv-text-disabled fv-xx-darker',
                     {
-                        wrapper: (d) =>
-                            `${d} fas fa-step-forward fa-2x fv-pointer`,
+                        wrapper: (d) => `${d} fas fa-step-forward fa-2x`,
                     },
                 ),
                 onclick: () => this.state.next(),
