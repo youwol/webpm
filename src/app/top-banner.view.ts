@@ -35,7 +35,7 @@ export class TopBannerView implements VirtualDOM {
                 class: 'flex-grow-1 my-auto',
                 children: [
                     {
-                        class: 'w-50 flex-grow-1 d-flex justify-content-around mx-auto',
+                        class: 'w-100 flex-grow-1 d-flex justify-content-around mx-auto',
                         children: [
                             new Button({
                                 icon: '',
@@ -53,6 +53,12 @@ export class TopBannerView implements VirtualDOM {
                                 icon: 'fas fa-cloud-upload-alt',
                                 target: 'Publish',
                                 title: 'Publish package',
+                                topic$,
+                            }),
+                            new Button({
+                                icon: 'fas fa-users-cog',
+                                target: 'OnPremise',
+                                title: 'On Premise',
                                 topic$,
                             }),
                         ],
