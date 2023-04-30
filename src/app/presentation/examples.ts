@@ -155,4 +155,58 @@ export const examples = [
     return FV.render({ innerText: 'PI approximation: '+pi})
 }`,
     },
+    {
+        title: 'Hello workers',
+        description: {
+            innerHTML:
+                'Same as the previous example, but running a hundred times in a worker pool with a view including ' +
+                'real time updates (workers count & average PI approximation).',
+        },
+        src: `
+function inWorker(modules, args, globals){
+    modules.PY.registerJsModule('jsModule', {count: args.count})
+    return modules.PY.runPython(\`
+    import numpy as np
+    from jsModule import count 
+
+    def calc_pi(n):
+        data = np.random.uniform(-0.5, 0.5, size=(n, 2))
+        norms = np.linalg.norm(data, axis=1)
+        return len(np.argwhere(norms<0.5)) / n * 4
+        
+    calc_pi(count)\`)
+}        
+return async (cdnClient, message$) => {
+    const {PY, FV} = await cdnClient.install({
+        modules: ['@youwol/flux-view'],
+        aliases: { FV: "@youwol/flux-view" },
+    })
+    const pool = new cdnClient.workerPool({
+        install:{ 
+            customInstallers:[{
+                module: "@youwol/cdn-pyodide-loader#^0.1.2",
+                installInputs: {
+                    modules: [ "numpy" ],
+                    exportedPyodideInstanceName: "PY",
+                    onEvent: (ev) => message$.next(ev.text),
+                }
+            }]
+        },
+        workerCount: { startAt:3, stretchTo: 10 }
+    })    
+    const results$ = new rxjs.Subject()
+    for( let i=0; i<100; i++){
+        pool.schedule({taskId:''+i, entryPoint: inWorker, args: {count:1000}})
+        .then(r => results$.next(r))
+    }
+    return { 
+        children:[{
+            innerText: FV.attr$(pool.workers$, (workers) => 'Current workers count: '+workers.length)
+        }, {
+            innerText: FV.attr$(
+                results$.pipe(rxjs.operators.scan((acc,e)=>[...acc,e], []), 
+                (results) => 'Current average: '+results.reduce( (acc,e) => acc+e, 0) / results.length
+        }]
+}`,
+    },
 ]
