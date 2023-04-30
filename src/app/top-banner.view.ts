@@ -49,17 +49,12 @@ export class TopBannerView implements VirtualDOM {
                                 title: 'Browse packages',
                                 topic$,
                             }),
-                            /*
                             new Button({
-                                icon: 'fas fa-upload',
+                                icon: 'fas fa-cloud-upload-alt',
+                                target: 'Publish',
                                 title: 'Publish package',
                                 topic$,
                             }),
-                            new Button({
-                                icon: 'fas fa-home',
-                                title: 'Home',
-                                topic$,
-                            }),*/
                         ],
                     },
                 ],

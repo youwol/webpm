@@ -3,8 +3,9 @@ import { TopBannerView } from './top-banner.view'
 import { PresentationView } from './presentation/presentation.view'
 import { BehaviorSubject } from 'rxjs'
 import { BrowseView } from './browse/browse.view'
+import { PublishView } from './publish/publish.view'
 
-export type Topic = 'Presentation' | 'Browse'
+export type Topic = 'Presentation' | 'Browse' | 'Publish'
 
 export class AppView implements VirtualDOM {
     public readonly topic$ = new BehaviorSubject<Topic>('Presentation')
@@ -21,6 +22,9 @@ export class AppView implements VirtualDOM {
                 }
                 if (topic == 'Browse') {
                     return new BrowseView()
+                }
+                if (topic == 'Publish') {
+                    return new PublishView()
                 }
             }),
         ]
