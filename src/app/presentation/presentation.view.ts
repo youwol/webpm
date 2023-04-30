@@ -29,13 +29,16 @@ export class PresentationView implements VirtualDOM {
                                     fontWeight: 'bolder',
                                 },
                                 class: 'title text-center',
-                                innerText:
-                                    'A free run-time provider for browsers',
+                                innerText: 'Run-time provider for browsers',
                             },
                             {
                                 class: 'sub-title text-center',
                                 innerText:
-                                    'On-the-fly installer, linker & runner for browser-compatible ecosystems.',
+                                    'Install, linker & run browser-compatible ecosystems.',
+                            },
+                            {
+                                class: 'sub-title text-center',
+                                innerText: 'Free & open source.',
                             },
                             { class: 'my-3' },
                             {
@@ -43,7 +46,14 @@ export class PresentationView implements VirtualDOM {
                                 style: {
                                     maxWidth: '800px',
                                 },
-                                children: [new CodeEditorView()],
+                                children: [
+                                    {
+                                        class: 'text-center',
+                                        innerHTML:
+                                            'Following examples use the <a href="https://github.com/youwol/cdn-client">CdnClient package</a> to fetch run times from W3Swarm.',
+                                    },
+                                    new CodeEditorView(),
+                                ],
                             },
                         ],
                     },
