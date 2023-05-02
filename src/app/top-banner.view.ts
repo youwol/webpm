@@ -23,6 +23,12 @@ const topicButtons = (topic$) => [
         topic$,
     }),
     new Button({
+        icon: 'fas fa-folder-open',
+        target: 'Explore',
+        title: 'Explore assets',
+        topic$,
+    }),
+    new Button({
         icon: 'fas fa-cloud-upload-alt',
         target: 'Publish',
         title: 'Publish package',
