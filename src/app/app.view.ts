@@ -3,14 +3,14 @@ import { TopBannerView } from './top-banner.view'
 import { PresentationView } from './presentation/presentation.view'
 import { BehaviorSubject } from 'rxjs'
 import { BrowseView } from './browse/browse.view'
-import { PublishView } from './publish/publish.view'
+import { JsPlaygroundView } from './js-playground/js-playground.view'
 import { OnPremiseView } from './on-premise/on-premise.view'
 import { AssetsExplorerView } from './explore/assets-explorer.view'
 
 export type Topic =
     | 'Presentation'
     | 'Browse'
-    | 'Publish'
+    | 'Playground'
     | 'OnPremise'
     | 'Explore'
 
@@ -30,8 +30,8 @@ export class AppView implements VirtualDOM {
                 if (topic == 'Browse') {
                     return new BrowseView()
                 }
-                if (topic == 'Publish') {
-                    return new PublishView()
+                if (topic == 'Playground') {
+                    return new JsPlaygroundView()
                 }
                 if (topic == 'OnPremise') {
                     return new OnPremiseView()

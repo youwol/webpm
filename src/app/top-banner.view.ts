@@ -29,9 +29,9 @@ const topicButtons = (topic$) => [
         topic$,
     }),
     new Button({
-        icon: 'fas fa-cloud-upload-alt',
-        target: 'Publish',
-        title: 'Publish package',
+        icon: 'fab fa-js-square',
+        target: 'Playground',
+        title: 'Js playground',
         topic$,
     }),
     new Button({
