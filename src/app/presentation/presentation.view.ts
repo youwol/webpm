@@ -23,7 +23,7 @@ export class PresentationView implements VirtualDOM {
                 class: 'background py-3',
                 children: [
                     {
-                        class: 'h-100 d-flex fv-text-primary flex-column justify-content-center mx-auto p-3',
+                        class: 'h-100 d-flex fv-text-primary flex-column justify-content-center mx-auto py-3',
                         children: [
                             {
                                 style: {
