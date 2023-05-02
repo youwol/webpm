@@ -3,7 +3,7 @@ export const examples = [
         title: 'Hello world',
         description: {
             innerHTML:
-                'Basics of importing resources using <a href="https://getbootstrap.com/docs/4.0/components/dropdowns/">bootstrap example</a>. ' +
+                'Basics of importing resources using a drop-down from <a href="https://getbootstrap.com/docs/4.0/components/dropdowns/">bootstrap example</a>. ' +
                 'Installation goes over indirect dependencies installation first and then link bootstrap appropriately.',
         },
         src: `return async (cdnClient, message$) => {
