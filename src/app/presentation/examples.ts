@@ -63,7 +63,7 @@ export const examples = [
     const renderer = new THREE.WebGLRenderer();
         
     return FV.render({
-        style:{ 'height': '800px', width:'800px'},
+        style:{ 'height': '500px', width:'100%'},
         connectedCallback:(elem) => {
             const camera = new THREE.PerspectiveCamera(75, elem.clientWidth / elem.clientHeight, 0.1, 1000);
             camera.position.z = 4;      
@@ -81,7 +81,7 @@ export const examples = [
 }`,
     },
     {
-        title: 'Display current run-time',
+        title: 'Run-time',
         description: {
             innerHTML:
                 'Libraries installed comes as individual entities. ' +

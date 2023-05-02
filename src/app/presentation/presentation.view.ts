@@ -3,8 +3,9 @@ import { AssetsStoreView } from './assets-store.view'
 import { CdnSectionView } from './cdn-section.view'
 import { LocalServerSection } from './local-server.view'
 import { IntroView } from './intro.view'
-import { CodeEditorView } from './code-editor.view'
 import { RemoteServerSection } from './remote-server.view'
+import { FaqsView } from './FAQ.view'
+import { SnippetsSectionView } from './snippets-section.view'
 export {}
 
 export class PresentationView implements VirtualDOM {
@@ -34,33 +35,20 @@ export class PresentationView implements VirtualDOM {
                             {
                                 class: 'sub-title text-center',
                                 innerText:
-                                    'Install, linker & run browser-compatible ecosystems.',
+                                    'Install, link & run browser-compatible ecosystems.',
                             },
                             {
                                 class: 'sub-title text-center',
                                 innerText: 'Free & open source.',
                             },
                             { class: 'my-3' },
-                            {
-                                class: 'mx-auto',
-                                style: {
-                                    maxWidth: '800px',
-                                },
-                                children: [
-                                    {
-                                        class: 'text-center',
-                                        innerHTML:
-                                            'Following examples use the <a href="https://github.com/youwol/cdn-client">CdnClient package</a> to fetch run times from W3Swarm.',
-                                    },
-                                    new CodeEditorView(),
-                                ],
-                            },
+                            new SnippetsSectionView(),
                         ],
                     },
                 ],
             },
             {
-                class: 'mx-auto',
+                class: 'mx-auto px-2',
                 style: { maxWidth: '800px' },
                 children: [
                     new IntroView(),
@@ -72,7 +60,15 @@ export class PresentationView implements VirtualDOM {
                     new LocalServerSection(),
                     { class: 'my-5' },
                     new RemoteServerSection(),
+                    { class: 'my-5' },
                 ],
+            },
+            {
+                class: 'mx-auto py-3',
+                style: {
+                    backgroundColor: 'rgba(175,175,175)',
+                },
+                children: [new FaqsView()],
             },
         ]
     }
