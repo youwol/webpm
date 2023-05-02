@@ -3,13 +3,13 @@ export const examples = [
         title: 'Hello world',
         description: {
             innerHTML:
-                'Basics of importing resources using a drop-down from <a href="https://getbootstrap.com/docs/4.0/components/dropdowns/">bootstrap example</a>. ' +
+                'Basics of importing resources with a <a href="https://getbootstrap.com/docs/4.0/components/dropdowns/">drop-down example</a> from bootstrap. ' +
                 'Installation goes over indirect dependencies installation first and then link bootstrap appropriately.',
         },
         src: `return async (cdnClient, message$) => {
     await cdnClient.install({
     // bootstrap will come with its dependencies installed first (e.g. popper.js)
-        modules:['bootstrap#^4.0.0'],
+        modules:['bootstrap#^4.4.0'],
     // CSS are explicitly imported 
         css: ['bootstrap#^4.4.0~bootstrap.min.css']
     })
