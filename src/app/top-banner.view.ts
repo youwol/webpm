@@ -34,12 +34,6 @@ const topicButtons = (topic$) => [
         title: 'Js playground',
         topic$,
     }),
-    new Button({
-        icon: 'fas fa-users-cog',
-        target: 'OnPremise',
-        title: 'On Premise',
-        topic$,
-    }),
 ]
 export class TopBannerView implements VirtualDOM {
     public readonly id = 'top-banner'
