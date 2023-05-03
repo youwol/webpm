@@ -81,10 +81,7 @@ export class TopBannerView implements VirtualDOM {
                         style: { lineHeight: '13px' },
                         children: [
                             {
-                                innerText: 'W3',
-                            },
-                            {
-                                innerText: 'Swarm',
+                                innerText: 'Nebula',
                             },
                         ],
                     },

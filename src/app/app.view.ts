@@ -4,7 +4,6 @@ import { PresentationView } from './presentation/presentation.view'
 import { BehaviorSubject } from 'rxjs'
 import { BrowseView } from './browse/browse.view'
 import { JsPlaygroundView } from './js-playground/js-playground.view'
-import { OnPremiseView } from './on-premise/on-premise.view'
 import { AssetsExplorerView } from './explore/assets-explorer.view'
 
 export type Topic =
@@ -32,9 +31,6 @@ export class AppView implements VirtualDOM {
                 }
                 if (topic == 'Playground') {
                     return new JsPlaygroundView()
-                }
-                if (topic == 'OnPremise') {
-                    return new OnPremiseView()
                 }
                 if (topic == 'Explore') {
                     return new AssetsExplorerView()
