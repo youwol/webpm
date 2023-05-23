@@ -7,12 +7,20 @@ export const examples = [
                 'Installation goes over indirect dependencies installation first and then link bootstrap appropriately.',
         },
         src: `return async (cdnClient, message$) => {
+
+    // the library 'cdnClient' serves as entry point to install run-time dependencies
     await cdnClient.install({
-    // bootstrap will come with its dependencies installed first (e.g. popper.js)
+    // It is possible to import a list of modules based on name & semantic versioning
+    // Here, bootstrap will come with its dependencies installed first (e.g. popper.js)
         modules:['bootstrap#^4.4.0'],
-    // CSS are explicitly imported 
+    // CSS can also be imported, again using semantic versioning
+    // Here the bootstrap  style sheets is imported
         css: ['bootstrap#^4.4.0~bootstrap.min.css']
+    // Not shown here, but it is also possible to import standalone javascript files (which are not modules)
     })
+    
+    // Next lines are 'standard' bootstrap HTMLElements for a dropdown
+    // Refer to dedicated explanation for help (https://getbootstrap.com/docs/4.0/components/dropdowns/)
     const div = document.createElement('div')
     div.innerHTML =  \`
 <div class="dropdown">
@@ -25,6 +33,8 @@ export const examples = [
     <a class="dropdown-item">Something else here</a>
   </div>
 </div>\`
+    
+    // All the snippets presented here can return an HTMLElement to be displayed when ran.
     return div
 }`,
     },
@@ -63,7 +73,7 @@ export const examples = [
     const renderer = new THREE.WebGLRenderer();
         
     return FV.render({
-        style:{ 'height': '500px', width:'100%'},
+        style:{ 'height': '800px', width:'100%'},
         connectedCallback:(elem) => {
             const camera = new THREE.PerspectiveCamera(75, elem.clientWidth / elem.clientHeight, 0.1, 1000);
             camera.position.z = 4;      
@@ -89,24 +99,23 @@ export const examples = [
         },
         src: `return async (cdnClient) => {
 
-    const {PMP, FV, THREE} = await cdnClient.install({
+    await cdnClient.install({
         modules:[
-            '@youwol/flux-view#x'
+            '@youwol/flux-view#x',
+            'rxjs#7.x'
         ],
         aliases:{
-            FV: '@youwol/flux-view'
+            FV: '@youwol/flux-view',
+            RX: 'rxjs'
         }
     })
     //------------------------------------------------------------
     // The current run time can be accessed using 'cdnClient.State'
     //------------------------------------------------------------
-    const importedBundles = cdnClient.State.importedBundles
     return FV.render({
         tag:'pre',
         class:'h-100 w-100 fv-text-primary',
-        children: [...cdnClient.State.importedBundles.entries()].map(([k,v])=>{
-            return { innerText: k + ': ' + v }
-        })
+        children: [cdnClient.monitoring().view]
     })
 }`,
     },
@@ -162,51 +171,68 @@ export const examples = [
                 'Same as the previous example, but running a hundred times in a worker pool with a view including ' +
                 'real time updates (workers count & average PI approximation).',
         },
-        src: `
-function inWorker(modules, args, globals){
-    modules.PY.registerJsModule('jsModule', {count: args.count})
-    return modules.PY.runPython(\`
+        src: `function inWorker({args, workerScope}){
+    const {PY} = workerScope
+    PY.registerJsModule('jsModule', {count: args.count})
+    return PY.runPython(\`
     import numpy as np
     from jsModule import count 
-
-    def calc_pi(n):
-        data = np.random.uniform(-0.5, 0.5, size=(n, 2))
-        norms = np.linalg.norm(data, axis=1)
-        return len(np.argwhere(norms<0.5)) / n * 4
-        
-    calc_pi(count)\`)
+    data = np.random.uniform(-0.5, 0.5, size=(count, 2))
+    len(np.argwhere(np.linalg.norm(data, axis=1)<0.5)) / count * 4\`)
 }        
 return async (cdnClient, message$) => {
-    const {PY, FV} = await cdnClient.install({
+    message$.next('prepare worker pool with 1 initial instances')
+    // workers pool module is an opt-in feature of cdnClient
+    const WPool = await cdnClient.installWorkersPoolModule()
+    
+    // run-time of main thread
+    const {FV, RX} = await cdnClient.install({
         modules: ['@youwol/flux-view'],
-        aliases: { FV: "@youwol/flux-view" },
+        aliases: { FV: "@youwol/flux-view", RX: "rxjs"},
     })
-    const pool = new cdnClient.workerPool({
+    const {scan, buffer, takeWhile, last}   = RX.operators
+    
+    // run-time of worker's thread
+    const pool = new WPool.WorkersPool({
         install:{ 
+            // rxjs not used in worker: just for illustration
+            modules:['rxjs#^7.0.0'],
             customInstallers:[{
                 module: "@youwol/cdn-pyodide-loader#^0.1.2",
-                installInputs: {
-                    modules: [ "numpy" ],
-                    exportedPyodideInstanceName: "PY",
-                    onEvent: (ev) => message$.next(ev.text),
-                }
+                installInputs: { modules: [ "numpy" ], exportedPyodideInstanceName: "PY" }
             }]
         },
-        workerCount: { startAt:3, stretchTo: 10 }
-    })    
-    const results$ = new rxjs.Subject()
-    for( let i=0; i<100; i++){
-        pool.schedule({taskId:''+i, entryPoint: inWorker, args: {count:1000}})
-        .then(r => results$.next(r))
+        pool: { startAt: 1, stretchTo: 10 }
+    })      
+    const view = pool.view()
+    // optional: wait for pool.startAt worker(s) ready
+    await pool.ready() 
+    message$.next('done')
+    
+    const results$ = new RX.Subject()    
+    const perSecond$ = results$.pipe(buffer(RX.interval(1000)))
+    const acc$ = results$.pipe(scan(({s, c},e)=>({s:s + e, c: c+1}), {s:0, c:0}))
+    
+    const compute = () => {
+        for( let i=0; i<1000; i++){
+            pool.schedule({title: 'PI', entryPoint: inWorker, args: {count:100000}})
+            .pipe(
+                takeWhile( ({type}) => type != 'Exit', true),
+                last()
+            )
+            .subscribe(message => results$.next(message.data.result))
+        }
     }
     return { 
-        children:[{
-            innerText: FV.attr$(pool.workers$, (workers) => 'Current workers count: '+workers.length)
-        }, {
-            innerText: FV.attr$(
-                results$.pipe(rxjs.operators.scan((acc,e)=>[...acc,e], []), 
-                (results) => 'Current average: '+results.reduce( (acc,e) => acc+e, 0) / results.length
-        }]
+        children:[
+            { class:'btn btn-primary', innerText: 'start 1000 runs', onclick: compute },
+            { innerText: FV.attr$(pool.workers$, (workers) => 'Workers count: '+Object.keys(workers).length)}, 
+            { innerText: FV.attr$(acc$, ({s, c}) => 'Average: '+ s / c )},
+            { innerText: FV.attr$(acc$, ({c}) => 'Simulation count: '+ c)},
+            { innerText: FV.attr$(perSecond$, (results) => 'Results /s: '+ results.length)},
+            view
+        ]
+    }
 }`,
     },
 ]
