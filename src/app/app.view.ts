@@ -4,14 +4,8 @@ import { PresentationView } from './presentation/presentation.view'
 import { BehaviorSubject } from 'rxjs'
 import { BrowseView } from './browse/browse.view'
 import { JsPlaygroundView } from './js-playground/js-playground.view'
-import { AssetsExplorerView } from './explore/assets-explorer.view'
 
-export type Topic =
-    | 'Presentation'
-    | 'Browse'
-    | 'Playground'
-    | 'OnPremise'
-    | 'Explore'
+export type Topic = 'Presentation' | 'Browse' | 'Playground' | 'OnPremise'
 
 export class AppView implements VirtualDOM {
     public readonly topic$ = new BehaviorSubject<Topic>('Presentation')
@@ -31,9 +25,6 @@ export class AppView implements VirtualDOM {
                 }
                 if (topic == 'Playground') {
                     return new JsPlaygroundView()
-                }
-                if (topic == 'Explore') {
-                    return new AssetsExplorerView()
                 }
             }),
         ]
