@@ -1237,6 +1237,15 @@
   dependencies:
     semver "^7.3.4"
 
+"@youwol/cdn-client@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@youwol/cdn-client/-/cdn-client-2.0.0.tgz#4ae7fa3f6b8ec37b744ccf0b8f2a4d76a617bed0"
+  integrity sha512-HThZclwTOZxN6YfpRJrVALQa5/5SJA90xmQg0J3i7fuOtgx6DdYuo/731d/c0/pVsqaqRUExsyBIJMReVpGEYw==
+  dependencies:
+    "@youwol/flux-view" "^1.1.0"
+    rxjs "^6.5.5"
+    semver "^7.3.4"
+
 "@youwol/eslint-config@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@youwol/eslint-config/-/eslint-config-0.1.0.tgz#0c851e1f342870012e3f34b12ab7890b0b9ac681"
@@ -1252,7 +1261,7 @@
     eslint-plugin-tsdoc "^0.2.17"
     eslint-plugin-unused-imports "^2.0.0"
 
-"@youwol/flux-view@^1.0.3":
+"@youwol/flux-view@^1.0.3", "@youwol/flux-view@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@youwol/flux-view/-/flux-view-1.1.0.tgz#6bd3a09ea5d6e059936cd734d2434dc52d367f93"
   integrity sha512-KsNJl/fpWTg26/7E1Lcc/bgOVxhPwwZe5uRV8uXU1G3c427TkXaj3j3VZMhbxLPKdueEC7QO+iE3n1DX2BJ/Dg==

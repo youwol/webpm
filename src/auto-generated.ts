@@ -1,7 +1,7 @@
 
 const runTimeDependencies = {
     "externals": {
-        "@youwol/cdn-client": "^1.0.2",
+        "@youwol/cdn-client": "^2.0.0",
         "@youwol/flux-view": "^1.0.3",
         "@youwol/fv-code-mirror-editors": "^0.2.3",
         "rxjs": "^6.5.5",
@@ -11,7 +11,7 @@ const runTimeDependencies = {
     "includedInBundle": {}
 }
 const externals = {
-    "@youwol/cdn-client": "window['@youwol/cdn-client_APIv1']",
+    "@youwol/cdn-client": "window['@youwol/cdn-client_APIv2']",
     "@youwol/flux-view": "window['@youwol/flux-view_APIv1']",
     "@youwol/fv-code-mirror-editors": "window['@youwol/fv-code-mirror-editors_APIv02']",
     "rxjs": "window['rxjs_APIv6']",
@@ -21,7 +21,7 @@ const externals = {
 }
 const exportedSymbols = {
     "@youwol/cdn-client": {
-        "apiKey": "1",
+        "apiKey": "2",
         "exportedSymbol": "@youwol/cdn-client"
     },
     "@youwol/flux-view": {
