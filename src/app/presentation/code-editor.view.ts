@@ -96,14 +96,14 @@ export class CodeEditorView implements VirtualDOM {
                 class: attr$(this.state.mode$, (mode) =>
                     mode == 'code' ? 'flex-grow-1' : 'd-none',
                 ),
-                style: { minHeight: '0px' },
+                style: { height: '800px' },
                 children: [ideView],
             },
             {
                 class: attr$(this.state.mode$, (mode) =>
                     mode == 'view' ? 'flex-grow-1' : 'd-none',
                 ),
-                style: { minHeight: '0px' },
+                style: { height: '800px' },
                 children: [child$(this.state.result$, (vDom) => vDom)],
             },
             { class: 'my-2' },
