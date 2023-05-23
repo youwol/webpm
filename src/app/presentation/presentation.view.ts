@@ -1,5 +1,4 @@
 import { VirtualDOM } from '@youwol/flux-view'
-import { AssetsStoreView } from './assets-store.view'
 import { CdnSectionView } from './cdn-section.view'
 import { LocalServerSection } from './local-server.view'
 import { IntroView } from './intro.view'
@@ -54,8 +53,6 @@ export class PresentationView implements VirtualDOM {
                     new IntroView(),
                     { class: 'my-5' },
                     new CdnSectionView(),
-                    { class: 'my-5' },
-                    new AssetsStoreView(),
                     { class: 'my-5' },
                     new LocalServerSection(),
                     { class: 'my-5' },
