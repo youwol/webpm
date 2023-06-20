@@ -1,9 +1,8 @@
 import { VirtualDOM, child$, attr$ } from '@youwol/flux-view'
 import { Common } from '@youwol/fv-code-mirror-editors'
 import { examples } from './examples'
-import { BehaviorSubject, from, Observable, of, Subject } from 'rxjs'
-import { catchError, mergeMap, tap, withLatestFrom } from 'rxjs/operators'
-import * as cdnClient from '@youwol/cdn-client'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
+import { map, tap, withLatestFrom } from 'rxjs/operators'
 
 class State {
     public readonly currentExample$ = new BehaviorSubject(examples[0])
@@ -23,24 +22,8 @@ class State {
     constructor() {
         this.result$ = this.run$.pipe(
             withLatestFrom(this.ideState.updates$['./main']),
-            mergeMap(([, file]) => {
-                try {
-                    const fct = new Function(file.content)()
-                    const result = fct(cdnClient, this.message$)
-                    return from(result).pipe(
-                        catchError((err) => {
-                            console.log('Got an error 0', err)
-                            return of(undefined)
-                        }),
-                    )
-                } catch (err) {
-                    console.log(err)
-                    return of(undefined)
-                }
-            }),
-            catchError((err) => {
-                console.log('Got an error', err)
-                return of(undefined)
+            map(([_, file]) => {
+                return file.content
             }),
             tap(() => {
                 this.mode$.next('view')
@@ -80,7 +63,7 @@ export class CodeEditorView implements VirtualDOM {
         const ideView = new Common.CodeEditorView({
             ideState: this.state.ideState,
             path: './main',
-            language: 'javascript',
+            language: 'htmlmixed',
             config: {
                 extraKeys: {
                     'Ctrl-Enter': () => {
@@ -104,7 +87,14 @@ export class CodeEditorView implements VirtualDOM {
                     mode == 'view' ? 'flex-grow-1' : 'd-none',
                 ),
                 style: { height: '800px' },
-                children: [child$(this.state.result$, (vDom) => vDom)],
+                children: [
+                    {
+                        tag: 'iframe',
+                        width: '100%',
+                        height: '100%',
+                        srcdoc: attr$(this.state.result$, (r) => r),
+                    },
+                ],
             },
             { class: 'my-2' },
         ]
