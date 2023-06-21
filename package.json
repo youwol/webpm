@@ -1,9 +1,9 @@
 {
-    "name": "@youwol/welcome",
+    "name": "@youwol/webpm",
     "description": "",
     "version": "0.1.0-wip",
     "author": "greinisch@youwol.com",
-    "homepage": "https://github.com/youwol/welcome#README.md",
+    "homepage": "https://github.com/youwol/webpm#README.md",
     "main": "dist/index.html",
     "types": "src/index.ts",
     "scripts": {

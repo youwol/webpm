@@ -61,18 +61,18 @@ const mainEntry : {entryFile: string,loadDependencies:string[]} = {
 const secondaryEntries : {[k:string]:{entryFile: string, name: string, loadDependencies:string[]}}= {}
 
 const entries = {
-     '@youwol/welcome': './main.ts',
-    ...Object.values(secondaryEntries).reduce( (acc,e) => ({...acc, [`@youwol/welcome/${e.name}`]:e.entryFile}), {})
+     '@youwol/webpm': './main.ts',
+    ...Object.values(secondaryEntries).reduce( (acc,e) => ({...acc, [`@youwol/webpm/${e.name}`]:e.entryFile}), {})
 }
 export const setup = {
-    name:'@youwol/welcome',
-        assetId:'QHlvdXdvbC93ZWxjb21l',
+    name:'@youwol/webpm',
+        assetId:'QHlvdXdvbC93ZWJwbQ==',
     version:'0.1.0-wip',
     shortDescription:"",
-    developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/welcome',
-    npmPackage:'https://www.npmjs.com/package/@youwol/welcome',
-    sourceGithub:'https://github.com/youwol/welcome',
-    userGuide:'https://l.youwol.com/doc/@youwol/welcome',
+    developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/webpm&tab=doc',
+    npmPackage:'https://www.npmjs.com/package/@youwol/webpm',
+    sourceGithub:'https://github.com/youwol/webpm',
+    userGuide:'https://l.youwol.com/doc/@youwol/webpm',
     apiVersion:'01',
     runTimeDependencies,
     externals,
@@ -84,7 +84,7 @@ export const setup = {
     },
 
     installMainModule: ({cdnClient, installParameters}:{
-        cdnClient:{install:(unknown) => Promise<Window>},
+        cdnClient:{install:(unknown) => Promise<WindowOrWorkerGlobalScope>},
         installParameters?
     }) => {
         const parameters = installParameters || {}
@@ -98,12 +98,12 @@ export const setup = {
             modules,
             scripts,
         }).then(() => {
-            return window[`@youwol/welcome_APIv01`]
+            return window[`@youwol/webpm_APIv01`]
         })
     },
     installAuxiliaryModule: ({name, cdnClient, installParameters}:{
         name: string,
-        cdnClient:{install:(unknown) => Promise<Window>},
+        cdnClient:{install:(unknown) => Promise<WindowOrWorkerGlobalScope>},
         installParameters?
     }) => {
         const entry = secondaryEntries[name]
@@ -113,7 +113,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/welcome#0.1.0-wip~dist/@youwol/welcome/${entry.name}.js`
+            `@youwol/webpm#0.1.0-wip~dist/@youwol/webpm/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),
@@ -124,7 +124,7 @@ export const setup = {
             modules,
             scripts,
         }).then(() => {
-            return window[`@youwol/welcome/${entry.name}_APIv01`]
+            return window[`@youwol/webpm/${entry.name}_APIv01`]
         })
     },
     getCdnDependencies(name?: string){
