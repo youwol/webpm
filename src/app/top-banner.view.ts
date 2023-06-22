@@ -75,7 +75,7 @@ export class TopBannerView implements VirtualDOM {
                         style: { lineHeight: '13px' },
                         children: [
                             {
-                                innerText: 'Nebula',
+                                innerText: 'WebPM',
                             },
                         ],
                     },

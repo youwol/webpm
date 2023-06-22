@@ -18,7 +18,7 @@ const FAQs = [
     {
         question: "Does it impact the way I'm writing code?",
         response:
-            'In essence, no. This is evidenced by the fact that npm packages are published in Nebula without any ' +
+            'In essence, no. This is evidenced by the fact that npm packages are published in WebPM without any ' +
             'code changes. Specifically, for developers who rely on TypeScript typings, the dynamic resolution ' +
             'process does not result in the loss of typings definitions. ',
     },

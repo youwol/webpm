@@ -19,7 +19,7 @@ export class IntroView implements VirtualDOM {
                     tag: 'blockquote',
                     innerHTML:
                         '«Browsers are capable of accessing peripherals, interpreting code written in multiple ' +
-                        "languages, and harnessing the power of increasingly advanced computers. Along with Nebula's " +
+                        "languages, and harnessing the power of increasingly advanced computers. Along with WebPM's " +
                         'plug-and-play ecosystem, experience the convenience and performance of a truly versatile ' +
                         'operating system - right in your browser.» <b>ChatGPT</b> (with a bit of guidance 😇 )',
                 },

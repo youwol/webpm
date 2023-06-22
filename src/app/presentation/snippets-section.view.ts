@@ -24,7 +24,7 @@ export class SnippetsSectionView implements VirtualDOM {
             {
                 class: 'text-center',
                 innerHTML:
-                    'Following examples use the <a href="https://github.com/youwol/cdn-client">CdnClient package</a> to fetch run times from Nebula.',
+                    'Following examples use the <a href="https://github.com/youwol/cdn-client">CdnClient package</a> to fetch run times from WebPM.',
             },
             new CodeEditorView(),
         ]

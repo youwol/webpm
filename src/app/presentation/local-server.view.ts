@@ -18,14 +18,14 @@ export class LocalServerSection implements VirtualDOM {
             {
                 class: 'text',
                 innerHTML:
-                    'The <a href="">Nebula</a> Python package allows you to emulate the entire Nebula environment on ' +
+                    'The <a href="https://pypi.org/project/youwol/">youwol</a> Python package allows you to emulate the entire WebPM environment on ' +
                     'your PC, with assets installed lazily into local databases as needed. ' +
                     'This local environment provides numerous benefits, including an unlimited cache for the browser, ' +
                     'no-latency access to files of any size, secure storage, and the ability to use locally ' +
                     'installed programs in applications. ' +
                     'It is also highly configurable and can meet a broad range of requirements: think of it as local ' +
                     '& easy to use k8s cluster. ' +
-                    'These make it a perfect fit for developers to easily publish their code within Nebula remote ' +
+                    'These make it a perfect fit for developers to easily publish their code within WebPM remote ' +
                     'instance(s).',
             },
         ]
