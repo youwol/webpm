@@ -49,7 +49,10 @@ export const examples = [
         const cdnClient = window['@youwol/cdn-client']
         await cdnClient.install({
             modules:['@youwol/vsf-core#^0.1.2', '@youwol/flux-view', '@youwol/vsf-canvas#^0.1.1'],
-            css: ['bootstrap#^4.4.0~bootstrap.min.css'],
+            css: [
+                'bootstrap#^4.4.0~bootstrap.min.css', 
+                'fontawesome#5.12.1~css/all.min.css', 
+                '@youwol/fv-widgets#latest~dist/assets/styles/style.youwol.css'],
             aliases:{
                 VSF:'@youwol/vsf-core', Canvas:'@youwol/vsf-canvas', FV: '@youwol/flux-view'
             },
@@ -69,7 +72,7 @@ export const examples = [
             children:[
                 {
                     class:'h-50',
-                    children: [project.instancePool.getModule('viewer').html()]
+                    children: [project.instancePool.inspector().getModule('viewer').html()]
                 },
                 {   class:'h-50',
                     children: [new Canvas.Renderer3DView({project$: rxjs.of(project), workflowId:'main'})]
@@ -221,7 +224,7 @@ export const examples = [
             for( let i=0; i<1000; i++){
                 pool.schedule({title: 'PI', entryPoint: inWorker, args: {count:100000}})
                     .pipe(
-                        takeWhile( ({type}) => type != 'Exit', true),
+                        takeWhile( ({type}) => type !== 'Exit', true),
                         last()
                     )
                     .subscribe(message => results$.next(message.data.result))
