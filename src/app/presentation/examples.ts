@@ -5,29 +5,29 @@ export const examples = [
         title: 'Hello world',
         description: {
             innerHTML:
-                'Basics of importing resources with a <a href="https://getbootstrap.com/docs/4.0/components/dropdowns/">drop-down example</a> from bootstrap. ' +
+                'Basics of importing resources with a <a href="https://getbootstrap.com/docs/5.3/components/dropdowns/">drop-down example</a> from bootstrap. ' +
                 'Installation goes over indirect dependencies installation first and then link bootstrap appropriately.',
         },
         src: `<!DOCTYPE html>
 <html lang="en">
-    ${head}
+    <head><script src="https://webpm.org/^2.0.4/cdn-client.js"></script></head>
     <body>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-            </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item">Action</a>
-            <a class="dropdown-item">Another action</a>
-            <a class="dropdown-item">Something else here</a>
-          </div>
+       	<div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown button
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
         </div>
     </body>    
     <script type="module">
         const client = window['@youwol/cdn-client']
         await client.install({
-            modules:['bootstrap#^4.4.0'],
-            css: ['bootstrap#^4.4.0~bootstrap.min.css'],
+            modules:['bootstrap#^5.3.0'],
+            css: ['bootstrap#^5.3.0~bootstrap.min.css'],
             displayLoadingScreen: true
         })
     </script>
