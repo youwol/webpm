@@ -10,7 +10,7 @@ export class CdnSectionView {
             },
             { class: 'my-5' },
             {
-                innerText: 'A dependencies aware CDN...',
+                innerText: 'Difference with a regular CDN',
                 style: {
                     fontSize: '2rem',
                     fontWeight: 'bolder',
@@ -20,11 +20,18 @@ export class CdnSectionView {
             {
                 class: 'text',
                 innerHTML:
-                    'Unlike regular CDNs that only provide access to specific isolated resources, WebPM offers a ' +
-                    'proper dependencies resolution and linking feature. In fact, just like in a node environment, ' +
-                    'different versions of a particular library may co-exist in the runtime and linked to the appropriate consumer. ' +
-                    'This versatility can be leveraged by applications to enable powerful custom code injection, ' +
-                    'making it particularly valuable for plugin-based architectures and fields like numerical science. ',
+                    "It's all about managing dependencies, a critical aspect of scalable project development. " +
+                    'Regular CDNs offer two options for handling them: including them in the bundle or leaving it up to the consumer to handle.<br>' +
+                    'Bundling dependencies with libraries leads to scalability issues: shared dependencies are duplicated, increasing payload sizes and introducing potential bugs. ' +
+                    'Avoiding this is the very reason why package managers exists.<br>' +
+                    'On the other hand, relying on consumers to include dependencies manually and in the correct order is not scalabile neither: ' +
+                    'it becomes challenging to manage and maintain, especially as the number of dependencies and their interdependencies grow.<br>' +
+                    "Addressing this challenge is at the heart of WebPM's mission. " +
+                    'Through its infrastructure and client, WebPM enables the effortless installation of dependency trees. ' +
+                    'Libraries can be published as self-contained entities, ' +
+                    'while ensuring long-term scalability and maintainability of projects. <br>' +
+                    'The downside of WebPM is that it is not possible to directly consume projects from GitHUB or NPM. ' +
+                    'However, it is most of the time a straigthforward process as explained in the next section. ',
             },
         ]
     }
