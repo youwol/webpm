@@ -11,8 +11,8 @@ export const examples = [
         src: `<!DOCTYPE html>
 <html lang="en">
     <head><script src="https://webpm.org/^2.0.4/cdn-client.js"></script></head>
-    <body>
-       	<div class="dropdown">
+    <body class="vh-100 vw-100">
+       	<div class="dropdown" style="width: fit-content; postion:fixed; top:50%; left:50%; transform: translate(-50%, -50%);">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown button
           </button>
@@ -37,7 +37,7 @@ export const examples = [
         title: 'Real world',
         description: {
             innerHTML:
-                '<a href="l.youwol.com/doc/@youwol/vs-flow">VS-Flow</a>, a powerful low-code ecosystem, owes its existence to WebPM: ' +
+                '<a href="https://l.youwol.com/doc/@youwol/vs-flow">VS-Flow</a>, a powerful low-code ecosystem, owes its existence to WebPM: ' +
                 'run time is updated on the fly while users connect "modules". ' +
                 'In this example, a "remeshing" application is contructed that leverages the C++ library <a href="https://www.pmp-library.org/">PMP</a>.',
         },
@@ -47,7 +47,7 @@ export const examples = [
     <body class="vw-100 vh-100"></body>
     <script type="module">
         const cdnClient = window['@youwol/cdn-client']
-        await cdnClient.install({
+        const {VSF, Canvas, FV, rxjs} = await cdnClient.install({
             modules:['@youwol/vsf-core#^0.1.2', '@youwol/flux-view', '@youwol/vsf-canvas#^0.1.1'],
             css: [
                 'bootstrap#^4.4.0~bootstrap.min.css', 
