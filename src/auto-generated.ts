@@ -1,7 +1,7 @@
 
 const runTimeDependencies = {
     "externals": {
-        "@youwol/cdn-client": "^2.0.0",
+        "@youwol/webpm-client": "^2.2.0",
         "@youwol/flux-view": "^1.0.3",
         "@youwol/fv-code-mirror-editors": "^0.3.1",
         "rxjs": "^6.5.5",
@@ -11,7 +11,7 @@ const runTimeDependencies = {
     "includedInBundle": {}
 }
 const externals = {
-    "@youwol/cdn-client": "window['@youwol/cdn-client_APIv2']",
+    "@youwol/webpm-client": "window['@youwol/webpm-client_APIv2']",
     "@youwol/flux-view": "window['@youwol/flux-view_APIv1']",
     "@youwol/fv-code-mirror-editors": "window['@youwol/fv-code-mirror-editors_APIv03']",
     "rxjs": "window['rxjs_APIv6']",
@@ -20,9 +20,9 @@ const externals = {
     "rxjs/operators": "window['rxjs_APIv6']['operators']"
 }
 const exportedSymbols = {
-    "@youwol/cdn-client": {
+    "@youwol/webpm-client": {
         "apiKey": "2",
-        "exportedSymbol": "@youwol/cdn-client"
+        "exportedSymbol": "@youwol/webpm-client"
     },
     "@youwol/flux-view": {
         "apiKey": "1",
@@ -49,7 +49,7 @@ const exportedSymbols = {
 const mainEntry : {entryFile: string,loadDependencies:string[]} = {
     "entryFile": "./main.ts",
     "loadDependencies": [
-        "@youwol/cdn-client",
+        "@youwol/webpm-client",
         "@youwol/flux-view",
         "@youwol/fv-code-mirror-editors",
         "rxjs",
@@ -67,7 +67,7 @@ const entries = {
 export const setup = {
     name:'@youwol/webpm',
         assetId:'QHlvdXdvbC93ZWJwbQ==',
-    version:'0.1.0',
+    version:'0.1.1-wip',
     shortDescription:"",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/webpm&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/webpm',
@@ -113,7 +113,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/webpm#0.1.0~dist/@youwol/webpm/${entry.name}.js`
+            `@youwol/webpm#0.1.1-wip~dist/@youwol/webpm/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),

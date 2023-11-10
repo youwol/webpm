@@ -1346,15 +1346,6 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@youwol/cdn-client@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@youwol/cdn-client/-/cdn-client-2.0.0.tgz#4ae7fa3f6b8ec37b744ccf0b8f2a4d76a617bed0"
-  integrity sha512-HThZclwTOZxN6YfpRJrVALQa5/5SJA90xmQg0J3i7fuOtgx6DdYuo/731d/c0/pVsqaqRUExsyBIJMReVpGEYw==
-  dependencies:
-    "@youwol/flux-view" "^1.1.0"
-    rxjs "^6.5.5"
-    semver "^7.3.4"
-
 "@youwol/cdn-client@^2.1.2":
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/@youwol/cdn-client/-/cdn-client-2.1.3.tgz#3d1b2e03553eef9f59f608bd6fbb8e8431dbd7af"
@@ -1443,6 +1434,15 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@youwol/tsconfig/-/tsconfig-1.0.0.tgz#76e8569781dc4bdc53f27dc0b4f3cd6e17e1bd52"
   integrity sha512-R+8tI08X56yOpSfGTJ2gG5GWZVpirr63Prmtfe3EQgc0pXhNpE4kzoxS6ByYsRZPn+ydGJxE61P424uycm+rNQ==
+
+"@youwol/webpm-client@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@youwol/webpm-client/-/webpm-client-2.2.0.tgz#b28c2f1a5adaf624ae6ca4d8ca8505c302505cd0"
+  integrity sha512-XOigMoaREk+DXxVVNByycnKo5CcOweylGdGudYm0iueFT+GFLuQmrxBMbh5mnsDIkvRSgDioIFJu3XIoITGS8A==
+  dependencies:
+    "@youwol/flux-view" "^1.1.0"
+    rxjs "^6.5.5"
+    semver "^7.3.4"
 
 abab@^2.0.6:
   version "2.0.6"
