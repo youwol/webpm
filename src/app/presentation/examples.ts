@@ -46,14 +46,14 @@ export const examples = [
     <body class="vw-100 vh-100"></body>
     <script type="module">
         const {VSF, Canvas, FV, rxjs} = await webpm.install({
-            modules:['@youwol/vsf-core#^0.1.2', '@youwol/flux-view', '@youwol/vsf-canvas#^0.1.1'],
+            modules:[
+                '@youwol/vsf-core#^0.1.2 as VSF', 
+                '@youwol/flux-view as FV', 
+                '@youwol/vsf-canvas#^0.1.1 as Canvas'],
             css: [
                 'bootstrap#^4.4.0~bootstrap.min.css', 
                 'fontawesome#5.12.1~css/all.min.css', 
                 '@youwol/fv-widgets#latest~dist/assets/styles/style.youwol.css'],
-            aliases:{
-                VSF:'@youwol/vsf-core', Canvas:'@youwol/vsf-canvas', FV: '@youwol/flux-view'
-            },
             displayLoadingScreen: true
         })
         let project = new VSF.Projects.ProjectState()
@@ -95,18 +95,14 @@ export const examples = [
     <script type="module">
         await webpm.install({
             modules:[
-                '@youwol/flux-view#x',
+                '@youwol/flux-view#x as FV',
                 'rxjs#7.x'
             ],
             css: ['bootstrap#^4.4.0~bootstrap.min.css'],
-            aliases:{
-                FV: '@youwol/flux-view',
-                RX: 'rxjs'
-            },
             displayLoadingScreen: true,
         })
         //------------------------------------------------------------
-        // The current run time can be accessed using 'webpm.State'
+        // The current run time can be accessed using 'webpm.monitoring'
         //------------------------------------------------------------
         const div = FV.render({
             tag:'pre',
@@ -130,15 +126,13 @@ export const examples = [
     <body style="height: 100%;width: 100%;background-color: white;"></body>
     <script type="module">
         const {PY, FV} = await webpm.install({
-            modules: ['@youwol/flux-view'],
-            aliases: { FV: "@youwol/flux-view" },
+            modules: ['@youwol/flux-view as FV'],
             customInstallers: [
                 {
                     module: "@youwol/cdn-pyodide-loader#^0.1.2",
                     installInputs: {
                         modules: [ "numpy" ],
                         exportedPyodideInstanceName: "PY",
-                        // onEvent: (ev) => message$.next(ev.text),
                     }
                 }
             ],
@@ -185,14 +179,13 @@ export const examples = [
         const WPool = await webpm.installWorkersPoolModule()
     
         // run-time of main thread
-        const {FV, RX} = await webpm.install({
-            modules: ['@youwol/flux-view'],
+        const {FV, rxjs} = await webpm.install({
+            modules: ['@youwol/flux-view as FV'],
             css: ['bootstrap#^4.4.0~bootstrap.min.css',
                 '@youwol/fv-widgets#latest~dist/assets/styles/style.youwol.css',],
-            aliases: { FV: "@youwol/flux-view", RX: "rxjs"},
             displayLoadingScreen: true,
         })
-        const {scan, buffer, takeWhile, last}   = RX.operators
+        const {scan, buffer, takeWhile, last}   = rxjs.operators
     
         // run-time of worker's thread
         const pool = new WPool.WorkersPool({
@@ -209,8 +202,8 @@ export const examples = [
         const view = pool.view()
         await pool.ready()
     
-        const results$ = new RX.Subject()
-        const perSecond$ = results$.pipe(buffer(RX.interval(1000)))
+        const results$ = new rxjs.Subject()
+        const perSecond$ = results$.pipe(buffer(rxjs.interval(1000)))
         const acc$ = results$.pipe(scan(({s, c},e)=>({s:s + e, c: c+1}), {s:0, c:0}))
     
         const compute = () => {
