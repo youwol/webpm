@@ -28,7 +28,10 @@ template = Template(
     dependencies=Dependencies(
         runTime=RunTimeDeps(
             externals=externals
-        )
+        ),
+        devTime={
+            "lz-string": "^1.4.4"
+        }
     ),
     bundles=Bundles(
       mainModule=MainModule(
