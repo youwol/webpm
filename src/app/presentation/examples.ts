@@ -1,4 +1,4 @@
-const webpmUrl = 'https://webpm.org/^2.0.4/cdn-client.js'
+const webpmUrl = 'https://testing.webpm.org/^2.2.0/webpm-client.js'
 const head = `<head><script src="${webpmUrl}"></script></head>`
 export const examples = [
     {
@@ -10,7 +10,7 @@ export const examples = [
         },
         src: `<!DOCTYPE html>
 <html lang="en">
-    <head><script src="https://webpm.org/^2.0.4/cdn-client.js"></script></head>
+    ${head}
     <body class="vh-100 vw-100">
        	<div class="dropdown" style="width: fit-content; postion:fixed; top:50%; left:50%; transform: translate(-50%, -50%);">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -23,9 +23,8 @@ export const examples = [
           </ul>
         </div>
     </body>    
-    <script type="module">
-        const client = window['@youwol/cdn-client']
-        await client.install({
+    <script type="module">        
+        await webpm.install({
             modules:['bootstrap#^5.3.0'],
             css: ['bootstrap#^5.3.0~bootstrap.min.css'],
             displayLoadingScreen: true
@@ -46,8 +45,7 @@ export const examples = [
     ${head}
     <body class="vw-100 vh-100"></body>
     <script type="module">
-        const cdnClient = window['@youwol/cdn-client']
-        const {VSF, Canvas, FV, rxjs} = await cdnClient.install({
+        const {VSF, Canvas, FV, rxjs} = await webpm.install({
             modules:['@youwol/vsf-core#^0.1.2', '@youwol/flux-view', '@youwol/vsf-canvas#^0.1.1'],
             css: [
                 'bootstrap#^4.4.0~bootstrap.min.css', 
@@ -95,8 +93,7 @@ export const examples = [
     ${head}
     <body></body>
     <script type="module">
-        const cdnClient = window['@youwol/cdn-client']
-        await cdnClient.install({
+        await webpm.install({
             modules:[
                 '@youwol/flux-view#x',
                 'rxjs#7.x'
@@ -109,12 +106,12 @@ export const examples = [
             displayLoadingScreen: true,
         })
         //------------------------------------------------------------
-        // The current run time can be accessed using 'cdnClient.State'
+        // The current run time can be accessed using 'webpm.State'
         //------------------------------------------------------------
         const div = FV.render({
             tag:'pre',
             class:'h-100 w-100 fv-text-primary',
-            children: [cdnClient.monitoring().view]
+            children: [webpm.monitoring().view]
         })
         document.body.appendChild(div)
     </script>
@@ -132,9 +129,7 @@ export const examples = [
     ${head}
     <body style="height: 100%;width: 100%;background-color: white;"></body>
     <script type="module">
-        const cdnClient = window['@youwol/cdn-client']
-        console.log(cdnClient)
-        const {PY, FV} = await cdnClient.install({
+        const {PY, FV} = await webpm.install({
             modules: ['@youwol/flux-view'],
             aliases: { FV: "@youwol/flux-view" },
             customInstallers: [
@@ -187,12 +182,10 @@ export const examples = [
                 len(np.argwhere(np.linalg.norm(data, axis=1)<0.5)) / count * 4\`)
         }
     
-        const cdnClient = window['@youwol/cdn-client']
-        console.log(cdnClient)
-        const WPool = await cdnClient.installWorkersPoolModule()
+        const WPool = await webpm.installWorkersPoolModule()
     
         // run-time of main thread
-        const {FV, RX} = await cdnClient.install({
+        const {FV, RX} = await webpm.install({
             modules: ['@youwol/flux-view'],
             css: ['bootstrap#^4.4.0~bootstrap.min.css',
                 '@youwol/fv-widgets#latest~dist/assets/styles/style.youwol.css',],
