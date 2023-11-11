@@ -1,4 +1,4 @@
-import { VirtualDOM, child$, attr$ } from '@youwol/flux-view'
+import { VirtualDOM, attr$, child$ } from '@youwol/flux-view'
 import { Common } from '@youwol/fv-code-mirror-editors'
 import { examples } from './examples'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
@@ -58,6 +58,7 @@ export class CodeEditorView implements VirtualDOM {
     public readonly state = new State()
     public readonly class = 'w-100 d-flex flex-column py-2 rounded'
     public readonly children: VirtualDOM[]
+    public readonly infoToggled$ = new BehaviorSubject<boolean>(false)
     constructor() {
         const ideView = new Common.CodeEditorView({
             ideState: this.state.ideState,
@@ -72,20 +73,37 @@ export class CodeEditorView implements VirtualDOM {
             },
         })
         this.children = [
-            new EditorBannerView({ state: this.state }),
-            child$(this.state.message$, (message) => new MessageView(message)),
+            new EditorBannerView({
+                state: this.state,
+                infoToggled$: this.infoToggled$,
+            }),
+            //child$(this.state.message$, (message) => new MessageView(message)),
             {
                 class: 'w-100 overflow-auto',
                 style: {
-                    maxHeight: '50vh',
+                    maxHeight: '1000px',
                 },
                 children: [
                     {
                         class: attr$(this.state.mode$, (mode) =>
-                            mode == 'code' ? 'flex-grow-1 text-left' : 'd-none',
+                            mode == 'code'
+                                ? 'flex-grow-1 text-left d-flex'
+                                : 'd-none',
                         ),
                         //style: { height: '50vh' },
-                        children: [ideView],
+                        children: [
+                            ideView,
+                            child$(this.infoToggled$, (displayed) => {
+                                return displayed
+                                    ? {
+                                          class: 'w-100',
+                                          innerHTML:
+                                              this.state.currentExample$.value
+                                                  .description.innerHTML,
+                                      }
+                                    : {}
+                            }),
+                        ],
                     },
                     {
                         class: attr$(this.state.mode$, (mode) =>
@@ -131,8 +149,11 @@ export class EditorBannerView implements VirtualDOM {
     public readonly class =
         'w-100 d-flex align-items-center justify-content-center py-1 mb-2'
     public readonly children: VirtualDOM[]
-
-    constructor(params: { state: State }) {
+    public readonly infoToggled$: BehaviorSubject<boolean>
+    constructor(params: {
+        state: State
+        infoToggled$: BehaviorSubject<boolean>
+    }) {
         Object.assign(this, params)
         this.children = [
             {
@@ -169,21 +190,15 @@ export class EditorBannerView implements VirtualDOM {
                             },
                             { class: 'mx-3' },
                             {
-                                class: 'd-flex align-items-center p-1 px-2 fv-pointer fv-text-focus fv-bg-background fv-hover-x-lighter fv-border-primary',
+                                class: 'd-flex align-items-center p-1 px-2 fv-pointer fv-text-success fv-hover-x-lighter',
                                 children: [
                                     {
-                                        class: attr$(this.state.mode$, (mode) =>
-                                            mode == 'code'
-                                                ? 'fas fa-play'
-                                                : 'fas fa-pen',
-                                        ),
-                                    },
-                                    { class: 'mx-1' },
-                                    {
-                                        innerText: attr$(
+                                        class: attr$(
                                             this.state.mode$,
                                             (mode) =>
-                                                mode == 'code' ? 'run' : 'edit',
+                                                mode == 'code'
+                                                    ? 'fas fa-play'
+                                                    : 'fas fa-pen',
                                         ),
                                     },
                                 ],
@@ -193,8 +208,36 @@ export class EditorBannerView implements VirtualDOM {
                                         : this.state.mode$.next('code')
                                 },
                             },
-                            { class: 'flex-grow-1 fv-border-primary mx-2' },
+                            { class: 'mx-2' },
+                            child$(this.state.mode$, (mode) => {
+                                return mode == 'view'
+                                    ? {}
+                                    : {
+                                          class: attr$(
+                                              this.infoToggled$,
+                                              (toggled): string =>
+                                                  toggled
+                                                      ? 'fv-text-focus'
+                                                      : 'fv-hover-text-focus',
+                                              {
+                                                  wrapper: (d) =>
+                                                      `${d} d-flex align-items-center p-1 px-2 fv-pointer fv-hover-x-lighter`,
+                                              },
+                                          ),
+                                          children: [
+                                              {
+                                                  class: 'fas fa-info-circle',
+                                              },
+                                          ],
+                                          onclick: () => {
+                                              this.infoToggled$.next(
+                                                  !this.infoToggled$.value,
+                                              )
+                                          },
+                                      }
+                            }),
 
+                            { class: 'flex-grow-1 fv-border-primary mx-2' },
                             {
                                 class: attr$(
                                     this.state.currentExample$,
@@ -212,22 +255,22 @@ export class EditorBannerView implements VirtualDOM {
                             },
                         ],
                     },
-                    {
-                        class: 'text-small rounded',
-                        style: {
-                            //backgroundColor: 'rgba(255,255,255,0.8)',
-                            fontStyle: 'italic',
-                            fontFamily: "Arimo', sans-serif;",
-                            textAlign: 'justify',
-                        },
-                        //class: 'text-justify py-1',
-                        children: [
-                            child$(
-                                this.state.currentExample$,
-                                (example) => example.description,
-                            ),
-                        ],
-                    },
+                    // {
+                    //     class: 'text-small rounded',
+                    //     style: {
+                    //         //backgroundColor: 'rgba(255,255,255,0.8)',
+                    //         fontStyle: 'italic',
+                    //         fontFamily: "Arimo', sans-serif;",
+                    //         textAlign: 'justify',
+                    //     },
+                    //     //class: 'text-justify py-1',
+                    //     children: [
+                    //         child$(
+                    //             this.state.currentExample$,
+                    //             (example) => example.description,
+                    //         ),
+                    //     ],
+                    // },
                 ],
             },
         ]
