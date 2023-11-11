@@ -1,4 +1,4 @@
-import { attr$, child$, VirtualDOM } from '@youwol/flux-view'
+import { child$, VirtualDOM } from '@youwol/flux-view'
 import { BehaviorSubject, from, Subject } from 'rxjs'
 import { Topic } from './app.view'
 import { install } from '@youwol/webpm-client'
@@ -7,27 +7,6 @@ function installBootstrap$() {
     return from(install({ modules: ['bootstrap#^4.4.1'] }))
 }
 type ScreenMode = 'small' | 'large'
-
-const topicButtons = (topic$) => [
-    new Button({
-        icon: '',
-        target: 'Presentation',
-        title: 'Presentation',
-        topic$,
-    }),
-    new Button({
-        icon: 'fas fa-search',
-        target: 'Browse',
-        title: 'Browse packages',
-        topic$,
-    }),
-    new Button({
-        icon: 'fab fa-js-square',
-        target: 'Playground',
-        title: 'Js playground',
-        topic$,
-    }),
-]
 
 export class Logo implements VirtualDOM {
     public readonly class = 'my-auto'
@@ -44,11 +23,22 @@ export class Logo implements VirtualDOM {
 
 export class BannerItem implements VirtualDOM {
     public readonly tag = 'div'
-    public readonly class = 'mx-3 my-auto'
+    public readonly class = 'mx-3 my-auto fv-pointer'
     public readonly innerText: string
-
-    constructor({ title }: { title: string }) {
+    onclick: (ev: MouseEvent) => void
+    constructor({
+        title,
+        topic$,
+        target,
+    }: {
+        title: string
+        topic$: BehaviorSubject<Topic>
+        target: Topic
+    }) {
         this.innerText = title
+        this.onclick = () => {
+            topic$.next(target)
+        }
     }
 }
 export class DropDownBannerItem implements VirtualDOM {
@@ -58,11 +48,9 @@ export class DropDownBannerItem implements VirtualDOM {
     constructor({
         title,
         options,
-        topic$,
     }: {
         title: string
-        options: string[]
-        topic$: BehaviorSubject<Topic>
+        options: { title: string; type: string; url?: string }[]
     }) {
         this.children = [
             {
@@ -78,17 +66,33 @@ export class DropDownBannerItem implements VirtualDOM {
                 innerText: title,
             },
             {
-                class: 'dropdown-menu fv-border-primary fv-bg-background',
+                class: 'dropdown-menu fv-border-primary fv-bg-background fv-text-primary px-3',
+                style: { width: '200px' },
                 customAttributes: {
                     'aria-labelledby': 'dropdownMenuButton',
                 },
                 children: options.map((option) => {
-                    return new Button({
-                        icon: '',
-                        target: undefined,
-                        title: option,
-                        topic$,
-                    })
+                    if (option.type == 'link') {
+                        return {
+                            class: 'd-flex align-items-center',
+                            children: [
+                                {
+                                    innerText: option.title,
+                                },
+                                {
+                                    tag: 'a',
+                                    class: 'fas fa-external-link-square-alt mx-2',
+                                    href: option.url,
+                                },
+                            ],
+                        }
+                    }
+                    if (option.type == 'delimiter') {
+                        return {
+                            class: 'text-center mt-3 mb-2',
+                            innerText: option.title,
+                        }
+                    }
                 }),
             },
         ]
@@ -103,19 +107,23 @@ export class BannerItems implements VirtualDOM {
     public readonly children: VirtualDOM[]
     constructor({ topic$ }: { topic$: BehaviorSubject<Topic> }) {
         this.children = [
-            new DropDownBannerItem({
-                title: 'Tools',
-                options: ['Publish from NPM', 'Publish by yourself'],
-                topic$,
-            }),
+            new BannerItem({ title: 'Home', topic$, target: 'Home' }),
             new SeparatorView(),
             new DropDownBannerItem({
                 title: 'Resources',
-                options: ['Blog', 'webpm JS client API'],
-                topic$,
+                options: [
+                    { type: 'link', title: 'Blog', url: '' },
+                    { type: 'delimiter', title: 'API Documentation' },
+                    {
+                        type: 'link',
+                        title: 'client',
+                        url: '/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/2.2.0/dist/docs/modules/MainModule.html',
+                    },
+                    { type: 'link', title: 'backend', url: '' },
+                ],
             }),
             new SeparatorView(),
-            new BannerItem({ title: 'About us' }),
+            new BannerItem({ title: 'About us', topic$, target: 'About' }),
         ]
     }
 }
@@ -160,100 +168,3 @@ export class TopBannerView implements VirtualDOM {
         ]
     }
 }
-
-class Button implements VirtualDOM {
-    public readonly class
-    public readonly style = {
-        width: '200px',
-        height: 'fit-content',
-        fontFamily: 'Poppins',
-        letterSpacing: '0.3px',
-        outlineOffset: '3px',
-        fontWeight: 'bold',
-    }
-    public readonly children: VirtualDOM[]
-    public readonly onclick: (ev: MouseEvent) => void
-    constructor(params: {
-        icon: string
-        target: Topic
-        title: string
-        topic$: BehaviorSubject<Topic>
-    }) {
-        this.class = attr$(
-            params.topic$,
-            (topic): string => {
-                return topic == params.target ? 'fv-border-bottom-focus' : ''
-            },
-            {
-                wrapper: (d) =>
-                    `${d} my-auto p-1 fv-text-primary fv-pointer mx-2  d-flex fv-hover-text-focus`,
-            },
-        )
-        this.children = [
-            {
-                class: params.icon,
-            },
-            {
-                class: 'mx-2',
-            },
-            {
-                innerText: params.title,
-            },
-        ]
-        this.onclick = () => params.topic$.next(params.target)
-    }
-}
-
-export class MenuDropDown implements VirtualDOM {
-    public readonly class = 'dropdown mx-auto'
-    public readonly children: VirtualDOM[]
-    public readonly topic$: BehaviorSubject<Topic>
-
-    constructor(params: { topic$: BehaviorSubject<Topic> }) {
-        Object.assign(this, params)
-        const buttons = topicButtons(this.topic$)
-        this.children = [
-            {
-                tag: 'button',
-                class: 'btn btn-secondary dropdown-toggle fv-border-bottom-focus',
-                type: 'button',
-                style: { backgroundColor: 'black' },
-                customAttributes: {
-                    'data-toggle': 'dropdown',
-                    'aria-haspopup': 'true',
-                    'aria-expanded': 'false',
-                },
-                innerText: attr$(this.topic$, (t) => t),
-            },
-            {
-                class: 'dropdown-menu fv-border-primary fv-bg-background',
-                customAttributes: {
-                    'aria-labelledby': 'dropdownMenuButton',
-                },
-                children: buttons,
-            },
-        ]
-    }
-}
-
-export class MenuExpanded implements VirtualDOM {
-    public readonly class = 'flex-grow-1 my-auto d-flex justify-content-around'
-    public readonly children: VirtualDOM[]
-    public readonly topic$: BehaviorSubject<Topic>
-
-    constructor(params: { topic$: BehaviorSubject<Topic> }) {
-        Object.assign(this, params)
-        this.children = topicButtons(this.topic$)
-    }
-}
-
-// <div class="dropdown">
-// <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-//     Dropdown button
-// </button>
-// <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-// <a class="dropdown-item">Action</a>
-//     <a class="dropdown-item">Another action</a>
-// <a class="dropdown-item">Something else here</a>
-// </div>
-// </div>
