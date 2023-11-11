@@ -1,9 +1,9 @@
 import { VirtualDOM } from '@youwol/flux-view'
 import { CdnSectionView } from './cdn-section.view'
-import { ExamplesSection } from './examples.view'
 import { PublishPackagesSection } from './publish-package-section.view'
 import { WhatMoreSection } from './what-more-section.view'
 import { WoAreWeView } from './who-are-we.view'
+import { CodeEditorView } from './code-editor.view'
 export {}
 
 export class PresentationView implements VirtualDOM {
@@ -24,33 +24,38 @@ export class PresentationView implements VirtualDOM {
                         class: 'h-100 d-flex fv-text-primary flex-column justify-content-center mx-auto p-3',
                         children: [
                             {
-                                style: {
-                                    fontWeight: 'bolder',
-                                },
-                                class: 'title text-center',
-                                innerText: 'WebPM',
-                            },
-                            {
-                                class: 'title text-center',
+                                tag: 'h1',
+                                class: 'text-center',
                                 innerText: 'Package manager for browsers',
+                                style: {
+                                    fontWeight: '600',
+                                },
                             },
-                            { class: 'my-3' },
+                            { class: 'my-1' },
                             {
-                                class: 'sub-title text-justify text-column-width',
+                                tag: 'p',
+                                class: 'text-justify text-column-width',
+                                style: {
+                                    fontWeight: '400',
+                                    fontSize: '16px',
+                                },
                                 innerText:
-                                    'WebPM stands out as a CDN solution that enables on-the-fly package installation directly in a web browser. ' +
-                                    'What sets it apart from other similar solutions is its unique capability to dynamically resolve dependency trees and ensure proper linking of requested resources.',
+                                    'Think about NPM, but running directly in your browser',
                             },
-                            { class: 'my-2' },
+                            { class: 'my-4' },
+                            {
+                                class: 'mx-auto px-2 border p-2',
+                                style: { width: '1040px' },
+                                children: [new CodeEditorView()],
+                            },
                         ],
                     },
                 ],
             },
             {
                 class: 'mx-auto px-2',
-                style: { maxWidth: '800px' },
+                style: { maxWidth: '1040px' },
                 children: [
-                    new ExamplesSection(),
                     { class: 'my-5' },
                     new CdnSectionView(),
                     { class: 'my-5' },
