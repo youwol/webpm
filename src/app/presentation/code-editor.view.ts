@@ -103,6 +103,41 @@ export class CodeEditorView implements VirtualDOM {
                                       }
                                     : {}
                             }),
+                            child$(this.state.mode$, (mode) => {
+                                return mode == 'view'
+                                    ? {}
+                                    : {
+                                          class: 'd-flex align-items-center p-1 px-2 fv-pointer fv-hover-text-focus',
+                                          children: [
+                                              {
+                                                  class: attr$(
+                                                      this.infoToggled$,
+                                                      (toggled) =>
+                                                          toggled
+                                                              ? 'fas fa-chevron-left fv-text-background'
+                                                              : 'fas fa-chevron-left fv-text-focus',
+                                                  ),
+                                              },
+                                              {
+                                                  class: 'fas fa-info-circle',
+                                              },
+                                              {
+                                                  class: attr$(
+                                                      this.infoToggled$,
+                                                      (toggled) =>
+                                                          toggled
+                                                              ? 'fas fa-chevron-right fv-text-focus'
+                                                              : 'fas fa-chevron-right fv-text-background',
+                                                  ),
+                                              },
+                                          ],
+                                          onclick: () => {
+                                              this.infoToggled$.next(
+                                                  !this.infoToggled$.value,
+                                              )
+                                          },
+                                      }
+                            }),
                         ],
                     },
                     {
@@ -178,7 +213,6 @@ export class EditorBannerView implements VirtualDOM {
                             },
                             { class: 'flex-grow-1 fv-border-primary mx-2' },
                             {
-                                class: 'fv-text-focus',
                                 style: {
                                     fontSize: '1.3rem',
                                     fontWeight: 'bolder',
@@ -209,34 +243,6 @@ export class EditorBannerView implements VirtualDOM {
                                 },
                             },
                             { class: 'mx-2' },
-                            child$(this.state.mode$, (mode) => {
-                                return mode == 'view'
-                                    ? {}
-                                    : {
-                                          class: attr$(
-                                              this.infoToggled$,
-                                              (toggled): string =>
-                                                  toggled
-                                                      ? 'fv-text-focus'
-                                                      : 'fv-hover-text-focus',
-                                              {
-                                                  wrapper: (d) =>
-                                                      `${d} d-flex align-items-center p-1 px-2 fv-pointer fv-hover-x-lighter`,
-                                              },
-                                          ),
-                                          children: [
-                                              {
-                                                  class: 'fas fa-info-circle',
-                                              },
-                                          ],
-                                          onclick: () => {
-                                              this.infoToggled$.next(
-                                                  !this.infoToggled$.value,
-                                              )
-                                          },
-                                      }
-                            }),
-
                             { class: 'flex-grow-1 fv-border-primary mx-2' },
                             {
                                 class: attr$(
