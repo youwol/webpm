@@ -1,9 +1,10 @@
 import { VirtualDOM } from '@youwol/flux-view'
 import { CdnSectionView } from './cdn-section.view'
-import { PublishPackagesSection } from './publish-package-section.view'
-import { WhatMoreSection } from './what-more-section.view'
-import { WoAreWeView } from './who-are-we.view'
 import { CodeEditorView } from './code-editor.view'
+import { CombineSectionView } from './combine-npm-jsdlevr-section'
+import { DeveloperSectionView } from './developer-section'
+import { SearchPackageView } from './search-publish-section.view'
+import { ApplicationsSectionView } from './applications-section.view'
 export {}
 
 export class PresentationView implements VirtualDOM {
@@ -56,12 +57,17 @@ export class PresentationView implements VirtualDOM {
                 class: 'mx-auto px-2',
                 style: { maxWidth: '1040px' },
                 children: [
-                    { class: 'my-5' },
+                    new SeparatorSectionFirst(),
+                    new SearchPackageView(),
+                    new SeparatorSectionSecond(),
                     new CdnSectionView(),
+                    new SeparatorSectionRight(),
+                    new CombineSectionView(),
+                    new SeparatorSectionLeft(),
+                    new DeveloperSectionView(),
+                    new SeparatorSectionLast(),
                     { class: 'my-5' },
-                    new PublishPackagesSection(),
-                    { class: 'my-5' },
-                    new WhatMoreSection(),
+                    new ApplicationsSectionView(),
                     { class: 'my-5' },
                 ],
             },
@@ -70,8 +76,52 @@ export class PresentationView implements VirtualDOM {
                 style: {
                     backgroundColor: 'rgba(175,175,175)',
                 },
-                children: [new WoAreWeView()],
             },
         ]
+    }
+}
+class SeparatorSectionFirst {
+    public readonly class = 'd-flex w-100'
+    public readonly style = {
+        height: '5em',
+    }
+    public readonly children = [
+        {
+            class: 'w-50 border-right',
+        },
+    ]
+}
+class SeparatorSectionSecond {
+    public readonly class = 'd-flex w-100'
+    public readonly style = {
+        height: '5em',
+    }
+    public readonly children = [
+        {
+            class: 'w-50 border-right border-bottom',
+        },
+    ]
+}
+class SeparatorSectionLast {
+    public readonly class = 'd-flex w-100'
+    public readonly style = {
+        height: '5em',
+    }
+    public readonly children = [
+        {
+            class: 'w-50 border-right border-top',
+        },
+    ]
+}
+class SeparatorSectionLeft {
+    public readonly class = 'border-left'
+    public readonly style = {
+        height: '5em',
+    }
+}
+class SeparatorSectionRight {
+    public readonly class = 'border-right'
+    public readonly style = {
+        height: '5em',
     }
 }
