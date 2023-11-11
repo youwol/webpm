@@ -1,6 +1,6 @@
 import { VirtualDOM, child$ } from '@youwol/flux-view'
 import { from } from 'rxjs'
-import { install } from '@youwol/cdn-client'
+import { install } from '@youwol/webpm-client'
 
 export class BrowseView implements VirtualDOM {
     public readonly class = 'h-100 w-100'
