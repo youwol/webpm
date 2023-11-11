@@ -1,8 +1,7 @@
 import { attr$, child$, VirtualDOM } from '@youwol/flux-view'
-import { BehaviorSubject, from, of, Subject } from 'rxjs'
+import { BehaviorSubject, from, Subject } from 'rxjs'
 import { Topic } from './app.view'
-import { map, mergeMap } from 'rxjs/operators'
-import { install } from '@youwol/cdn-client'
+import { install } from '@youwol/webpm-client'
 
 function installBootstrap$() {
     return from(install({ modules: ['bootstrap#^4.4.1'] }))
@@ -29,13 +28,105 @@ const topicButtons = (topic$) => [
         topic$,
     }),
 ]
+
+export class Logo implements VirtualDOM {
+    public readonly class = 'my-auto'
+    public readonly style = {
+        backgroundColor: 'black',
+        fontFamily: 'Lexend',
+        letterSpacing: '0.3px',
+        outlineOffset: '3px',
+        fontWeight: 'bold',
+        fontSize: '20px',
+    }
+    public readonly innerText = 'WebPM'
+}
+
+export class BannerItem implements VirtualDOM {
+    public readonly tag = 'div'
+    public readonly class = 'mx-3 my-auto'
+    public readonly innerText: string
+
+    constructor({ title }: { title: string }) {
+        this.innerText = title
+    }
+}
+export class DropDownBannerItem implements VirtualDOM {
+    public readonly class = 'dropdown mx-auto '
+    public readonly children: VirtualDOM[]
+
+    constructor({
+        title,
+        options,
+        topic$,
+    }: {
+        title: string
+        options: string[]
+        topic$: BehaviorSubject<Topic>
+    }) {
+        this.children = [
+            {
+                tag: 'button',
+                class: 'btn btn-secondary dropdown-toggle',
+                type: 'button',
+                style: { backgroundColor: 'black', border: 'none' },
+                customAttributes: {
+                    'data-toggle': 'dropdown',
+                    'aria-haspopup': 'true',
+                    'aria-expanded': 'false',
+                },
+                innerText: title,
+            },
+            {
+                class: 'dropdown-menu fv-border-primary fv-bg-background',
+                customAttributes: {
+                    'aria-labelledby': 'dropdownMenuButton',
+                },
+                children: options.map((option) => {
+                    return new Button({
+                        icon: '',
+                        target: undefined,
+                        title: option,
+                        topic$,
+                    })
+                }),
+            },
+        ]
+    }
+}
+
+export class SeparatorView {
+    class = 'mx-4'
+}
+export class BannerItems implements VirtualDOM {
+    public readonly class = 'd-flex px-5 my-auto'
+    public readonly children: VirtualDOM[]
+    constructor({ topic$ }: { topic$: BehaviorSubject<Topic> }) {
+        this.children = [
+            new DropDownBannerItem({
+                title: 'Tools',
+                options: ['Publish from NPM', 'Publish by yourself'],
+                topic$,
+            }),
+            new SeparatorView(),
+            new DropDownBannerItem({
+                title: 'Resources',
+                options: ['Blog', 'webpm JS client API'],
+                topic$,
+            }),
+            new SeparatorView(),
+            new BannerItem({ title: 'About us' }),
+        ]
+    }
+}
+
 export class TopBannerView implements VirtualDOM {
     public readonly id = 'top-banner'
-    public readonly class = 'w-100 d-flex fv-text-primary'
+    public readonly class = 'w-100 fv-text-primary'
     public readonly style = {
         minHeight: '40px',
         backgroundColor: 'black',
-        fontFamily: 'Poppins',
+        fontFamily: 'Lexend',
         letterSpacing: '0.3px',
         outlineOffset: '3px',
         fontWeight: 'bold',
@@ -54,22 +145,18 @@ export class TopBannerView implements VirtualDOM {
             this.htmlElement = elem
             observerResize.observe(this.htmlElement)
         }
-
+        installBootstrap$().subscribe()
         this.children = [
-            child$(
-                this.screenMode$.pipe(
-                    mergeMap((mode) =>
-                        mode == 'large'
-                            ? of(mode)
-                            : installBootstrap$().pipe(map(() => mode)),
-                    ),
-                ),
-                (mode) => {
-                    return mode == 'small'
-                        ? new MenuDropDown({ topic$ })
-                        : new MenuExpanded({ topic$ })
-                },
-            ),
+            child$(installBootstrap$(), () => ({
+                class: 'w-75 d-flex justify-content-center mx-auto',
+                children: [
+                    new Logo(),
+                    {
+                        class: 'flex-grow-1',
+                    },
+                    new BannerItems({ topic$ }),
+                ],
+            })),
         ]
     }
 }
@@ -99,7 +186,7 @@ class Button implements VirtualDOM {
             },
             {
                 wrapper: (d) =>
-                    `${d} my-auto p-1 fv-text-primary fv-pointer mx-2 text-center d-flex align-items-center justify-content-center`,
+                    `${d} my-auto p-1 fv-text-primary fv-pointer mx-2  d-flex fv-hover-text-focus`,
             },
         )
         this.children = [
