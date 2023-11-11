@@ -2,6 +2,35 @@ const webpmUrl = 'https://testing.webpm.org/^2.2.0/webpm-client.js'
 const head = `<head><script src="${webpmUrl}"></script></head>`
 export const examples = [
     {
+        title: 'Run-time',
+        description: {
+            innerHTML:
+                'Libraries installed comes as individual entities. ' +
+                'This snippet presents the state of the CDN client: the modules installed so far.',
+        },
+        src: `<!DOCTYPE html>
+<html lang="en">
+    ${head}
+    <body></body>
+    <script type="module">
+        // Ask about what you want to install, provide aliases if you want
+        // Dependencies resolutions, given what is already installed in your browser, is handled automatically
+        const {FV} = await webpm.install({
+            modules:[
+                '@youwol/flux-view#x as FV',
+                'rxjs#^7.0.0 as RxJS'
+            ],
+            css: ['bootstrap#^4.4.0~bootstrap.min.css'],
+            displayLoadingScreen: true,
+        })
+        // Then use your packages at will
+        document.body.appendChild(
+            FV.render({children: [webpm.monitoring().view]})
+        )
+    </script>
+</html>`,
+    },
+    {
         title: 'Hello world',
         description: {
             innerHTML:
@@ -80,38 +109,6 @@ export const examples = [
     </script>
 </html>
 `,
-    },
-    {
-        title: 'Run-time',
-        description: {
-            innerHTML:
-                'Libraries installed comes as individual entities. ' +
-                'This snippet presents the state of the CDN client: the modules installed so far.',
-        },
-        src: `<!DOCTYPE html>
-<html lang="en">
-    ${head}
-    <body></body>
-    <script type="module">
-        await webpm.install({
-            modules:[
-                '@youwol/flux-view#x as FV',
-                'rxjs#7.x'
-            ],
-            css: ['bootstrap#^4.4.0~bootstrap.min.css'],
-            displayLoadingScreen: true,
-        })
-        //------------------------------------------------------------
-        // The current run time can be accessed using 'webpm.monitoring'
-        //------------------------------------------------------------
-        const div = FV.render({
-            tag:'pre',
-            class:'h-100 w-100 fv-text-primary',
-            children: [webpm.monitoring().view]
-        })
-        document.body.appendChild(div)
-    </script>
-</html>`,
     },
     {
         title: 'Hello Python',
