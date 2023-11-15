@@ -117,7 +117,7 @@ export class BannerItems implements VirtualDOM {
                     {
                         type: 'link',
                         title: 'client',
-                        url: '/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/2.2.0/dist/docs/modules/MainModule.html',
+                        url: '/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/^2.2.0/dist/docs/modules/MainModule.html',
                     },
                     { type: 'link', title: 'backend', url: '' },
                 ],
