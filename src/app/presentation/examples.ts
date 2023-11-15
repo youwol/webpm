@@ -50,17 +50,23 @@ export const examples = [
     <script type="module">
         // Ask about what you want to install, provide aliases if you want
         // Dependencies resolutions, given what is already installed in your browser, is handled automatically
-        const {FV} = await webpm.install({
+        const {rxVDOM} = await webpm.install({
             modules:[
-                '@youwol/flux-view#x as FV',
-                'rxjs#^7.0.0 as RxJS'
+                'bootstrap#^4.0.0',
+                '@youwol/rx-vdom#^1.0.0 as rxVDOM',
+                'rxjs#^7.0.0 as rxjs7',
+                'rxjs#^6.2.0 as rxjs6'
             ],
-            css: ['bootstrap#^4.4.0~bootstrap.min.css'],
+            aliases: {
+                popper: 'Popper'
+            },
+            css: ['bootstrap#^4.4.0~bootstrap.min.css',          
+                  'fontawesome#5.12.1~css/all.min.css'],
             displayLoadingScreen: true,
         })
         // Then use your packages at will
         document.body.appendChild(
-            FV.render({children: [webpm.monitoring().view]})
+            rxVDOM.render({tag:'div', class:'p-5', children: [webpm.monitoring().view]})
         )
     </script>
 </html>`,
