@@ -178,11 +178,14 @@ export const examples = [
         // run-time of main thread
         const {FV, rxjs} = await webpm.install({
             modules: ['@youwol/flux-view as FV'],
-            css: ['bootstrap#^4.4.0~bootstrap.min.css',
-                '@youwol/fv-widgets#latest~dist/assets/styles/style.youwol.css',],
+            css: [
+                'bootstrap#^4.4.0~bootstrap.min.css',                
+                'fontawesome#5.12.1~css/all.min.css', 
+                '@youwol/fv-widgets#latest~dist/assets/styles/style.youwol.css'
+            ],
             displayLoadingScreen: true,
         })
-        const {scan, buffer, takeWhile, last}   = rxjs.operators
+        const {scan, buffer, takeWhile, last, filter, map}   = rxjs.operators
     
         // run-time of worker's thread
         const pool = new WPool.WorkersPool({
@@ -196,9 +199,6 @@ export const examples = [
             },
             pool: { startAt: 1, stretchTo: 10 }
         })
-        const view = pool.view()
-        await pool.ready()
-    
         const results$ = new rxjs.Subject()
         const perSecond$ = results$.pipe(buffer(rxjs.interval(1000)))
         const acc$ = results$.pipe(scan(({s, c},e)=>({s:s + e, c: c+1}), {s:0, c:0}))
@@ -213,17 +213,24 @@ export const examples = [
                     .subscribe(message => results$.next(message.data.result))
             }
         }
+        const workersCount$ = pool.workers$.pipe(map( workers => Object.keys(workers).length))
         const div = FV.render({
+            class:'p-5',
             children:[
-                { class:'btn btn-primary', innerText: 'start 1000 runs', onclick: compute },
-                { innerText: FV.attr$(pool.workers$, (workers) => 'Workers count: '+Object.keys(workers).length)},
+                FV.child$( 
+                    workersCount$.pipe( filter((count) => count > 0)),
+                    () => ({ class:'btn btn-primary', innerText: 'start 1000 runs', onclick: compute })
+                ),
+                { innerText: FV.attr$(workersCount$, (count) => 'Workers count: '+ count)},
                 { innerText: FV.attr$(acc$, ({s, c}) => 'Average: '+ s / c )},
                 { innerText: FV.attr$(acc$, ({c}) => 'Simulation count: '+ c)},
                 { innerText: FV.attr$(perSecond$, (results) => 'Results /s: '+ results.length)},
-                view
+                pool.view()
             ]
         })
         document.body.appendChild(div)
+        await pool.ready()
+    
     </script>
 </html>`,
     },
