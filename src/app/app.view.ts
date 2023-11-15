@@ -3,7 +3,7 @@ import { VirtualDOM, ChildrenLike, FluxViewVirtualDOM } from '@youwol/rx-vdom'
 import { TopBannerView } from './top-banner.view'
 import { PresentationView } from './presentation/presentation.view'
 import { BehaviorSubject } from 'rxjs'
-import { AboutView } from './presentation/about.view'
+import { AboutView } from './about/about.view'
 
 export type Topic = 'Home' | 'About'
 
