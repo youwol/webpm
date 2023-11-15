@@ -1,10 +1,10 @@
 import { VirtualDOM } from '@youwol/flux-view'
 import { CdnSectionView } from './cdn-section.view'
-import { CodeEditorView } from './code-editor.view'
 import { CombineSectionView } from './combine-npm-jsdlevr-section'
 import { DeveloperSectionView } from './developer-section'
 import { SearchPackageView } from './search-publish-section.view'
 import { ApplicationsSectionView } from './applications-section.view'
+import { HeaderView } from './header.view'
 export {}
 
 export class PresentationView implements VirtualDOM {
@@ -20,38 +20,7 @@ export class PresentationView implements VirtualDOM {
             {
                 id: 'background',
                 class: 'background py-3',
-                children: [
-                    {
-                        class: 'h-100 d-flex fv-text-primary flex-column justify-content-center mx-auto p-3',
-                        children: [
-                            {
-                                tag: 'h1',
-                                class: 'text-center',
-                                innerText: 'Package manager for browsers',
-                                style: {
-                                    fontWeight: '600',
-                                },
-                            },
-                            { class: 'my-1' },
-                            {
-                                tag: 'p',
-                                class: 'text-justify text-column-width',
-                                style: {
-                                    fontWeight: '400',
-                                    fontSize: '16px',
-                                },
-                                innerText:
-                                    'Think about NPM, but running directly in your browser',
-                            },
-                            { class: 'my-4' },
-                            {
-                                class: 'mx-auto px-2 border p-2',
-                                style: { width: '1040px' },
-                                children: [new CodeEditorView()],
-                            },
-                        ],
-                    },
-                ],
+                children: [new HeaderView()],
             },
             {
                 class: 'mx-auto px-2',
