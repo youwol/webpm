@@ -2,6 +2,41 @@ const webpmUrl = 'https://webpm.org/^2.2.0/webpm-client.js'
 const head = `<head><script src="${webpmUrl}"></script></head>`
 export const examples = [
     {
+        title: 'Hello world',
+        description: {
+            innerHTML:
+                'Basics of importing resources with a <a href="https://getbootstrap.com/docs/5.3/components/dropdowns/">drop-down example</a> from bootstrap. ' +
+                'Installation goes over indirect dependencies installation first and then link bootstrap appropriately.',
+        },
+        src: `
+<!-- All examples are standalones: you can copy/paste them in an 'index.html' file opened by browser -->
+<!DOCTYPE html>
+    <html lang="en">
+        ${head}
+        
+        <script type="module">
+            await webpm.install({
+                modules:['bootstrap#^5.3.0'],
+                css: ['bootstrap#^5.3.0~bootstrap.min.css'],
+                displayLoadingScreen: true
+            })
+        </script>
+        
+        <body class="vh-100 vw-100">
+           	<div class="dropdown" style="width: fit-content; postion:fixed; top:50%; left:50%; transform: translate(-50%, -50%);">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown button
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item">Action</a></li>
+                <li><a class="dropdown-item">Another action</a></li>
+                <li><a class="dropdown-item">Something else here</a></li>
+              </ul>
+            </div>
+        </body>
+    </html>`,
+    },
+    {
         title: 'Hello WebPM',
         description: {
             innerHTML:
@@ -30,37 +65,6 @@ export const examples = [
     </script>
 </html>`,
     },
-    //     {
-    //         title: 'Hello world',
-    //         description: {
-    //             innerHTML:
-    //                 'Basics of importing resources with a <a href="https://getbootstrap.com/docs/5.3/components/dropdowns/">drop-down example</a> from bootstrap. ' +
-    //                 'Installation goes over indirect dependencies installation first and then link bootstrap appropriately.',
-    //         },
-    //         src: `<!DOCTYPE html>
-    // <html lang="en">
-    //     ${head}
-    //     <body class="vh-100 vw-100">
-    //        	<div class="dropdown" style="width: fit-content; postion:fixed; top:50%; left:50%; transform: translate(-50%, -50%);">
-    //           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    //             Dropdown button
-    //           </button>
-    //           <ul class="dropdown-menu">
-    //             <li><a class="dropdown-item">Action</a></li>
-    //             <li><a class="dropdown-item">Another action</a></li>
-    //             <li><a class="dropdown-item">Something else here</a></li>
-    //           </ul>
-    //         </div>
-    //     </body>
-    //     <script type="module">
-    //         await webpm.install({
-    //             modules:['bootstrap#^5.3.0'],
-    //             css: ['bootstrap#^5.3.0~bootstrap.min.css'],
-    //             displayLoadingScreen: true
-    //         })
-    //     </script>
-    // </html>`,
-    //     },
     {
         title: 'Real world',
         description: {
