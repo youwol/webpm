@@ -187,7 +187,7 @@ export const examples = [
     
         // run-time of main thread
         const {FV, rxjs} = await webpm.install({
-            modules: ['@youwol/flux-view as FV'],
+            modules: ['@youwol/rx-vdom#^1.0.0 as rxVDOM', 'rxjs#^7.5.6 as rxjs'],
             css: [
                 'bootstrap#^4.4.0~bootstrap.min.css',                
                 'fontawesome#5.12.1~css/all.min.css', 
@@ -195,13 +195,12 @@ export const examples = [
             ],
             displayLoadingScreen: true,
         })
-        const {scan, buffer, takeWhile, last, filter, map}   = rxjs.operators
+        const {scan, buffer, takeWhile, last, filter, map}   = rxjs
     
         // run-time of worker's thread
         const pool = new WPool.WorkersPool({
             install:{
-                // rxjs not used in worker: just for illustration
-                modules:['rxjs#^7.0.0'],
+                modules:[/*no js modules*/],
                 customInstallers:[{
                     module: "@youwol/cdn-pyodide-loader#^0.1.2",
                     installInputs: { modules: [ "numpy" ], exportedPyodideInstanceName: "PY" }
@@ -224,17 +223,18 @@ export const examples = [
             }
         }
         const workersCount$ = pool.workers$.pipe(map( workers => Object.keys(workers).length))
-        const div = FV.render({
+        const div = rxVDOM.render({
+            tag: 'div', 
             class:'p-5',
             children:[
-                FV.child$( 
-                    workersCount$.pipe( filter((count) => count > 0)),
-                    () => ({ class:'btn btn-primary', innerText: 'start 1000 runs', onclick: compute })
-                ),
-                { innerText: FV.attr$(workersCount$, (count) => 'Workers count: '+ count)},
-                { innerText: FV.attr$(acc$, ({s, c}) => 'Average: '+ s / c )},
-                { innerText: FV.attr$(acc$, ({c}) => 'Simulation count: '+ c)},
-                { innerText: FV.attr$(perSecond$, (results) => 'Results /s: '+ results.length)},
+                {
+                    source$: workersCount$.pipe( filter((count) => count > 0)),
+                    vdomMap: () => ({ tag:'div', class:'btn btn-primary', innerText: 'start 1000 runs', onclick: compute })
+                },
+                { tag:'div', innerText: workersCount$.pipe( map( count => 'Workers count: '+ count))},
+                { tag:'div', innerText: acc$.pipe( map(({s, c}) => 'Average: '+ s / c ))},
+                { tag:'div', innerText: acc$.pipe( map(({c}) => 'Simulation count: '+ c ))},
+                { tag:'div', innerText: perSecond$.pipe( map(results=> 'Results /s: '+ results.length))},
                 pool.view()
             ]
         })
