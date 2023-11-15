@@ -3,6 +3,7 @@ import { Common } from '@youwol/fv-code-mirror-editors'
 import { examples } from './examples'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { map, tap, withLatestFrom } from 'rxjs/operators'
+import { setup } from '../../auto-generated'
 
 class State {
     public readonly currentExample$ = new BehaviorSubject(examples[0])
@@ -17,8 +18,10 @@ class State {
     })
     public readonly run$ = new Subject()
     public readonly result$: Observable<string>
-    public readonly mode$ = new BehaviorSubject<'code' | 'view'>('code')
-    public readonly message$ = new Subject()
+    public readonly mode$ = new BehaviorSubject<'code' | 'view' | 'video'>(
+        'code',
+    )
+
     constructor() {
         this.result$ = this.run$.pipe(
             withLatestFrom(this.ideState.updates$['./main']),
@@ -35,15 +38,7 @@ class State {
         this.run$.next()
     }
 
-    next() {
-        const index = examples.indexOf(this.currentExample$.value)
-        index < examples.length - 1 && this.set(examples[index + 1])
-    }
-    prev() {
-        const index = examples.indexOf(this.currentExample$.value)
-        index > 0 && this.set(examples[index - 1])
-    }
-    private set(example) {
+    set(example) {
         this.mode$.next('code')
         this.ideState.update({
             path: './main',
@@ -52,6 +47,9 @@ class State {
         })
         this.currentExample$.next(example)
     }
+    displayVideo() {
+        this.mode$.next('video')
+    }
 }
 
 export class CodeEditorView implements VirtualDOM<'div'> {
@@ -59,7 +57,9 @@ export class CodeEditorView implements VirtualDOM<'div'> {
     public readonly state = new State()
     public readonly class = 'w-100 d-flex flex-column py-2 rounded'
     public readonly children: ChildrenLike
-    public readonly infoToggled$ = new BehaviorSubject<boolean>(false)
+    public readonly style = {
+        position: 'relative' as const,
+    }
     constructor() {
         const ideView = new Common.CodeEditorView({
             ideState: this.state.ideState,
@@ -76,13 +76,12 @@ export class CodeEditorView implements VirtualDOM<'div'> {
         this.children = [
             new EditorBannerView({
                 state: this.state,
-                infoToggled$: this.infoToggled$,
             }) as FluxViewVirtualDOM,
             {
                 tag: 'div',
                 class: 'w-100 overflow-auto',
                 style: {
-                    maxHeight: '1000px',
+                    maxHeight: '700px',
                 },
                 children: [
                     {
@@ -94,67 +93,7 @@ export class CodeEditorView implements VirtualDOM<'div'> {
                                     : 'd-none',
                             ),
                         ),
-                        //style: { height: '50vh' },
-                        children: [
-                            ideView as FluxViewVirtualDOM,
-                            {
-                                source$: this.infoToggled$,
-                                vdomMap: (displayed) => {
-                                    return displayed
-                                        ? {
-                                              tag: 'div',
-                                              class: 'w-100',
-                                              innerHTML:
-                                                  this.state.currentExample$
-                                                      .value.description
-                                                      .innerHTML,
-                                          }
-                                        : {}
-                                },
-                            },
-                            {
-                                source$: this.state.mode$,
-                                vdomMap: (mode) => {
-                                    return mode == 'view'
-                                        ? { tag: 'div' }
-                                        : {
-                                              tag: 'div',
-                                              class: 'd-flex align-items-center p-1 px-2 fv-pointer fv-hover-text-focus',
-                                              children: [
-                                                  {
-                                                      tag: 'div',
-                                                      class: this.infoToggled$.pipe(
-                                                          map((toggled) =>
-                                                              toggled
-                                                                  ? 'fas fa-chevron-left fv-text-background'
-                                                                  : 'fas fa-chevron-left fv-text-focus',
-                                                          ),
-                                                      ),
-                                                  },
-                                                  {
-                                                      tag: 'div',
-                                                      class: 'fas fa-info-circle',
-                                                  },
-                                                  {
-                                                      tag: 'div',
-                                                      class: this.infoToggled$.pipe(
-                                                          map((toggled) =>
-                                                              toggled
-                                                                  ? 'fas fa-chevron-right fv-text-focus'
-                                                                  : 'fas fa-chevron-right fv-text-background',
-                                                          ),
-                                                      ),
-                                                  },
-                                              ],
-                                              onclick: () => {
-                                                  this.infoToggled$.next(
-                                                      !this.infoToggled$.value,
-                                                  )
-                                              },
-                                          }
-                                },
-                            },
-                        ],
+                        children: [ideView as FluxViewVirtualDOM],
                     },
                     {
                         tag: 'div',
@@ -172,27 +111,32 @@ export class CodeEditorView implements VirtualDOM<'div'> {
                             },
                         ],
                     },
+                    {
+                        tag: 'div',
+                        class: this.state.mode$.pipe(
+                            map((mode) =>
+                                mode == 'video'
+                                    ? 'flex-grow-1 text-left d-flex'
+                                    : 'd-none',
+                            ),
+                        ),
+                        connectedCallback: (elem) => {
+                            const iframe = document.createElement('iframe')
+                            iframe.src =
+                                'https://www.youtube.com/embed/fTJH72_wdSg?si=isW48l2rnMCfW9o1'
+                            iframe['credentialless'] = true
+                            elem.appendChild(iframe)
+                        },
+                    },
+                    {
+                        source$: this.state.mode$,
+                        vdomMap: (mode: 'code' | 'view') =>
+                            mode == 'code'
+                                ? new MenuViewEdition(this.state)
+                                : new MenuViewRun(this.state),
+                    },
                 ],
             },
-        ]
-    }
-}
-
-export class MessageView implements VirtualDOM<'pre'> {
-    public readonly tag = 'pre'
-    public readonly class = 'd-flex align-items-center'
-    public readonly children: ChildrenLike
-
-    constructor(message) {
-        if (message == 'done') {
-            return
-        }
-        this.children = [
-            {
-                tag: 'div',
-                class: 'fas fa-spinner fa-spin mx-2',
-            },
-            { tag: 'div', innerText: message },
         ]
     }
 }
@@ -201,96 +145,101 @@ export class EditorBannerView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
     public readonly state: State
     public readonly class =
-        'w-100 d-flex align-items-center justify-content-center py-1 mb-2'
+        'w-100 d-flex align-items-center justify-content-around py-1 mb-2'
     public readonly children: ChildrenLike
-    public readonly infoToggled$: BehaviorSubject<boolean>
-    constructor(params: {
-        state: State
-        infoToggled$: BehaviorSubject<boolean>
-    }) {
+    public readonly style = {
+        backgroundColor: '#0c102100',
+        fontWeight: 600,
+        fontSize: '1.2em',
+    }
+    constructor(params: { state: State }) {
         Object.assign(this, params)
+        this.children = examples.map((ex) => ({
+            tag: 'div',
+            class: {
+                source$: this.state.currentExample$,
+                vdomMap: (current) => (current == ex ? 'fv-text-focus' : ''),
+                wrapper: (classes) => `fv-pointer ${classes}`,
+            },
+            innerText: ex.title,
+            onclick: () => this.state.set(ex),
+        }))
+    }
+}
+
+const styleMenuEdition = {
+    position: 'absolute' as const,
+    top: '50px',
+    right: '0%',
+    zIndex: 1000,
+    width: '150px',
+}
+const classesMenuEdition = 'fv-text-primary px-3 py-4 fv-xx-lighter'
+const classesMenuItemEdition =
+    'w-100 fv-bg-background-alt border rounded p-2 d-flex align-items-center justify-content-around fv-hover-xx-lighter fv-pointer'
+class MenuViewEdition implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
+    public readonly children: ChildrenLike
+    public readonly class = classesMenuEdition
+    public readonly style = styleMenuEdition
+
+    constructor(state: State) {
         this.children = [
             {
                 tag: 'div',
-                class: 'flex-grow-1 d-flex flex-column',
+                class: classesMenuItemEdition,
+                onclick: () => state.execute(),
                 children: [
                     {
+                        tag: 'i',
+                        class: 'fas fa-play fv-text-success',
+                    },
+                    {
                         tag: 'div',
-                        class: 'w-100 d-flex align-items-center',
-                        children: [
-                            {
-                                tag: 'div',
-                                class: {
-                                    source$: this.state.currentExample$,
-                                    vdomMap: (
-                                        ex: typeof this.state.currentExample$.value,
-                                    ): string =>
-                                        examples.indexOf(ex) > 0
-                                            ? 'fv-text-focus fv-pointer fv-hover-x-lighter'
-                                            : 'fv-text-disabled fv-xx-darker',
-                                    wrapper: (d) =>
-                                        `${d} fas fa-step-backward fa-2x`,
-                                },
-                                onclick: () => this.state.prev(),
-                            },
-                            {
-                                tag: 'div',
-                                class: 'flex-grow-1 fv-border-primary mx-2',
-                            },
-                            {
-                                tag: 'div',
-                                style: {
-                                    fontSize: '1.3rem',
-                                    fontWeight: 'bolder',
-                                },
-                                innerText: this.state.currentExample$.pipe(
-                                    map((ex) => ex.title),
-                                ),
-                            },
-                            { tag: 'div', class: 'mx-3' },
-                            {
-                                tag: 'div',
-                                class: 'd-flex align-items-center p-1 px-2 fv-pointer fv-text-success fv-hover-x-lighter',
-                                children: [
-                                    {
-                                        tag: 'div',
-                                        class: this.state.mode$.pipe(
-                                            map((mode) =>
-                                                mode == 'code'
-                                                    ? 'fas fa-play'
-                                                    : 'fas fa-pen',
-                                            ),
-                                        ),
-                                    },
-                                ],
-                                onclick: () => {
-                                    this.state.mode$.value == 'code'
-                                        ? this.state.execute()
-                                        : this.state.mode$.next('code')
-                                },
-                            },
-                            { tag: 'div', class: 'mx-2' },
-                            {
-                                tag: 'div',
-                                class: 'flex-grow-1 fv-border-primary mx-2',
-                            },
-                            {
-                                tag: 'div',
-                                class: {
-                                    source$: this.state.currentExample$,
-                                    vdomMap: (
-                                        ex: typeof this.state.currentExample$.value,
-                                    ): string =>
-                                        examples.indexOf(ex) <
-                                        examples.length - 1
-                                            ? 'fv-text-focus fv-pointer fv-hover-x-lighter'
-                                            : 'fv-text-disabled fv-xx-darker',
-                                    wrapper: (d) =>
-                                        `${d} fas fa-step-forward fa-2x`,
-                                },
-                                onclick: () => this.state.next(),
-                            },
-                        ],
+                        innerText: 'Run',
+                    },
+                ],
+            },
+            { tag: 'div', class: 'my-3' },
+            {
+                tag: 'div',
+                class: classesMenuItemEdition,
+                onclick: () => state.displayVideo(),
+                children: [
+                    {
+                        tag: 'img',
+                        height: 25,
+                        src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/YouTube.png`,
+                    },
+                    {
+                        tag: 'div',
+                        innerText: 'Explain',
+                    },
+                ],
+            },
+        ]
+    }
+}
+
+class MenuViewRun implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
+    public readonly children: ChildrenLike
+    public readonly class = classesMenuEdition
+    public readonly style = styleMenuEdition
+    constructor(state: State) {
+        this.children = [
+            {
+                tag: 'div',
+                class: classesMenuItemEdition,
+                onclick: () => state.mode$.next('code'),
+                children: [
+                    {
+                        tag: 'i',
+                        class: 'fas fa-pen mx-3 fv-text-success',
+                    },
+                    {
+                        tag: 'div',
+                        innerText: 'Edit',
                     },
                 ],
             },
