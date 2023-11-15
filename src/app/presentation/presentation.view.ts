@@ -11,7 +11,6 @@ export class PresentationView implements VirtualDOM {
     public readonly class = 'w-100 flex-grow-1 overflow-auto'
     public readonly style = {
         minHeight: '0px',
-        fontFamily: 'Lexend, sans-serif',
     }
     public readonly children: VirtualDOM[]
 

@@ -11,6 +11,9 @@ export class AppView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
     public readonly topic$ = new BehaviorSubject<Topic>('Home')
     public readonly class = 'h-100  w-100 d-flex flex-column'
+    public readonly style = {
+        fontFamily: 'Lexend, sans-serif',
+    }
 
     public readonly children: ChildrenLike
 
