@@ -1,37 +1,112 @@
 import { VirtualDOM } from '@youwol/flux-view'
+import { setup } from '../../auto-generated'
 
 export class CdnSectionView {
-    public readonly class = 'text-center text-justify mx-auto'
+    public readonly class = 'mx-auto border-left border-bottom p-5'
     public readonly children: VirtualDOM[]
     constructor() {
         this.children = [
             {
-                class: 'separator',
-            },
-            { class: 'my-5' },
-            {
-                innerText: 'Difference with a regular CDN',
+                innerText: 'Flexible and robust',
                 style: {
-                    fontSize: '2rem',
+                    fontSize: '1.7rem',
                     fontWeight: 'bolder',
                 },
             },
-            { class: 'my-3' },
+            { class: 'my-4' },
+            new GridView(),
+        ]
+    }
+}
+
+class Cell implements VirtualDOM {
+    public readonly class = 'col-md-4 d-flex  align-items-center'
+    public readonly children: VirtualDOM[]
+    constructor({ imageName, text, title }) {
+        this.children = [
             {
-                class: 'text',
-                innerHTML:
-                    "It's all about managing dependencies, a critical aspect of scalable project development. " +
-                    'Regular CDNs offer two options for handling them: including them in the bundle or leaving it up to the consumer to handle.<br>' +
-                    'Bundling dependencies with libraries leads to scalability issues: shared dependencies are duplicated, increasing payload sizes and introducing potential bugs. ' +
-                    'Avoiding this is the very reason why package managers exists.<br>' +
-                    'On the other hand, relying on consumers to include dependencies manually and in the correct order is not scalabile neither: ' +
-                    'it becomes challenging to manage and maintain, especially as the number of dependencies and their interdependencies grow.<br>' +
-                    "Addressing this challenge is at the heart of WebPM's mission. " +
-                    'Through its infrastructure and client, WebPM enables the effortless installation of dependency trees. ' +
-                    'Libraries can be published as self-contained entities, ' +
-                    'while ensuring long-term scalability and maintainability of projects. <br>' +
-                    'The downside of WebPM is that it is not possible to directly consume projects from GitHUB or NPM. ' +
-                    'However, it is most of the time a straigthforward process as explained in the next section. ',
+                tag: 'img',
+                width: 64,
+                height: 64,
+                src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/${imageName}`,
+            },
+            {
+                class: 'd-flex flex-column m-2',
+                children: [
+                    {
+                        tag: 'h6',
+                        style: {
+                            fontWeight: '600',
+                        },
+                        innerText: title,
+                    },
+                    { class: 'text-justify', innerText: text },
+                ],
+            },
+        ]
+    }
+}
+class EmptyCell implements VirtualDOM {
+    public readonly class = 'col-md-4 d-flex  align-items-center'
+    public readonly children: VirtualDOM[]
+    constructor() {
+        this.children = []
+    }
+}
+class GridView implements VirtualDOM {
+    public readonly class = 'container mt-4'
+    public readonly children: VirtualDOM[]
+    constructor() {
+        this.children = [
+            {
+                class: 'row',
+                children: [
+                    new EmptyCell(),
+                    new Cell({
+                        imageName: 'flexible.jpg',
+                        title: 'On the fly install',
+                        text: 'Runtimes can be extended dynamically, creating a range of new opportunities.',
+                    }),
+                    new EmptyCell(),
+                ],
+            },
+            {
+                class: 'row',
+                children: [
+                    new Cell({
+                        imageName: 'browsers.png',
+                        title: 'Install in any browser',
+                        text: 'Share your code and runtime, ready to execute from a simple URL.',
+                    }),
+                    new EmptyCell(),
+                    new Cell({
+                        imageName: 'dependencies.png',
+                        title: 'Dependencies graph resolution',
+                        text: 'Properly handle direct and indirect dependencies along with dynamic linking.',
+                    }),
+                ],
+            },
+            {
+                class: 'row mt-5',
+                children: [
+                    new EmptyCell(),
+                    new Cell({
+                        imageName: 'multi-versions.png',
+                        title: 'Mixin versions support',
+                        text: 'Installed runtimes can feature library with multiple versions.',
+                    }),
+                    new EmptyCell(),
+                    // new Cell({
+                    //     imageName: 'safe.png',
+                    //     title: 'Imports using aliases',
+                    //     text: 'Conveniently assign aliases to your imports.',
+                    // }),
+                    // new Cell({
+                    //     imageName: 'packaging.png',
+                    //     title: 'Port your project or NPM packages easily',
+                    //     text: '',
+                    // }),
+                ],
             },
         ]
     }

@@ -1,9 +1,10 @@
 
 const runTimeDependencies = {
     "externals": {
-        "@youwol/cdn-client": "^2.0.0",
-        "@youwol/flux-view": "^1.0.3",
-        "@youwol/fv-code-mirror-editors": "^0.2.3",
+        "@youwol/webpm-client": "^2.2.0",
+        "@youwol/flux-view": "^1.2.0",
+        "@youwol/fv-code-mirror-editors": "^0.3.1",
+        "@youwol/rx-vdom": "^1.0.0",
         "rxjs": "^6.5.5",
         "@youwol/http-clients": "^2.0.5",
         "@youwol/http-primitives": "^0.1.2"
@@ -11,26 +12,31 @@ const runTimeDependencies = {
     "includedInBundle": {}
 }
 const externals = {
-    "@youwol/cdn-client": "window['@youwol/cdn-client_APIv2']",
+    "@youwol/webpm-client": "window['@youwol/webpm-client_APIv2']",
     "@youwol/flux-view": "window['@youwol/flux-view_APIv1']",
-    "@youwol/fv-code-mirror-editors": "window['@youwol/fv-code-mirror-editors_APIv02']",
+    "@youwol/fv-code-mirror-editors": "window['@youwol/fv-code-mirror-editors_APIv03']",
+    "@youwol/rx-vdom": "window['@youwol/rx-vdom_APIv1']",
     "rxjs": "window['rxjs_APIv6']",
     "@youwol/http-clients": "window['@youwol/http-clients_APIv2']",
     "@youwol/http-primitives": "window['@youwol/http-primitives_APIv01']",
     "rxjs/operators": "window['rxjs_APIv6']['operators']"
 }
 const exportedSymbols = {
-    "@youwol/cdn-client": {
+    "@youwol/webpm-client": {
         "apiKey": "2",
-        "exportedSymbol": "@youwol/cdn-client"
+        "exportedSymbol": "@youwol/webpm-client"
     },
     "@youwol/flux-view": {
         "apiKey": "1",
         "exportedSymbol": "@youwol/flux-view"
     },
     "@youwol/fv-code-mirror-editors": {
-        "apiKey": "02",
+        "apiKey": "03",
         "exportedSymbol": "@youwol/fv-code-mirror-editors"
+    },
+    "@youwol/rx-vdom": {
+        "apiKey": "1",
+        "exportedSymbol": "@youwol/rx-vdom"
     },
     "rxjs": {
         "apiKey": "6",
@@ -49,9 +55,10 @@ const exportedSymbols = {
 const mainEntry : {entryFile: string,loadDependencies:string[]} = {
     "entryFile": "./main.ts",
     "loadDependencies": [
-        "@youwol/cdn-client",
+        "@youwol/webpm-client",
         "@youwol/flux-view",
         "@youwol/fv-code-mirror-editors",
+        "@youwol/rx-vdom",
         "rxjs",
         "@youwol/http-clients",
         "@youwol/http-primitives"
@@ -67,13 +74,13 @@ const entries = {
 export const setup = {
     name:'@youwol/webpm',
         assetId:'QHlvdXdvbC93ZWJwbQ==',
-    version:'0.1.0-wip',
-    shortDescription:"",
+    version:'0.2.0-wip',
+    shortDescription:"WebPM web-site",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/webpm&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/webpm',
     sourceGithub:'https://github.com/youwol/webpm',
     userGuide:'https://l.youwol.com/doc/@youwol/webpm',
-    apiVersion:'01',
+    apiVersion:'02',
     runTimeDependencies,
     externals,
     exportedSymbols,
@@ -98,7 +105,7 @@ export const setup = {
             modules,
             scripts,
         }).then(() => {
-            return window[`@youwol/webpm_APIv01`]
+            return window[`@youwol/webpm_APIv02`]
         })
     },
     installAuxiliaryModule: ({name, cdnClient, installParameters}:{
@@ -113,7 +120,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/webpm#0.1.0-wip~dist/@youwol/webpm/${entry.name}.js`
+            `@youwol/webpm#0.2.0-wip~dist/@youwol/webpm/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),
@@ -124,7 +131,7 @@ export const setup = {
             modules,
             scripts,
         }).then(() => {
-            return window[`@youwol/webpm/${entry.name}_APIv01`]
+            return window[`@youwol/webpm/${entry.name}_APIv02`]
         })
     },
     getCdnDependencies(name?: string){

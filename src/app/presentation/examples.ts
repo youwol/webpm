@@ -1,4 +1,4 @@
-const webpmUrl = 'https://webpm.org/^2.0.4/cdn-client.js'
+const webpmUrl = 'https://webpm.org/^2.2.0/webpm-client.js'
 const head = `<head><script src="${webpmUrl}"></script></head>`
 export const examples = [
     {
@@ -8,28 +8,66 @@ export const examples = [
                 'Basics of importing resources with a <a href="https://getbootstrap.com/docs/5.3/components/dropdowns/">drop-down example</a> from bootstrap. ' +
                 'Installation goes over indirect dependencies installation first and then link bootstrap appropriately.',
         },
+        src: `
+<!-- All examples are standalones: you can copy/paste them in an 'index.html' file opened by browser -->
+<!DOCTYPE html>
+    <html lang="en">
+        ${head}
+        
+        <script type="module">
+            await webpm.install({
+                modules:['bootstrap#^5.3.0'],
+                css: ['bootstrap#^5.3.0~bootstrap.min.css'],
+                displayLoadingScreen: true
+            })
+        </script>
+        
+        <body class="vh-100 vw-100">
+           	<div class="dropdown" style="width: fit-content; postion:fixed; top:50%; left:50%; transform: translate(-50%, -50%);">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown button
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item">Action</a></li>
+                <li><a class="dropdown-item">Another action</a></li>
+                <li><a class="dropdown-item">Something else here</a></li>
+              </ul>
+            </div>
+        </body>
+    </html>`,
+    },
+    {
+        title: 'Hello WebPM',
+        description: {
+            innerHTML:
+                'Libraries installed comes as individual entities. ' +
+                'This snippet presents the state of the CDN client: the modules installed so far.',
+        },
         src: `<!DOCTYPE html>
 <html lang="en">
-    <head><script src="https://webpm.org/^2.0.4/cdn-client.js"></script></head>
-    <body class="vh-100 vw-100">
-       	<div class="dropdown" style="width: fit-content; postion:fixed; top:50%; left:50%; transform: translate(-50%, -50%);">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown button
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item">Action</a></li>
-            <li><a class="dropdown-item">Another action</a></li>
-            <li><a class="dropdown-item">Something else here</a></li>
-          </ul>
-        </div>
-    </body>    
+    ${head}
+    <body></body>
     <script type="module">
-        const client = window['@youwol/cdn-client']
-        await client.install({
-            modules:['bootstrap#^5.3.0'],
-            css: ['bootstrap#^5.3.0~bootstrap.min.css'],
-            displayLoadingScreen: true
+        // Ask about what you want to install, provide aliases if you want
+        // Dependencies resolutions, given what is already installed in your browser, is handled automatically
+        const {rxVDOM} = await webpm.install({
+            modules:[
+                'bootstrap#^4.0.0',
+                '@youwol/rx-vdom#^1.0.0 as rxVDOM',
+                'rxjs#^7.0.0 as rxjs7',
+                'rxjs#^6.2.0 as rxjs6'
+            ],
+            aliases: {
+                popper: 'Popper'
+            },
+            css: ['bootstrap#^4.4.0~bootstrap.min.css',          
+                  'fontawesome#5.12.1~css/all.min.css'],
+            displayLoadingScreen: true,
         })
+        // Then use your packages at will
+        document.body.appendChild(
+            rxVDOM.render({tag:'div', class:'p-5', children: [webpm.monitoring().view]})
+        )
     </script>
 </html>`,
     },
@@ -46,16 +84,15 @@ export const examples = [
     ${head}
     <body class="vw-100 vh-100"></body>
     <script type="module">
-        const cdnClient = window['@youwol/cdn-client']
-        const {VSF, Canvas, FV, rxjs} = await cdnClient.install({
-            modules:['@youwol/vsf-core#^0.1.2', '@youwol/flux-view', '@youwol/vsf-canvas#^0.1.1'],
+        const {VSF, Canvas, FV, rxjs} = await webpm.install({
+            modules:[
+                '@youwol/vsf-core#^0.1.2 as VSF', 
+                '@youwol/flux-view as FV', 
+                '@youwol/vsf-canvas#^0.1.1 as Canvas'],
             css: [
                 'bootstrap#^4.4.0~bootstrap.min.css', 
                 'fontawesome#5.12.1~css/all.min.css', 
                 '@youwol/fv-widgets#latest~dist/assets/styles/style.youwol.css'],
-            aliases:{
-                VSF:'@youwol/vsf-core', Canvas:'@youwol/vsf-canvas', FV: '@youwol/flux-view'
-            },
             displayLoadingScreen: true
         })
         let project = new VSF.Projects.ProjectState()
@@ -84,43 +121,6 @@ export const examples = [
 `,
     },
     {
-        title: 'Run-time',
-        description: {
-            innerHTML:
-                'Libraries installed comes as individual entities. ' +
-                'This snippet presents the state of the CDN client: the modules installed so far.',
-        },
-        src: `<!DOCTYPE html>
-<html lang="en">
-    ${head}
-    <body></body>
-    <script type="module">
-        const cdnClient = window['@youwol/cdn-client']
-        await cdnClient.install({
-            modules:[
-                '@youwol/flux-view#x',
-                'rxjs#7.x'
-            ],
-            css: ['bootstrap#^4.4.0~bootstrap.min.css'],
-            aliases:{
-                FV: '@youwol/flux-view',
-                RX: 'rxjs'
-            },
-            displayLoadingScreen: true,
-        })
-        //------------------------------------------------------------
-        // The current run time can be accessed using 'cdnClient.State'
-        //------------------------------------------------------------
-        const div = FV.render({
-            tag:'pre',
-            class:'h-100 w-100 fv-text-primary',
-            children: [cdnClient.monitoring().view]
-        })
-        document.body.appendChild(div)
-    </script>
-</html>`,
-    },
-    {
         title: 'Hello Python',
         description: {
             innerHTML:
@@ -132,18 +132,14 @@ export const examples = [
     ${head}
     <body style="height: 100%;width: 100%;background-color: white;"></body>
     <script type="module">
-        const cdnClient = window['@youwol/cdn-client']
-        console.log(cdnClient)
-        const {PY, FV} = await cdnClient.install({
-            modules: ['@youwol/flux-view'],
-            aliases: { FV: "@youwol/flux-view" },
+        const {PY, FV} = await webpm.install({
+            modules: ['@youwol/flux-view as FV'],
             customInstallers: [
                 {
                     module: "@youwol/cdn-pyodide-loader#^0.1.2",
                     installInputs: {
                         modules: [ "numpy" ],
                         exportedPyodideInstanceName: "PY",
-                        // onEvent: (ev) => message$.next(ev.text),
                     }
                 }
             ],
@@ -187,25 +183,24 @@ export const examples = [
                 len(np.argwhere(np.linalg.norm(data, axis=1)<0.5)) / count * 4\`)
         }
     
-        const cdnClient = window['@youwol/cdn-client']
-        console.log(cdnClient)
-        const WPool = await cdnClient.installWorkersPoolModule()
+        const WPool = await webpm.installWorkersPoolModule()
     
         // run-time of main thread
-        const {FV, RX} = await cdnClient.install({
-            modules: ['@youwol/flux-view'],
-            css: ['bootstrap#^4.4.0~bootstrap.min.css',
-                '@youwol/fv-widgets#latest~dist/assets/styles/style.youwol.css',],
-            aliases: { FV: "@youwol/flux-view", RX: "rxjs"},
+        const {FV, rxjs} = await webpm.install({
+            modules: ['@youwol/rx-vdom#^1.0.0 as rxVDOM', 'rxjs#^7.5.6 as rxjs'],
+            css: [
+                'bootstrap#^4.4.0~bootstrap.min.css',                
+                'fontawesome#5.12.1~css/all.min.css', 
+                '@youwol/fv-widgets#latest~dist/assets/styles/style.youwol.css'
+            ],
             displayLoadingScreen: true,
         })
-        const {scan, buffer, takeWhile, last}   = RX.operators
+        const {scan, buffer, takeWhile, last, filter, map}   = rxjs
     
         // run-time of worker's thread
         const pool = new WPool.WorkersPool({
             install:{
-                // rxjs not used in worker: just for illustration
-                modules:['rxjs#^7.0.0'],
+                modules:[/*no js modules*/],
                 customInstallers:[{
                     module: "@youwol/cdn-pyodide-loader#^0.1.2",
                     installInputs: { modules: [ "numpy" ], exportedPyodideInstanceName: "PY" }
@@ -213,11 +208,8 @@ export const examples = [
             },
             pool: { startAt: 1, stretchTo: 10 }
         })
-        const view = pool.view()
-        await pool.ready()
-    
-        const results$ = new RX.Subject()
-        const perSecond$ = results$.pipe(buffer(RX.interval(1000)))
+        const results$ = new rxjs.Subject()
+        const perSecond$ = results$.pipe(buffer(rxjs.interval(1000)))
         const acc$ = results$.pipe(scan(({s, c},e)=>({s:s + e, c: c+1}), {s:0, c:0}))
     
         const compute = () => {
@@ -230,17 +222,25 @@ export const examples = [
                     .subscribe(message => results$.next(message.data.result))
             }
         }
-        const div = FV.render({
+        const workersCount$ = pool.workers$.pipe(map( workers => Object.keys(workers).length))
+        const div = rxVDOM.render({
+            tag: 'div', 
+            class:'p-5',
             children:[
-                { class:'btn btn-primary', innerText: 'start 1000 runs', onclick: compute },
-                { innerText: FV.attr$(pool.workers$, (workers) => 'Workers count: '+Object.keys(workers).length)},
-                { innerText: FV.attr$(acc$, ({s, c}) => 'Average: '+ s / c )},
-                { innerText: FV.attr$(acc$, ({c}) => 'Simulation count: '+ c)},
-                { innerText: FV.attr$(perSecond$, (results) => 'Results /s: '+ results.length)},
-                view
+                {
+                    source$: workersCount$.pipe( filter((count) => count > 0)),
+                    vdomMap: () => ({ tag:'div', class:'btn btn-primary', innerText: 'start 1000 runs', onclick: compute })
+                },
+                { tag:'div', innerText: workersCount$.pipe( map( count => 'Workers count: '+ count))},
+                { tag:'div', innerText: acc$.pipe( map(({s, c}) => 'Average: '+ s / c ))},
+                { tag:'div', innerText: acc$.pipe( map(({c}) => 'Simulation count: '+ c ))},
+                { tag:'div', innerText: perSecond$.pipe( map(results=> 'Results /s: '+ results.length))},
+                pool.view()
             ]
         })
         document.body.appendChild(div)
+        await pool.ready()
+    
     </script>
 </html>`,
     },
