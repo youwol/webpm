@@ -17,7 +17,7 @@ const table = `<table>
             <td><strong>Host</strong></td>
             <td> <div class="w-100 d-flex justify-content-center"><img class='mx-center' width=48 src="/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/browsers.png"></div></td>
             <td> <div class="w-100 d-flex justify-content-center"><img class='mx-center' width=48 src="/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/browsers.png"></div></td>
-            <td> <div class="w-100 d-flex justify-content-center"><img class='mx-center' width=48 src="/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/PC.jpg"></div></td>
+            <td> <div class="w-100 d-flex justify-content-center"><img class='mx-center' width=48 src="/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/laptop.png"></div></td>
         </tr>
         <tr>
             <td>Dynamic install</td>
