@@ -18,22 +18,22 @@ export const examples = [
         
         <script type="module">
             await webpm.install({
-                modules:['bootstrap#^5.3.0'],
-                css: ['bootstrap#^5.3.0~bootstrap.min.css'],
+                modules:['bootstrap#^4.4.1'],
+                css: ['bootstrap#^4.4.1~bootstrap.min.css'],
                 displayLoadingScreen: true
             })
         </script>
         
         <body class="vh-100 vw-100">
-           	<div class="dropdown" style="width: fit-content; postion:fixed; top:50%; left:50%; transform: translate(-50%, -50%);">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown button
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item">Action</a></li>
-                <li><a class="dropdown-item">Another action</a></li>
-                <li><a class="dropdown-item">Something else here</a></li>
-              </ul>
+           	<div class="dropdown">
+                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 Dropdown button
+                 </button>
+                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item">Action</a>
+                    <a class="dropdown-item">Another action</a>
+                    <a class="dropdown-item">Something else here</a>
+                 </div>
             </div>
         </body>
     </html>`,
@@ -90,9 +90,9 @@ export const examples = [
     <script type="module">
         const {VSF, Canvas, FV, rxjs} = await webpm.install({
             modules:[
-                '@youwol/vsf-core#^0.1.2 as VSF', 
+                '@youwol/vsf-core#^0.2.4 as VSF', 
                 '@youwol/flux-view as FV', 
-                '@youwol/vsf-canvas#^0.1.1 as Canvas'],
+                '@youwol/vsf-canvas#^0.2.2 as Canvas'],
             css: [
                 'bootstrap#^4.4.0~bootstrap.min.css', 
                 'fontawesome#5.12.1~css/all.min.css', 
@@ -100,14 +100,20 @@ export const examples = [
             displayLoadingScreen: true
         })
         let project = new VSF.Projects.ProjectState()
-        project = await project.import("@youwol/vsf-three", '@youwol/vsf-pmp', '@youwol/vsf-rxjs')
-        project = await project.parseDag([
-            "(of#of)>>(torusKnot#geom)>>(fromThree#three->pmp)>>(uniformRemeshing#remesh)>>(toThree#pmp->three)>>0(combineLatest#combine)>>(mesh#threeMesh)>>(viewer#viewer)",
-            "(#of)>>(standardMaterial#material)>>1(#combine)"
-        ], {
-            material: { wireframe: true },
-            remesh: { edgeFactor: 0.7 }
+        project = await project.with({
+            toolboxes:["@youwol/vsf-three", '@youwol/vsf-pmp', '@youwol/vsf-rxjs'],
+            workflow: {
+            	branches:[
+                    "(of#of)>>(torusKnot#geom)>>(fromThree#three->pmp)>>(uniformRemeshing#remesh)>>(toThree#pmp->three)>>0(combineLatest#combine)>>(mesh#threeMesh)>>(viewer#viewer)",
+                    "(#of)>>(standardMaterial#material)>>1(#combine)"
+                ],
+            	configurations:{
+                    material: { wireframe: true },
+                    remesh: { edgeFactor: 0.7 }
+                }
+            }
         })
+        
         document.body.append(FV.render({
             class:'h-100',
             children:[
@@ -136,10 +142,11 @@ export const examples = [
         src: `<!DOCTYPE html>
 <html lang="en">
     ${head}
-    <body style="height: 100%;width: 100%;background-color: white;"></body>
+    <body style="height: 100%;width: 100%;background-color: white;">
+        <div id="content"></div>
+    </body>
     <script type="module">
         const {PY, FV} = await webpm.install({
-            modules: ['@youwol/flux-view as FV'],
             customInstallers: [
                 {
                     module: "@youwol/cdn-pyodide-loader#^0.1.2",
@@ -162,8 +169,7 @@ export const examples = [
                 return len(np.argwhere(norms<0.5)) / n * 4
         
             calc_pi(count)\`)
-        const div = FV.render({ innerText: 'PI approximation: '+pi})
-        document.body.append(div)
+        document.getElementById('content').innerText = 'PI approximation: '+pi
     </script>
 </html>`,
     },
@@ -179,22 +185,13 @@ export const examples = [
         src: `<!DOCTYPE html>
 <html lang="en">
     ${head}
+    
     <body></body>
+    
     <script type="module">
-        function inWorker({args, workerScope}){
-            const {PY} = workerScope
-            PY.registerJsModule('jsModule', {count: args.count})
-            return PY.runPython(\`
-                import numpy as np
-                from jsModule import count
-                data = np.random.uniform(-0.5, 0.5, size=(count, 2))
-                len(np.argwhere(np.linalg.norm(data, axis=1)<0.5)) / count * 4\`)
-        }
-    
         const WPool = await webpm.installWorkersPoolModule()
-    
-        // run-time of main thread
-        const {FV, rxjs} = await webpm.install({
+        
+        const {rxVDOM, rxjs} = await webpm.install({
             modules: ['@youwol/rx-vdom#^1.0.0 as rxVDOM', 'rxjs#^7.5.6 as rxjs'],
             css: [
                 'bootstrap#^4.4.0~bootstrap.min.css',                
@@ -203,46 +200,62 @@ export const examples = [
             ],
             displayLoadingScreen: true,
         })
-        const {scan, buffer, takeWhile, last, filter, map}   = rxjs
-    
-        // run-time of worker's thread
         const pool = new WPool.WorkersPool({
             install:{
-                modules:[/*no js modules*/],
+                modules:[],
                 customInstallers:[{
                     module: "@youwol/cdn-pyodide-loader#^0.1.2",
-                    installInputs: { modules: [ "numpy" ], exportedPyodideInstanceName: "PY" }
+                    installInputs: {
+                        modules: [ "numpy" ], 
+                        exportedPyodideInstanceName: "PY"
+                    }
                 }]
             },
             pool: { startAt: 1, stretchTo: 10 }
         })
+        
         const results$ = new rxjs.Subject()
-        const perSecond$ = results$.pipe(buffer(rxjs.interval(1000)))
-        const acc$ = results$.pipe(scan(({s, c},e)=>({s:s + e, c: c+1}), {s:0, c:0}))
-    
-        const compute = () => {
+        
+        function task({args, workerScope}){
+            const {PY} = workerScope
+            PY.registerJsModule('jsModule', {count: args.count})
+            return PY.runPython(\`
+                import numpy as np
+                from jsModule import count
+                data = np.random.uniform(-0.5, 0.5, size=(count, 2))
+                len(np.argwhere(np.linalg.norm(data, axis=1)<0.5)) / count * 4\`)
+        }
+        
+        const scheduleThousandTasks = () => {
             for( let i=0; i<1000; i++){
-                pool.schedule({title: 'PI', entryPoint: inWorker, args: {count:100000}})
-                    .pipe(
-                        takeWhile( ({type}) => type !== 'Exit', true),
-                        last()
-                    )
+                pool.schedule({title: 'PI approx.', entryPoint: task, args: {count:100000}})
+                    .pipe(last())
                     .subscribe(message => results$.next(message.data.result))
             }
         }
-        const workersCount$ = pool.workers$.pipe(map( workers => Object.keys(workers).length))
+        
+        const { scan, buffer, takeWhile, last, filter, map }   = rxjs
+        const resultsRate$ = results$.pipe(buffer(rxjs.interval(1000)))
+        const sumAndCount$ = results$.pipe(scan(({s, c},e)=>({s:s + e, c: c+1}), {s:0, c:0}))    
+        const workerCount$ = pool.workers$.pipe(map( workers => Object.keys(workers).length))
+        
+        const button = {
+            tag: 'div', class:'btn btn-primary fv-pointer', innerText: 'start 1000 runs', 
+            onclick: scheduleThousandTasks
+        }
         const div = rxVDOM.render({
             tag: 'div', 
             class:'p-5',
             children:[
                 {
-                    source$: workersCount$.pipe( filter((count) => count > 0)),
-                    vdomMap: () => ({ tag:'div', class:'btn btn-primary', innerText: 'start 1000 runs', onclick: compute })
+                    source$: workerCount$.pipe( filter((count) => count > 0)),
+                    vdomMap: () => button,
+                    untilFirst: ({ innerHTML: '<i>Waiting for first worker readyness...</i>' })
                 },
-                { tag:'div', innerText: workersCount$.pipe( map( count => 'Workers count: '+ count))},
-                { tag:'div', innerText: acc$.pipe( map(({s, c}) => 'Average: '+ s / c ))},
-                { tag:'div', innerText: acc$.pipe( map(({c}) => 'Simulation count: '+ c ))},
-                { tag:'div', innerText: perSecond$.pipe( map(results=> 'Results /s: '+ results.length))},
+                { tag:'div', innerText: workerCount$.pipe( map( count => 'Workers count: '+ count))},
+                { tag:'div', innerText: sumAndCount$.pipe( map(({s, c}) => 'Average: '+ s / c ))},
+                { tag:'div', innerText: sumAndCount$.pipe( map(({c}) => 'Simulation count: '+ c ))},
+                { tag:'div', innerText: resultsRate$.pipe( map(results=> 'Results /s: '+ results.length))},
                 pool.view()
             ]
         })
