@@ -12,7 +12,6 @@ export class Logo implements VirtualDOM {
     public readonly class = 'my-auto'
     public readonly style = {
         backgroundColor: 'black',
-        fontFamily: 'Lexend',
         letterSpacing: '0.3px',
         outlineOffset: '3px',
         fontWeight: 'bold',
@@ -134,7 +133,6 @@ export class TopBannerView implements VirtualDOM {
     public readonly style = {
         minHeight: '40px',
         backgroundColor: 'black',
-        fontFamily: 'Lexend',
         letterSpacing: '0.3px',
         outlineOffset: '3px',
         fontWeight: 'bold',
