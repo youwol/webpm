@@ -63,7 +63,11 @@ export class DropDownBannerItem implements VirtualDOM {
                 tag: 'button',
                 class: 'btn btn-secondary dropdown-toggle',
                 type: 'button',
-                style: { backgroundColor: 'black', border: 'none' },
+                style: {
+                    backgroundColor: 'black',
+                    border: 'none',
+                    fontWeight: 800,
+                },
                 customAttributes: {
                     'data-toggle': 'dropdown',
                     'aria-haspopup': 'true',
@@ -97,6 +101,9 @@ export class DropDownBannerItem implements VirtualDOM {
                         return {
                             class: 'text-center mt-3 mb-2',
                             innerText: option.title,
+                            style: {
+                                fontWeight: 100,
+                            },
                         }
                     }
                 }),
@@ -122,10 +129,9 @@ export class BannerItems implements VirtualDOM {
                     { type: 'delimiter', title: 'API Documentation' },
                     {
                         type: 'link',
-                        title: 'client',
+                        title: 'WebPM client',
                         url: '/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/^2.2.0/dist/docs/modules/MainModule.html',
                     },
-                    { type: 'link', title: 'backend', url: '' },
                 ],
             }),
             new SeparatorView(),

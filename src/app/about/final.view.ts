@@ -17,7 +17,7 @@ export class FinalView implements VirtualDOM<'div'> {
                 children: [
                     {
                         tag: 'div',
-                        class: 'border p-4',
+                        class: 'p-4',
                         style: {
                             width: '500px',
                             height: '300px',
@@ -27,7 +27,7 @@ export class FinalView implements VirtualDOM<'div'> {
                             {
                                 tag: 'div',
                                 class: 'mx-auto text-center',
-                                innerText: 'WebPM',
+                                innerText: '',
                             },
                             { tag: 'div', class: 'my-4' },
                             {
@@ -44,13 +44,13 @@ export class FinalView implements VirtualDOM<'div'> {
                                     {
                                         tag: 'div',
                                         class: 'w-100 text-right',
-                                        innerText: 'WebOS',
+                                        innerText: '',
                                     },
                                     { tag: 'div', class: 'w-100' },
                                     {
                                         tag: 'div',
                                         class: 'w-100',
-                                        innerText: 'WebSDK',
+                                        innerText: '',
                                     },
                                 ],
                             },

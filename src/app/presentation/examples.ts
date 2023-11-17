@@ -2,7 +2,7 @@ const webpmUrl = 'https://webpm.org/^2.2.0/webpm-client.js'
 const head = `<head><script src="${webpmUrl}"></script></head>`
 export const examples = [
     {
-        title: 'Hello world',
+        title: 'Hello World',
         youtube:
             'https://www.youtube.com/embed/evYkrIug0ck?si=xTyTr1eFA5WOSgBD',
         links: [

@@ -56,7 +56,8 @@ class CellHeader implements VirtualDOM {
     }
 }
 class Cell implements VirtualDOM {
-    public readonly class = 'col-md-4 d-flex  flex-column align-items-center'
+    public readonly class =
+        'col-md-4 d-flex  flex-column align-items-center text-justify'
     public readonly children: VirtualDOM[]
     constructor({ imageName, text, title }) {
         this.children = [

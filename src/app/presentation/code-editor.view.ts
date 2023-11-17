@@ -68,6 +68,7 @@ export class CodeEditorView implements VirtualDOM<'div'> {
     public readonly children: ChildrenLike
     public readonly style = {
         position: 'relative' as const,
+        backgroundColor: '#0c1021',
     }
     public readonly currentHTMLElement$ = new ReplaySubject<HTMLElement>(1)
     public readonly size$ = new ReplaySubject<{
@@ -187,7 +188,6 @@ export class EditorBannerView implements VirtualDOM<'div'> {
         'w-100 d-flex align-items-center justify-content-around py-1 mb-2'
     public readonly children: ChildrenLike
     public readonly style = {
-        backgroundColor: '#0c102100',
         fontWeight: 600,
         fontSize: '1.2em',
     }
