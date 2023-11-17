@@ -98,10 +98,10 @@ class GridView implements VirtualDOM {
                 children: [
                     new EmptyCell(),
                     new Cell({
-                        imageName: 'TS.png',
-                        title: 'Typescript friendly',
-                        text: `Dynamic does not mean "any": type checking, completion, <i>etc.</i> are 
-                            available transparently in your project. Check for instance <a href='https://github.com/youwol/todo-app-ts'>here </a>`,
+                        imageName: 'debug-browser.png',
+                        title: 'In-browser debug',
+                        text: `We strive to provide the best experience to debug within the browser.
+                        Check for instance the 'youwol' libraries in the 'Sources' panel of your debug tool console.`,
                     }),
                     new EmptyCell(),
                 ],

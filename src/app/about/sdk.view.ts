@@ -10,7 +10,7 @@ export class SdkView implements VirtualDOM<'div'> {
         this.children = [
             new SectionTitle({
                 title: 'Software Development Kit',
-                subtitle: 'Code as you like, deploy as you want: WebSDK',
+                subtitle: 'Code as you like, deploy as you want',
             }),
             { tag: 'div', class: 'my-4' },
             {
@@ -28,32 +28,32 @@ export class SdkView implements VirtualDOM<'div'> {
             },
             { tag: 'div', class: 'my-4' },
             {
+                tag: 'div',
                 class: 'w-75 mx-auto',
                 style: paragraphStyle,
-                tag: 'ul',
                 children: [
                     {
-                        tag: 'li',
-                        innerText: 'py-youwol as youwol in your PC',
+                        tag: 'div',
+                        innerHTML: `<b>YouWol on Your PC</b> <br>
+                        YouWol provides the <a href="https://pypi.org/project/youwol/" target="_blank">python package youwol</a>,
+                         it's the foundation of our SDK as it allows to run all YouWol infrastructure in your PC.
+                        This local development environment allows for testing and building applications before deploying them to a broader audience.
+                        It also allows including software tools and datasets in your projects that are only available on your machine.  `,
                     },
+                    { tag: 'div', class: 'my-2' },
                     {
-                        tag: 'li',
-                        innerText:
-                            'the developer portal: bring your stack and deploy your solution ',
+                        tag: 'div',
+                        innerHTML: `<b>Developer Portal: Bring Your Stack and Deploy Your Solution</b><br>
+                        The developer portal is a central hub where developers can manage their projects and solutions. 
+                        It offers a convenient space to bring together various components of your tech stack.
+                         Developers can deploy their solutions directly from this portal, simplifying the deployment 
+                         process and ensuring a seamless experience.`,
                     },
+                    { tag: 'div', class: 'my-2' },
                     {
-                        tag: 'li',
-                        innerText:
-                            'local resources available (software or data)',
-                    },
-                    {
-                        tag: 'li',
-                        innerText:
-                            'Check this video to make an app available in 5 minutes',
-                    },
-                    {
-                        tag: 'li',
-                        innerHTML: 'More info on <a href="">WebSDK</a>',
+                        tag: 'div',
+                        class: 'text-center',
+                        innerHTML: `Check this <a href='' target="_blank">video</a> to deploy an app in 3 minutes.`,
                     },
                 ],
             },

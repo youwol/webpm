@@ -10,7 +10,7 @@ export class BrowserAsOSSectionView implements VirtualDOM<'div'> {
         this.children = [
             new SectionTitle({
                 title: 'Extending the concept',
-                subtitle: 'Turn browsers into OS: WebOS',
+                subtitle: 'Turn browsers into OS',
             }),
             { tag: 'div', class: 'my-4' },
             {
@@ -38,7 +38,10 @@ export class BrowserAsOSSectionView implements VirtualDOM<'div'> {
                         Because applications encompass more than just installing runtimes (user management, persistent
                          storage, indexed databases, installers, environment, and more), YouWol offers for developers
                           a set of solutions (backend APIs & frontend libraries) to fully take advantage of this OS 
-                          like environment. <br> <br>  Please visit <a href=''>WebOS</a> for further information.`,
+                          like environment. <br> <br>  You can visit for instance our 
+                          <a href='https://platform.youwol.com/applications/@youwol/platform/latest' target="_blank">desktop</a> 
+                          application to get a better idea of what we are taking of.
+                          More information on that subject will come soon.`,
                     },
                 ],
             },
