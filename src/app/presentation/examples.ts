@@ -38,41 +38,41 @@ export const examples = [
         </body>
     </html>`,
     },
-    {
-        title: 'Hello WebPM',
-        description: {
-            innerHTML:
-                'Libraries installed comes as individual entities. ' +
-                'This snippet presents the state of the CDN client: the modules installed so far.',
-        },
-        src: `<!DOCTYPE html>
-<html lang="en">
-    ${head}
-    <body></body>
-    <script type="module">
-        // Ask about what you want to install, provide aliases if you want
-        // Dependencies resolutions, given what is already installed in your browser, is handled automatically
-        const {rxVDOM} = await webpm.install({
-            modules:[
-                'bootstrap#^4.0.0',
-                '@youwol/rx-vdom#^1.0.0 as rxVDOM',
-                'rxjs#^7.0.0 as rxjs7',
-                'rxjs#^6.2.0 as rxjs6'
-            ],
-            aliases: {
-                popper: 'Popper'
-            },
-            css: ['bootstrap#^4.4.0~bootstrap.min.css',          
-                  'fontawesome#5.12.1~css/all.min.css'],
-            displayLoadingScreen: true,
-        })
-        // Then use your packages at will
-        document.body.appendChild(
-            rxVDOM.render({tag:'div', class:'p-5', children: [webpm.monitoring().view]})
-        )
-    </script>
-</html>`,
-    },
+    //     {
+    //         title: 'Hello WebPM',
+    //         description: {
+    //             innerHTML:
+    //                 'Libraries installed comes as individual entities. ' +
+    //                 'This snippet presents the state of the CDN client: the modules installed so far.',
+    //         },
+    //         src: `<!DOCTYPE html>
+    // <html lang="en">
+    //     ${head}
+    //     <body></body>
+    //     <script type="module">
+    //         // Ask about what you want to install, provide aliases if you want
+    //         // Dependencies resolutions, given what is already installed in your browser, is handled automatically
+    //         const {rxVDOM} = await webpm.install({
+    //             modules:[
+    //                 'bootstrap#^4.0.0',
+    //                 '@youwol/rx-vdom#^1.0.0 as rxVDOM',
+    //                 'rxjs#^7.0.0 as rxjs7',
+    //                 'rxjs#^6.2.0 as rxjs6'
+    //             ],
+    //             aliases: {
+    //                 popper: 'Popper'
+    //             },
+    //             css: ['bootstrap#^4.4.0~bootstrap.min.css',
+    //                   'fontawesome#5.12.1~css/all.min.css'],
+    //             displayLoadingScreen: true,
+    //         })
+    //         // Then use your packages at will
+    //         document.body.appendChild(
+    //             rxVDOM.render({tag:'div', class:'p-5', children: [webpm.monitoring().view]})
+    //         )
+    //     </script>
+    // </html>`,
+    //     },
     {
         title: 'Real World',
         youtube:
