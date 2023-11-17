@@ -39,6 +39,7 @@
     },
     "devDependencies": {
         "lz-string": "^1.4.4",
+        "conditional-type-checks": "^1.0.6",
         "@types/jest": "^29.5.6",
         "@types/node": "^18.9.1",
         "@types/webpack": "^5.28.0",
