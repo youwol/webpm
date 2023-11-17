@@ -24,9 +24,9 @@ class State {
     })
     public readonly run$ = new Subject()
     public readonly result$: Observable<string>
-    public readonly mode$ = new BehaviorSubject<'code' | 'view' | 'video'>(
-        'code',
-    )
+    public readonly mode$ = new BehaviorSubject<
+        'code' | 'view' | 'video' | 'links'
+    >('code')
 
     constructor() {
         this.result$ = this.run$.pipe(
@@ -55,6 +55,9 @@ class State {
     }
     displayVideo() {
         this.mode$.next('video')
+    }
+    displayLinks() {
+        this.mode$.next('links')
     }
 }
 
@@ -135,6 +138,21 @@ export class CodeEditorView implements VirtualDOM<'div'> {
                             return mode === 'video'
                                 ? new EmbeddedYoutube({
                                       url: example.youtube,
+                                      ...size,
+                                  })
+                                : { tag: 'div' }
+                        },
+                    },
+                    {
+                        source$: combineLatest([
+                            this.state.mode$,
+                            this.state.currentExample$,
+                            this.size$,
+                        ]),
+                        vdomMap: ([mode, example, size]): VirtualDOM<'div'> => {
+                            return mode === 'links'
+                                ? new LinksView({
+                                      links: example.links,
                                       ...size,
                                   })
                                 : { tag: 'div' }
@@ -238,6 +256,22 @@ class MenuViewEdition implements VirtualDOM<'div'> {
                     },
                 ],
             },
+            { tag: 'div', class: 'my-3' },
+            {
+                tag: 'div',
+                class: classesMenuItemEdition,
+                onclick: () => state.displayLinks(),
+                children: [
+                    {
+                        tag: 'i',
+                        class: 'fas fa-external-link-square-alt fv-text-success',
+                    },
+                    {
+                        tag: 'div',
+                        innerText: 'Links',
+                    },
+                ],
+            },
         ]
     }
 }
@@ -314,5 +348,49 @@ class EmbeddedYoutube implements VirtualDOM<'div'> {
             iframe.height = '' + params.height + 'px'
             elem.appendChild(iframe)
         }
+    }
+}
+
+class LinksView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
+    public readonly class = 'p-5 w-100'
+    public readonly children: ChildrenLike
+    public readonly style: { width: string; height: string }
+    constructor(params: {
+        links: { title: string; url: string; description: string }[]
+        width: number
+        height: number
+    }) {
+        this.style = {
+            width: `${params.width}px`,
+            height: `${params.height}px`,
+        }
+        const introView = {
+            tag: 'div' as const,
+            class: 'my-2',
+            innerText:
+                'Below are supplementary contents for delving further into topics related to the example:',
+        }
+        const linksViews = params.links.map((link) => {
+            return {
+                tag: 'div' as const,
+                class: 'd-flex align-items-center w-100',
+                children: [
+                    {
+                        tag: 'a' as const,
+                        innerText: link.title,
+                        href: link.url,
+                        target: '_blank',
+                    },
+                    { class: 'mx-2' },
+                    {
+                        tag: 'div' as const,
+                        class: 'flex-grow-1',
+                        innerHTML: link.description,
+                    },
+                ],
+            }
+        })
+        this.children = [introView, ...linksViews]
     }
 }
