@@ -1,7 +1,13 @@
 import { VirtualDOM, ChildrenLike, FluxViewVirtualDOM } from '@youwol/rx-vdom'
 import { Common } from '@youwol/fv-code-mirror-editors'
 import { examples } from './examples'
-import { BehaviorSubject, Observable, Subject } from 'rxjs'
+import {
+    BehaviorSubject,
+    combineLatest,
+    Observable,
+    ReplaySubject,
+    Subject,
+} from 'rxjs'
 import { map, tap, withLatestFrom } from 'rxjs/operators'
 import { setup } from '../../auto-generated'
 
@@ -60,6 +66,11 @@ export class CodeEditorView implements VirtualDOM<'div'> {
     public readonly style = {
         position: 'relative' as const,
     }
+    public readonly currentHTMLElement$ = new ReplaySubject<HTMLElement>(1)
+    public readonly size$ = new ReplaySubject<{
+        width: number
+        height: number
+    }>(1)
     constructor() {
         const ideView = new Common.CodeEditorView({
             ideState: this.state.ideState,
@@ -82,6 +93,9 @@ export class CodeEditorView implements VirtualDOM<'div'> {
                 class: 'w-100 overflow-auto',
                 style: {
                     maxHeight: '700px',
+                },
+                connectedCallback: (elem) => {
+                    this.currentHTMLElement$.next(elem)
                 },
                 children: [
                     {
@@ -112,20 +126,18 @@ export class CodeEditorView implements VirtualDOM<'div'> {
                         ],
                     },
                     {
-                        tag: 'div',
-                        class: this.state.mode$.pipe(
-                            map((mode) =>
-                                mode == 'video'
-                                    ? 'flex-grow-1 text-left d-flex'
-                                    : 'd-none',
-                            ),
-                        ),
-                        connectedCallback: (elem) => {
-                            const iframe = document.createElement('iframe')
-                            iframe.src =
-                                'https://www.youtube.com/embed/fTJH72_wdSg?si=isW48l2rnMCfW9o1'
-                            iframe['credentialless'] = true
-                            elem.appendChild(iframe)
+                        source$: combineLatest([
+                            this.state.mode$,
+                            this.state.currentExample$,
+                            this.size$,
+                        ]),
+                        vdomMap: ([mode, example, size]): VirtualDOM<'div'> => {
+                            return mode === 'video'
+                                ? new EmbeddedYoutube({
+                                      url: example.youtube,
+                                      ...size,
+                                  })
+                                : { tag: 'div' }
                         },
                     },
                     {
@@ -138,6 +150,15 @@ export class CodeEditorView implements VirtualDOM<'div'> {
                 ],
             },
         ]
+        combineLatest([
+            this.state.currentExample$,
+            this.currentHTMLElement$,
+        ]).subscribe(([_, elem]) => {
+            this.size$.next({
+                width: elem.offsetWidth,
+                height: elem.offsetHeight,
+            })
+        })
     }
 }
 
@@ -244,5 +265,54 @@ class MenuViewRun implements VirtualDOM<'div'> {
                 ],
             },
         ]
+    }
+}
+
+class EmbeddedYoutube implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
+    public readonly class = 'flex-grow-1 text-left d-flex flex-column'
+    public readonly connectedCallback: (elem: HTMLElement) => void
+    public readonly children: ChildrenLike
+    constructor(params: { url: string; width: number; height: number }) {
+        // Check if the browser is Firefox
+        const isFirefox = navigator.userAgent.toLowerCase().includes('firefox')
+        // Check if the browser is Safari
+        const isSafari = /^((?!chrome|android).)*safari/i.test(
+            navigator.userAgent,
+        )
+
+        if (isSafari || isFirefox) {
+            this.children = [
+                {
+                    tag: 'div',
+                    class: 'p-5',
+                    style: {
+                        width: '' + params.width + 'px',
+                        height: '' + params.height + 'px',
+                    },
+                    children: [
+                        {
+                            tag: 'div',
+                            innerText:
+                                'For now embedded video is not working on Safari or Firefox, please visit this link:',
+                        },
+                        {
+                            tag: 'a',
+                            href: params.url,
+                            innerText: 'Youtube video',
+                        },
+                    ],
+                },
+            ]
+            return
+        }
+        this.connectedCallback = (elem) => {
+            const iframe = document.createElement('iframe')
+            iframe.src = params.url
+            iframe['credentialless'] = true
+            iframe.width = '' + params.width + 'px'
+            iframe.height = '' + params.height + 'px'
+            elem.appendChild(iframe)
+        }
     }
 }

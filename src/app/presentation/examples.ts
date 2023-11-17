@@ -3,6 +3,8 @@ const head = `<head><script src="${webpmUrl}"></script></head>`
 export const examples = [
     {
         title: 'Hello world',
+        youtube:
+            'https://www.youtube.com/embed/evYkrIug0ck?si=xTyTr1eFA5WOSgBD',
         description: {
             innerHTML:
                 'Basics of importing resources with a <a href="https://getbootstrap.com/docs/5.3/components/dropdowns/">drop-down example</a> from bootstrap. ' +
@@ -72,7 +74,9 @@ export const examples = [
 </html>`,
     },
     {
-        title: 'Real world',
+        title: 'Real World',
+        youtube:
+            'https://www.youtube.com/embed/irZ5ZsJny04?si=QboZwRUtGPVqRO4A',
         description: {
             innerHTML:
                 '<a href="https://l.youwol.com/doc/@youwol/vs-flow">VS-Flow</a>, a powerful low-code ecosystem, owes its existence to WebPM: ' +
@@ -121,7 +125,9 @@ export const examples = [
 `,
     },
     {
-        title: 'Hello Python',
+        title: 'Python',
+        youtube:
+            'https://www.youtube.com/embed/Q0tdKI22qLc?si=WcsMZVN98x5wrPIu',
         description: {
             innerHTML:
                 'A custom installer allows to install python modules and run them using  <a href="https://pyodide.org/en/stable/">Pyodide</a>. ' +
@@ -162,7 +168,9 @@ export const examples = [
 </html>`,
     },
     {
-        title: 'Hello workers',
+        title: 'Workers',
+        youtube:
+            'https://www.youtube.com/embed/ST81HHBcR9s?si=DjQsSfuw4ITSd3Se',
         description: {
             innerHTML:
                 'Same as the previous example, but running a hundred times in a worker pool with a view including ' +
