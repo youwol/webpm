@@ -2,6 +2,7 @@ import { child$, VirtualDOM } from '@youwol/flux-view'
 import { BehaviorSubject, from, Subject } from 'rxjs'
 import { Topic } from './app.view'
 import { install } from '@youwol/webpm-client'
+import { RxAttribute } from '@youwol/rx-vdom'
 
 function installBootstrap$() {
     return from(install({ modules: ['bootstrap#^4.4.1'] }))
@@ -22,7 +23,7 @@ export class Logo implements VirtualDOM {
 
 export class BannerItem implements VirtualDOM {
     public readonly tag = 'div'
-    public readonly class = 'mx-3 my-auto fv-pointer'
+    public readonly class: RxAttribute<string, string>
     public readonly innerText: string
     onclick: (ev: MouseEvent) => void
     constructor({
@@ -35,6 +36,12 @@ export class BannerItem implements VirtualDOM {
         target: Topic
     }) {
         this.innerText = title
+        this.class = {
+            source$: topic$,
+            vdomMap: (selectedTopic) =>
+                selectedTopic === target ? 'fv-text-focus' : '',
+            wrapper: (d) => `${d} mx-3 my-auto fv-pointer`,
+        }
         this.onclick = () => {
             topic$.next(target)
         }
