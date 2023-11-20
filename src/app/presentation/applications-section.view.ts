@@ -22,9 +22,14 @@ export class ApplicationsSectionView {
                     {
                         class: 'px-4 text-justify',
                         innerHTML:
-                            'The <a href="">YouWol environment</a> scales up on WebPM to facilitate the development and access of applications. ' +
-                            'It offers persistent storage, indexed databases, users & groups management, and more. <br> ' +
+                            'The YouWol environment scales up on WebPM to facilitate the development and access of applications. ' +
+                            'It offers persistent storage, indexed databases, users & groups management, and more. ' +
                             'It is also entirely emulated on PC, including Mac, Windows, and Unix systems. ',
+                    },
+                    {
+                        class: 'px-4 text-justify',
+                        innerHTML:
+                            'Visit the <b>About us</b> page in the top banner for more information.',
                     },
                 ],
             },

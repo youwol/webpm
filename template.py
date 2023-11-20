@@ -37,7 +37,9 @@ template = Template(
     dependencies=Dependencies(
         runTime=RunTimeDeps(externals=externals),
         devTime={
-            "lz-string": "^1.4.4"
+            "lz-string": "^1.4.4",
+            # Required until rx-vdom#1.0.1 is shipped
+            "conditional-type-checks": "^1.0.6"
         }
     ),
     bundles=Bundles(

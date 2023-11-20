@@ -2,6 +2,7 @@ import { child$, VirtualDOM } from '@youwol/flux-view'
 import { BehaviorSubject, from, Subject } from 'rxjs'
 import { Topic } from './app.view'
 import { install } from '@youwol/webpm-client'
+import { RxAttribute } from '@youwol/rx-vdom'
 
 function installBootstrap$() {
     return from(install({ modules: ['bootstrap#^4.4.1'] }))
@@ -12,7 +13,6 @@ export class Logo implements VirtualDOM {
     public readonly class = 'my-auto'
     public readonly style = {
         backgroundColor: 'black',
-        fontFamily: 'Lexend',
         letterSpacing: '0.3px',
         outlineOffset: '3px',
         fontWeight: 'bold',
@@ -23,7 +23,7 @@ export class Logo implements VirtualDOM {
 
 export class BannerItem implements VirtualDOM {
     public readonly tag = 'div'
-    public readonly class = 'mx-3 my-auto fv-pointer'
+    public readonly class: RxAttribute<string, string>
     public readonly innerText: string
     onclick: (ev: MouseEvent) => void
     constructor({
@@ -36,6 +36,12 @@ export class BannerItem implements VirtualDOM {
         target: Topic
     }) {
         this.innerText = title
+        this.class = {
+            source$: topic$,
+            vdomMap: (selectedTopic) =>
+                selectedTopic === target ? 'fv-text-focus' : '',
+            wrapper: (d) => `${d} mx-3 my-auto fv-pointer`,
+        }
         this.onclick = () => {
             topic$.next(target)
         }
@@ -57,7 +63,11 @@ export class DropDownBannerItem implements VirtualDOM {
                 tag: 'button',
                 class: 'btn btn-secondary dropdown-toggle',
                 type: 'button',
-                style: { backgroundColor: 'black', border: 'none' },
+                style: {
+                    backgroundColor: 'black',
+                    border: 'none',
+                    fontWeight: 800,
+                },
                 customAttributes: {
                     'data-toggle': 'dropdown',
                     'aria-haspopup': 'true',
@@ -91,6 +101,9 @@ export class DropDownBannerItem implements VirtualDOM {
                         return {
                             class: 'text-center mt-3 mb-2',
                             innerText: option.title,
+                            style: {
+                                fontWeight: 100,
+                            },
                         }
                     }
                 }),
@@ -116,10 +129,9 @@ export class BannerItems implements VirtualDOM {
                     { type: 'delimiter', title: 'API Documentation' },
                     {
                         type: 'link',
-                        title: 'client',
+                        title: 'WebPM client',
                         url: '/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/^2.2.0/dist/docs/modules/MainModule.html',
                     },
-                    { type: 'link', title: 'backend', url: '' },
                 ],
             }),
             new SeparatorView(),
@@ -134,7 +146,6 @@ export class TopBannerView implements VirtualDOM {
     public readonly style = {
         minHeight: '40px',
         backgroundColor: 'black',
-        fontFamily: 'Lexend',
         letterSpacing: '0.3px',
         outlineOffset: '3px',
         fontWeight: 'bold',
