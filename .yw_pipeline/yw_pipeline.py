@@ -21,7 +21,7 @@ class PipelineFactory(IPipelineFactory):
     async def get(self, _env: YouwolEnvironment, context: Context):
         config = PipelineConfig(
             target=BrowserApp(
-                displayName="@youwol/welcome",
+                displayName="Webpm",
                 execution=Execution(standalone=True),
                 graphics=BrowserAppGraphics(
                     appIcon={"class": "far fa-laugh-beam fa-2x"}, fileIcon={}
