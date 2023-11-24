@@ -9,10 +9,11 @@ import {
     ReplaySubject,
     Subject,
 } from 'rxjs'
-import { map, tap, withLatestFrom } from 'rxjs/operators'
+import { map, mergeMap, tap, withLatestFrom } from 'rxjs/operators'
 import { setup } from '../../auto-generated'
 import { install } from '@youwol/webpm-client'
-import { CdnBackend } from '@youwol/http-clients'
+import { raiseHTTPErrors } from '@youwol/http-primitives'
+import { AssetsGateway } from '@youwol/http-clients'
 
 class State {
     public readonly currentExample$ = new BehaviorSubject(examples[0])
@@ -375,11 +376,16 @@ class ExplanationsView implements VirtualDOM<'div'> {
             {
                 source$: combineLatest([
                     from(install({ modules: ['marked#^4.2.3'] })),
-                    new CdnBackend.Client().getResource$({
-                        libraryId: setup.assetId,
-                        version: setup.version,
-                        restOfPath: `/assets/${params.filename}`,
-                    }),
+                    new AssetsGateway.Client().cdn
+                        .getResource$({
+                            libraryId: setup.assetId,
+                            version: setup.version,
+                            restOfPath: `/assets/${params.filename}`,
+                        })
+                        .pipe(
+                            raiseHTTPErrors(),
+                            mergeMap((blob) => from(blob.text())),
+                        ),
                 ]),
                 vdomMap: ([{ marked }, markdown]) => {
                     console.log('Marked', marked)
