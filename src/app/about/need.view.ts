@@ -119,7 +119,7 @@ class ServersView implements VirtualDOM<'div'> {
                         style: {
                             height: '125px',
                         },
-                        src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/server.jpg`,
+                        src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/servers.png`,
                     },
                 ],
             },
@@ -144,7 +144,7 @@ class PCView implements VirtualDOM<'div'> {
                         style: {
                             height: '125px',
                         },
-                        src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/PC.webp`,
+                        src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/laptop.png`,
                     },
                 ],
             },

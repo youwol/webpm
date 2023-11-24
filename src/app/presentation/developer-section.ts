@@ -40,8 +40,8 @@ class CellHeader implements VirtualDOM {
         this.children = [
             {
                 tag: 'img',
-                width: 50,
-                height: 50,
+                width: 75,
+                height: 75,
                 src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/${imageName}`,
             },
             {
@@ -86,7 +86,7 @@ class GridView implements VirtualDOM {
                     }),
                     new EmptyCell(),
                     new Cell({
-                        imageName: 'webpm-pc.jpg',
+                        imageName: 'laptop.png',
                         title: 'WebPM in your PC',
                         text: `WebPM backend can run in your PC to facilitate working with your own projects.
                                 Interested? Check a presentation <a href=''>here</a>.`,
