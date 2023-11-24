@@ -14,7 +14,7 @@ export class SearchPackageView implements VirtualDOM {
         const client = new CdnBackend.Client()
         this.children = [
             new CellHeader({
-                imageName: 'easy-npm.svg',
+                imageName: 'search-npm.png',
                 title: 'Looking for a NPM package?',
             }),
             {

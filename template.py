@@ -21,7 +21,7 @@ externals = {
     "@youwol/webpm-client": "^2.2.0",
     "@youwol/flux-view": "^1.2.0",
     "@youwol/fv-code-mirror-editors": "^0.3.1",
-    "@youwol/rx-vdom": "^1.0.0",
+    "@youwol/rx-vdom": "^1.0.1",
     "rxjs": "^6.5.5",
     "@youwol/http-clients": "^2.0.5",
     "@youwol/http-primitives": "^0.1.2",

@@ -1407,12 +1407,13 @@
     prettier "^3.0.3"
     prettier-plugin-properties "^0.3.0"
 
-"@youwol/rx-vdom@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@youwol/rx-vdom/-/rx-vdom-1.0.0.tgz#c2e15373d2997d534e2f843ac42a5dfba7e24457"
-  integrity sha512-KMFIHKPNc/ggiELCgk2aEptGZWVmOCD/QW0fSifnaGuvAQF8fD1/XRPb7rPIYu5nMjve9hj8reBVYGJ5rU4zqA==
+"@youwol/rx-vdom@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@youwol/rx-vdom/-/rx-vdom-1.0.1.tgz#061a7c69bb59ac7cbf862e4f0d8d121fa252211a"
+  integrity sha512-aMXoPn6YFNiTm00OiRSCY8JJMltq8EotIoAUGOskgXf5S1mRcSJEo2SeIKz6xOKv9GRXe+//ThyCOwq+KAcGDQ==
   dependencies:
     "@ungap/custom-elements" "1.2.0"
+    conditional-type-checks "^1.0.6"
     csstype "^2.6.0"
 
 "@youwol/tsconfig@1.0.0":

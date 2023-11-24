@@ -4,12 +4,15 @@ import { examples } from './examples'
 import {
     BehaviorSubject,
     combineLatest,
+    from,
     Observable,
     ReplaySubject,
     Subject,
 } from 'rxjs'
 import { map, tap, withLatestFrom } from 'rxjs/operators'
 import { setup } from '../../auto-generated'
+import { install } from '@youwol/webpm-client'
+import { CdnBackend } from '@youwol/http-clients'
 
 class State {
     public readonly currentExample$ = new BehaviorSubject(examples[0])
@@ -152,8 +155,8 @@ export class CodeEditorView implements VirtualDOM<'div'> {
                         ]),
                         vdomMap: ([mode, example, size]): VirtualDOM<'div'> => {
                             return mode === 'links'
-                                ? new LinksView({
-                                      links: example.links,
+                                ? new ExplanationsView({
+                                      filename: example.explanation,
                                       ...size,
                                   })
                                 : { tag: 'div' }
@@ -264,11 +267,11 @@ class MenuViewEdition implements VirtualDOM<'div'> {
                 children: [
                     {
                         tag: 'i',
-                        class: 'fas fa-external-link-square-alt fv-text-success',
+                        class: 'fas fa-file-alt fv-text-success',
                     },
                     {
                         tag: 'div',
-                        innerText: 'Links',
+                        innerText: 'Explain',
                     },
                 ],
             },
@@ -351,46 +354,39 @@ class EmbeddedYoutube implements VirtualDOM<'div'> {
     }
 }
 
-class LinksView implements VirtualDOM<'div'> {
+class ExplanationsView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = 'p-5 w-100'
+    public readonly class = 'p-1 w-100'
     public readonly children: ChildrenLike
-    public readonly style: { width: string; height: string }
-    constructor(params: {
-        links: { title: string; url: string; description: string }[]
-        width: number
-        height: number
-    }) {
+    public readonly style: {
+        width: string
+        height: string
+        backgroundColor: string
+        color: string
+    }
+    constructor(params: { filename: string; width: number; height: number }) {
         this.style = {
             width: `${params.width}px`,
             height: `${params.height}px`,
+            backgroundColor: 'white',
+            color: 'black',
         }
-        const introView = {
-            tag: 'div' as const,
-            class: 'my-2',
-            innerText:
-                'Below are supplementary contents for delving further into topics related to the example:',
-        }
-        const linksViews = params.links.map((link) => {
-            return {
-                tag: 'div' as const,
-                class: 'd-flex align-items-center w-100',
-                children: [
-                    {
-                        tag: 'a' as const,
-                        innerText: link.title,
-                        href: link.url,
-                        target: '_blank',
-                    },
-                    { class: 'mx-2' },
-                    {
-                        tag: 'div' as const,
-                        class: 'flex-grow-1',
-                        innerHTML: link.description,
-                    },
-                ],
-            }
-        })
-        this.children = [introView, ...linksViews]
+        this.children = [
+            {
+                source$: combineLatest([
+                    from(install({ modules: ['marked#^4.2.3'] })),
+                    new CdnBackend.Client().getResource$({
+                        libraryId: setup.assetId,
+                        version: setup.version,
+                        restOfPath: `/assets/${params.filename}`,
+                    }),
+                ]),
+                vdomMap: ([{ marked }, markdown]) => {
+                    console.log('Marked', marked)
+                    const parsed = marked.parse(markdown)
+                    return { tag: 'div', innerHTML: parsed }
+                },
+            },
+        ]
     }
 }

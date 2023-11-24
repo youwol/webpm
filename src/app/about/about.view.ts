@@ -52,6 +52,8 @@ export class AboutView implements VirtualDOM<'div'> {
                                     {
                                         tag: 'img',
                                         style: {
+                                            width: '100%',
+                                            height: '500px',
                                             opacity: 0.4,
                                         },
                                         src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/youwol-bg.png`,

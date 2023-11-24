@@ -5,30 +5,7 @@ export const examples = [
         title: 'Hello World',
         youtube:
             'https://www.youtube.com/embed/evYkrIug0ck?si=xTyTr1eFA5WOSgBD',
-        links: [
-            {
-                title: 'webPM.install',
-                url: 'https://platform.youwol.com/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/2.2.1-wip/dist/docs/classes/MainModule.Client.html#install',
-                description: 'API of the <i>webPM.install</i> function.',
-            },
-            {
-                title: 'Bootstrap 4 dropdown',
-                url: 'https://getbootstrap.com/docs/4.0/components/dropdowns/#single-button-dropdowns',
-                description: 'The original drop down example of bootstrap.',
-            },
-            {
-                title: 'Bootstrap 4 CDN install',
-                url: 'https://getbootstrap.com/docs/4.0/getting-started/introduction/#js',
-                description:
-                    'Describe the bootstrap installation from official documentation.',
-            },
-        ],
-
-        description: {
-            innerHTML:
-                'Basics of importing resources with a <a href="https://getbootstrap.com/docs/5.3/components/dropdowns/">drop-down example</a> from bootstrap. ' +
-                'Installation goes over indirect dependencies installation first and then link bootstrap appropriately.',
-        },
+        explanation: `hello-world.md`,
         src: `
 <!-- All examples are standalones: you can copy/paste them in an 'index.html' file opened by browser -->
 <!DOCTYPE html>
@@ -96,32 +73,7 @@ export const examples = [
         title: 'Real World',
         youtube:
             'https://www.youtube.com/embed/irZ5ZsJny04?si=QboZwRUtGPVqRO4A',
-        links: [
-            {
-                title: 'load code application example',
-                url: 'https://platform.youwol.com/applications/@youwol/vsf-notebook/latest?id=NDQ5NjQyMmMtY2MzYi00ZDg5LTgzNjctMjVhZTZiMDU5ZTY0',
-                description:
-                    'An example presenting the usage of the low code ecosystem Visual Studio Flow.',
-            },
-            {
-                title: 'project.with',
-                url: 'https://platform.youwol.com/api/assets-gateway/raw/package/QHlvdXdvbC92c2YtY29yZQ==/0.2.4/dist/docs/classes/Projects.ProjectState.html#with',
-                description: 'API of the <i>project.with</i> method.',
-            },
-            {
-                title: 'rx-vdom',
-                url: 'https://platform.youwol.com/api/assets-gateway/raw/package/QHlvdXdvbC9yeC12ZG9t/^1.0.0/dist/docs/modules.html',
-                description:
-                    'Technical documentation of <i>@youwol/rx-vdom</i>.',
-            },
-        ],
-
-        description: {
-            innerHTML:
-                '<a href="https://l.youwol.com/doc/@youwol/vs-flow">VS-Flow</a>, a powerful low-code ecosystem, owes its existence to WebPM: ' +
-                'run time is updated on the fly while users connect "modules". ' +
-                'In this example, a "remeshing" application is contructed that leverages the C++ library <a href="https://www.pmp-library.org/">PMP</a>.',
-        },
+        explanation: `real-world.md`,
         src: `<!DOCTYPE html>
 <html lang="en">
     ${head}
@@ -173,24 +125,7 @@ export const examples = [
         title: 'Python',
         youtube:
             'https://www.youtube.com/embed/Q0tdKI22qLc?si=WcsMZVN98x5wrPIu',
-        links: [
-            {
-                title: 'pyodide',
-                url: 'https://pyodide.org/en/stable/',
-                description:
-                    'the solution webPM rely on to embed python code in the browser.',
-            },
-            {
-                title: 'Pi approximation',
-                url: 'https://dzone.com/articles/monte-carlo-estimate-pi-numpy',
-                description: 'description of the algorithm to compute Pi.',
-            },
-        ],
-        description: {
-            innerHTML:
-                'A custom installer allows to install python modules and run them using  <a href="https://pyodide.org/en/stable/">Pyodide</a>. ' +
-                "The package 'numpy' use C++ code, such that Javascript, Python & C++ are running hand to hand here.",
-        },
+        explanation: `python.md`,
         src: `<!DOCTYPE html>
 <html lang="en">
     ${head}
@@ -229,53 +164,7 @@ export const examples = [
         title: 'Workers',
         youtube:
             'https://www.youtube.com/embed/ST81HHBcR9s?si=DjQsSfuw4ITSd3Se',
-        links: [
-            {
-                title: 'workers pool concept',
-                url: 'https://en.wikipedia.org/wiki/Thread_pool',
-                description:
-                    'description of a workers pool (or thread pool) from wikipedia.',
-            },
-            {
-                title: 'webPM function installWorkersPoolModule',
-                url: 'https://platform.youwol.com/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/2.2.1-wip/dist/docs/functions/MainModule.installWorkersPoolModule.html',
-                description:
-                    'API of the <i>webpm.installWorkersPoolModule</i> method.',
-            },
-            {
-                title: 'webPM class WorkersPool',
-                url: 'https://platform.youwol.com/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/2.2.1-wip/dist/docs/classes/MainModule.WorkersPoolTypes.WorkersPool.html',
-                description: 'API of the <i>WorkersPool</i> class in webPM.',
-            },
-            {
-                title: 'webPM method WorkersPool.schedule',
-                url: 'https://platform.youwol.com/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/2.2.1-wip/dist/docs/classes/MainModule.WorkersPoolTypes.WorkersPool.html#schedule',
-                description: 'API of the <i> WorkersPool.schedule</i> method.',
-            },
-            {
-                title: 'pyodide',
-                url: 'https://pyodide.org/en/stable/',
-                description:
-                    'the solution webPM rely on to embed python code in the browser.',
-            },
-            {
-                title: 'Pi approximation',
-                url: 'https://dzone.com/articles/monte-carlo-estimate-pi-numpy',
-                description: 'description of the algorithm to compute Pi.',
-            },
-            {
-                title: 'rx-vdom',
-                url: 'https://platform.youwol.com/api/assets-gateway/raw/package/QHlvdXdvbC9yeC12ZG9t/^1.0.0/dist/docs/modules.html',
-                description:
-                    'Technical documentation of <i>@youwol/rx-vdom</i>.',
-            },
-            {
-                title: 'rxjs',
-                url: 'https://rxjs.dev/',
-                description: 'Link to the official RxJS website.',
-            },
-        ],
-
+        explanation: `workers.md`,
         description: {
             innerHTML:
                 'Same as the previous example, but running a hundred times in a worker pool with a view including ' +

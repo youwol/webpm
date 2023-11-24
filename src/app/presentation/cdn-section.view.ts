@@ -26,8 +26,8 @@ class Cell implements VirtualDOM {
         this.children = [
             {
                 tag: 'img',
-                width: 64,
-                height: 64,
+                width: 75,
+                height: 75,
                 src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/${imageName}`,
             },
             {
@@ -63,7 +63,7 @@ class GridView implements VirtualDOM {
                 children: [
                     new EmptyCell(),
                     new Cell({
-                        imageName: 'flexible.jpg',
+                        imageName: 'flexible.png',
                         title: 'On the fly install',
                         text: 'Runtimes can be extended dynamically, creating a range of new opportunities.',
                     }),

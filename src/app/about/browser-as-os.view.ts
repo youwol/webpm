@@ -40,7 +40,7 @@ export class BrowserAsOSSectionView implements VirtualDOM<'div'> {
                           a set of solutions (backend APIs & frontend libraries) to fully take advantage of this OS 
                           like environment. <br> <br>  You can visit for instance our 
                           <a href='https://platform.youwol.com/applications/@youwol/platform/latest' target="_blank">desktop</a> 
-                          application to get a better idea of what we are taking of.
+                          application to get a better idea of what we are talking of.
                           More information on that subject will come soon.`,
                     },
                 ],
