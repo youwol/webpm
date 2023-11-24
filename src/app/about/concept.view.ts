@@ -10,17 +10,17 @@ export class ConceptView implements VirtualDOM<'div'> {
         this.children = [
             new SectionTitle({
                 title: 'The concept',
-                subtitle: 'Host runtime in the browser',
+                subtitle:
+                    'Browsers: customizable as PC, accessible as servers, and more',
             }),
             { tag: 'div', class: 'my-4' },
             {
                 class: 'w-75 mx-auto',
                 style: paragraphStyle,
                 tag: 'p',
-                innerHTML: `Positioned between your PC and the cloud, your web browser occupies a unique space, 
+                innerHTML: `Positioned between your PC and the cloud, your web browser occupies a unique space,
                 capable of merging the customizability of personal computers with the accessibility of cloud solutions.
-                 While often viewed as a display medium, it inherently possesses the capability to execute a variety of
-                  computations similar to those performed by your PC.`,
+                 Also, it inherently possesses the capability to execute a variety of  computations similar to those performed by your PC.`,
             },
             new GridView(),
             { tag: 'div', class: 'my-5' },
@@ -28,11 +28,10 @@ export class ConceptView implements VirtualDOM<'div'> {
                 class: 'w-75 mx-auto',
                 style: paragraphStyle,
                 tag: 'p',
-                innerHTML: `YouWol concept was born: extending local & cloud solutions by running and sharing code 
+                innerHTML: `The concept? Extending local & cloud solutions by running and sharing code 
                  through web-browser. The only lacking component was a robust package manager able to install and link
-                 runtimes dynamically. This is where <b>WebPM</b> comes in. It is both accessible - anyone can easily utilize
-                  runtimes through the WebPM client - and extendable - anyone can publish their libraries into the WebPM
-                   repository.`,
+                 runtimes dynamically directly into web-browsers. It is the essence of <b>WebPM</b>:
+                 promote an install-free, customizable & extendable runtime environment for browsers.`,
             },
         ]
     }
@@ -46,7 +45,7 @@ class CellHeader implements VirtualDOM<'div'> {
         this.children = [
             {
                 tag: 'img',
-                width: 75,
+                width: 125,
                 src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/${imageName}`,
             },
             {
@@ -70,11 +69,11 @@ class BrowserCell implements VirtualDOM<'div'> {
                 tag: 'div',
                 class: 'mx-auto my-auto',
                 children: [
-                    {
-                        tag: 'img',
-                        width: 75,
-                        src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/browsers.png`,
-                    },
+                    // {
+                    //     tag: 'img',
+                    //     width: 75,
+                    //     src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/browsers.png`,
+                    // },
                 ],
             },
         ]
@@ -109,9 +108,9 @@ class GridView implements VirtualDOM<'div'> {
                 children: [
                     new EmptyCell(),
                     new Cell({
-                        imageName: 'API.png',
-                        title: 'Standard API',
-                        text: `The code run the same way in every browser, in any computer.`,
+                        imageName: 'adaptor.png',
+                        title: 'Standard',
+                        text: `Standardized API and universal compilation target.`,
                     }),
                     new EmptyCell(),
                 ],
@@ -121,15 +120,15 @@ class GridView implements VirtualDOM<'div'> {
                 class: 'row',
                 children: [
                     new Cell({
-                        imageName: 'web-workers.jpeg',
-                        title: 'Parallel computations',
-                        text: `Computations can be parallelized up to the number of cores in your PC (8, 16, 32?)`,
+                        imageName: 'connected.png',
+                        title: 'Connected',
+                        text: `Can consume resources from local computers, servers & peripherals`,
                     }),
                     new BrowserCell(),
                     new Cell({
-                        imageName: 'GPU.png',
-                        title: 'GPU programing',
-                        text: `Computations can use PC's graphic card to accelerate computations.`,
+                        imageName: 'siwss-knife.png',
+                        title: 'Versatile',
+                        text: `On the fly install of programs written in various languages.`,
                     }),
                 ],
             },
@@ -139,9 +138,9 @@ class GridView implements VirtualDOM<'div'> {
                 children: [
                     new EmptyCell(),
                     new Cell({
-                        imageName: 'WASM.png',
-                        title: 'Web assembly',
-                        text: `WASM is a universal compilation target: codes in C++, Rust, D, Fortran, can be executed. `,
+                        imageName: 'rocket.png',
+                        title: 'Performant',
+                        text: `Multi-threading, GPU programing, Web-Assembly, and more`,
                     }),
                     new EmptyCell(),
                 ],
