@@ -96,16 +96,6 @@ class GridView implements VirtualDOM {
                         text: 'Installed runtimes can feature library with multiple versions.',
                     }),
                     new EmptyCell(),
-                    // new Cell({
-                    //     imageName: 'safe.png',
-                    //     title: 'Imports using aliases',
-                    //     text: 'Conveniently assign aliases to your imports.',
-                    // }),
-                    // new Cell({
-                    //     imageName: 'packaging.png',
-                    //     title: 'Port your project or NPM packages easily',
-                    //     text: '',
-                    // }),
                 ],
             },
         ]
