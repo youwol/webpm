@@ -29,14 +29,13 @@
         ]
     },
     "dependencies": {
-        "@youwol/webpm-client": "^2.2.0",
-        "@youwol/flux-view": "^1.2.0",
-        "@youwol/fv-code-mirror-editors": "^0.3.1",
+        "@youwol/webpm-client": "^3.0.0",
+        "@youwol/rx-code-mirror-editors": "^0.4.1",
         "@youwol/rx-vdom": "^1.0.1",
         "@youwol/rx-group-views": "^0.3.0",
-        "rxjs": "^6.5.5",
-        "@youwol/http-clients": "^2.0.5",
-        "@youwol/http-primitives": "^0.1.2"
+        "rxjs": "^7.5.6",
+        "@youwol/http-clients": "^3.0.0",
+        "@youwol/http-primitives": "^0.2.0"
     },
     "devDependencies": {
         "lz-string": "^1.4.4",
@@ -66,14 +65,13 @@
     },
     "webpm": {
         "dependencies": {
-            "@youwol/webpm-client": "^2.2.0",
-            "@youwol/flux-view": "^1.2.0",
-            "@youwol/fv-code-mirror-editors": "^0.3.1",
+            "@youwol/webpm-client": "^3.0.0",
+            "@youwol/rx-code-mirror-editors": "^0.4.1",
             "@youwol/rx-vdom": "^1.0.1",
             "@youwol/rx-group-views": "^0.3.0",
-            "rxjs": "^6.5.5",
-            "@youwol/http-clients": "^2.0.5",
-            "@youwol/http-primitives": "^0.1.2"
+            "rxjs": "^7.5.6",
+            "@youwol/http-clients": "^3.0.0",
+            "@youwol/http-primitives": "^0.2.0"
         },
         "aliases": []
     }

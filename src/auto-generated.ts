@@ -1,40 +1,34 @@
 
 const runTimeDependencies = {
     "externals": {
-        "@youwol/webpm-client": "^2.2.0",
-        "@youwol/flux-view": "^1.2.0",
-        "@youwol/fv-code-mirror-editors": "^0.3.1",
+        "@youwol/webpm-client": "^3.0.0",
+        "@youwol/rx-code-mirror-editors": "^0.4.1",
         "@youwol/rx-vdom": "^1.0.1",
         "@youwol/rx-group-views": "^0.3.0",
-        "rxjs": "^6.5.5",
-        "@youwol/http-clients": "^2.0.5",
-        "@youwol/http-primitives": "^0.1.2"
+        "rxjs": "^7.5.6",
+        "@youwol/http-clients": "^3.0.0",
+        "@youwol/http-primitives": "^0.2.0"
     },
     "includedInBundle": {}
 }
 const externals = {
-    "@youwol/webpm-client": "window['@youwol/webpm-client_APIv2']",
-    "@youwol/flux-view": "window['@youwol/flux-view_APIv1']",
-    "@youwol/fv-code-mirror-editors": "window['@youwol/fv-code-mirror-editors_APIv03']",
+    "@youwol/webpm-client": "window['@youwol/webpm-client_APIv3']",
+    "@youwol/rx-code-mirror-editors": "window['@youwol/rx-code-mirror-editors_APIv04']",
     "@youwol/rx-vdom": "window['@youwol/rx-vdom_APIv1']",
     "@youwol/rx-group-views": "window['@youwol/rx-group-views_APIv03']",
-    "rxjs": "window['rxjs_APIv6']",
-    "@youwol/http-clients": "window['@youwol/http-clients_APIv2']",
-    "@youwol/http-primitives": "window['@youwol/http-primitives_APIv01']",
-    "rxjs/operators": "window['rxjs_APIv6']['operators']"
+    "rxjs": "window['rxjs_APIv7']",
+    "@youwol/http-clients": "window['@youwol/http-clients_APIv3']",
+    "@youwol/http-primitives": "window['@youwol/http-primitives_APIv02']",
+    "rxjs/operators": "window['rxjs_APIv7']['operators']"
 }
 const exportedSymbols = {
     "@youwol/webpm-client": {
-        "apiKey": "2",
+        "apiKey": "3",
         "exportedSymbol": "@youwol/webpm-client"
     },
-    "@youwol/flux-view": {
-        "apiKey": "1",
-        "exportedSymbol": "@youwol/flux-view"
-    },
-    "@youwol/fv-code-mirror-editors": {
-        "apiKey": "03",
-        "exportedSymbol": "@youwol/fv-code-mirror-editors"
+    "@youwol/rx-code-mirror-editors": {
+        "apiKey": "04",
+        "exportedSymbol": "@youwol/rx-code-mirror-editors"
     },
     "@youwol/rx-vdom": {
         "apiKey": "1",
@@ -45,15 +39,15 @@ const exportedSymbols = {
         "exportedSymbol": "@youwol/rx-group-views"
     },
     "rxjs": {
-        "apiKey": "6",
+        "apiKey": "7",
         "exportedSymbol": "rxjs"
     },
     "@youwol/http-clients": {
-        "apiKey": "2",
+        "apiKey": "3",
         "exportedSymbol": "@youwol/http-clients"
     },
     "@youwol/http-primitives": {
-        "apiKey": "01",
+        "apiKey": "02",
         "exportedSymbol": "@youwol/http-primitives"
     }
 }
@@ -62,8 +56,7 @@ const mainEntry : {entryFile: string,loadDependencies:string[]} = {
     "entryFile": "./main.ts",
     "loadDependencies": [
         "@youwol/webpm-client",
-        "@youwol/flux-view",
-        "@youwol/fv-code-mirror-editors",
+        "@youwol/rx-code-mirror-editors",
         "@youwol/rx-vdom",
         "@youwol/rx-group-views",
         "rxjs",
@@ -127,7 +120,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/webpm#0.2.0-wip~dist/@youwol/webpm/${entry.name}.js`
+            `@youwol/webpm#0.2.0~dist/@youwol/webpm/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),
