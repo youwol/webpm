@@ -1,4 +1,4 @@
-import { VirtualDOM } from '@youwol/flux-view'
+import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { CdnSectionView } from './cdn-section.view'
 import { CombineSectionView } from './combine-npm-jsdlevr-section'
 import { DeveloperSectionView } from './developer-section'
@@ -7,21 +7,24 @@ import { ApplicationsSectionView } from './applications-section.view'
 import { HeaderView } from './header.view'
 export {}
 
-export class PresentationView implements VirtualDOM {
+export class PresentationView implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly class = 'w-100 flex-grow-1 overflow-auto'
     public readonly style = {
         minHeight: '0px',
     }
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
 
     constructor() {
         this.children = [
             {
+                tag: 'div',
                 id: 'background',
                 class: 'background py-3',
                 children: [new HeaderView()],
             },
             {
+                tag: 'div',
                 class: 'mx-auto px-2',
                 style: { maxWidth: '1040px' },
                 children: [
@@ -34,12 +37,13 @@ export class PresentationView implements VirtualDOM {
                     new SeparatorSectionLeft(),
                     new DeveloperSectionView(),
                     new SeparatorSectionLast(),
-                    { class: 'my-5' },
+                    { tag: 'div', class: 'my-5' },
                     new ApplicationsSectionView(),
-                    { class: 'my-5' },
+                    { tag: 'div', class: 'my-5' },
                 ],
             },
             {
+                tag: 'div',
                 class: 'mx-auto py-3',
                 style: {
                     backgroundColor: 'rgba(175,175,175)',
@@ -48,46 +52,45 @@ export class PresentationView implements VirtualDOM {
         ]
     }
 }
-class SeparatorSectionFirst {
+class SeparatorSectionFirst implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly class = 'd-flex w-100'
     public readonly style = {
         height: '5em',
     }
-    public readonly children = [
-        {
-            class: 'w-50 border-right',
-        },
+    public readonly children: ChildrenLike = [
+        { tag: 'div', class: 'w-50 border-right' },
     ]
 }
-class SeparatorSectionSecond {
+class SeparatorSectionSecond implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly class = 'd-flex w-100'
     public readonly style = {
         height: '5em',
     }
-    public readonly children = [
-        {
-            class: 'w-50 border-right border-bottom',
-        },
+    public readonly children: ChildrenLike = [
+        { tag: 'div', class: 'w-50 border-right border-bottom' },
     ]
 }
-class SeparatorSectionLast {
+class SeparatorSectionLast implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly class = 'd-flex w-100'
     public readonly style = {
         height: '5em',
     }
-    public readonly children = [
-        {
-            class: 'w-50 border-right border-top',
-        },
+    public readonly children: ChildrenLike = [
+        { tag: 'div', class: 'w-50 border-right border-top' },
     ]
 }
-class SeparatorSectionLeft {
+class SeparatorSectionLeft implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly class = 'border-left'
     public readonly style = {
         height: '5em',
     }
 }
-class SeparatorSectionRight {
+class SeparatorSectionRight implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly class = 'border-right'
     public readonly style = {
         height: '5em',

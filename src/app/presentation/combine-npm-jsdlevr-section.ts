@@ -1,4 +1,4 @@
-import { VirtualDOM } from '@youwol/flux-view'
+import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { setup } from '../../auto-generated'
 
 const checked = `<div class="w-100 d-flex justify-content-center"><i class=" mx-auto fas fa-check fv-text-success"></i></div>`
@@ -52,13 +52,15 @@ const table = `<table>
     </tbody>
 </table>
 `
-export class CombineSectionView {
+export class CombineSectionView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'mx-auto border-right border-bottom p-5'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor() {
         this.children = [
             new TitleView(),
             {
+                tag: 'div',
                 class: 'px-5 d-flex justify-content-center ',
                 children: [new TableComparisonView()],
             },
@@ -66,47 +68,46 @@ export class CombineSectionView {
     }
 }
 
-class TitleView implements VirtualDOM {
+class TitleView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'd-flex align-items-center'
     public readonly style = {
         fontSize: '1.7rem',
-        fontWeight: 'bolder',
+        fontWeight: 'bolder' as const,
     }
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
 
     constructor() {
         this.children = [
-            {
-                innerText: 'The best of ',
-            },
-            { class: 'mx-2' },
+            { tag: 'div', innerText: 'The best of ' },
+            { tag: 'div', class: 'mx-2' },
             {
                 tag: 'img',
                 height: 30,
                 src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/NPM.png`,
             },
-            { class: 'mx-2' },
-            {
-                innerText: ' and ',
-            },
-            { class: 'mx-2' },
+            { tag: 'div', class: 'mx-2' },
+            { tag: 'div', innerText: ' and ' },
+            { tag: 'div', class: 'mx-2' },
             {
                 tag: 'img',
                 height: 60,
                 src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/jsDelivr.png`,
             },
-            { class: 'flex-grow-1' },
+            { tag: 'div', class: 'flex-grow-1' },
         ]
     }
 }
 
-class TableComparisonView implements VirtualDOM {
+class TableComparisonView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'w-50'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor() {
         this.children = [
-            { class: 'my-4' },
+            { tag: 'div', class: 'my-4' },
             {
+                tag: 'div',
                 class: 'text',
                 innerHTML: table,
             },

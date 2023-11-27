@@ -1,7 +1,7 @@
 type AllTags = keyof HTMLElementTagNameMap
 export type Configuration = {
     TypeCheck: 'strict'
-    SupportedHTMLTags: 'Dev' extends 'Prod' ? AllTags : DevTags
+    SupportedHTMLTags: 'Prod' extends 'Prod' ? AllTags : DevTags
     WithFluxView: true
 }
 
@@ -21,3 +21,8 @@ type DevTags =
     | 'iframe'
     | 'i'
     | 'a'
+    | 'input'
+    | 'span'
+    | 'button'
+    | 'select'
+    | 'option'

@@ -1,6 +1,6 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { paragraphStyle, SectionTitle } from './common'
-import { setup } from '../../auto-generated'
+import { Cell } from './cell.view'
 
 export class NeedSectionView implements VirtualDOM<'div'> {
     public readonly tag: 'div'
@@ -13,11 +13,12 @@ export class NeedSectionView implements VirtualDOM<'div'> {
                 subtitle: 'Customization of PC, accessibility of servers',
             }),
             { tag: 'div', class: 'my-4' },
-            {
-                tag: 'div',
-                class: 'd-flex ',
-                children: [new PCView(), new ServersView()],
-            },
+            // {
+            //     tag: 'div',
+            //     class: 'd-flex ',
+            //     children: [new PCView(), new ServersView()],
+            // },
+            new GridView(),
             { tag: 'div', class: 'my-5' },
             {
                 class: 'w-75 mx-auto',
@@ -32,123 +33,69 @@ export class NeedSectionView implements VirtualDOM<'div'> {
     }
 }
 
-class ItemView implements VirtualDOM<'div'> {
+class GridView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = 'd-flex align-items-center'
+    public readonly class = ' d-flex justify-content-center flex-wrap mt-4'
     public readonly children: ChildrenLike
-    constructor({ text, classes }: { text: string; classes: string }) {
-        this.children = [
-            {
-                tag: 'i',
-                class: classes,
-            },
-            { tag: 'div', class: 'mx-2' },
-            {
-                tag: 'div',
-                innerText: text,
-            },
-        ]
-    }
-}
-
-const classItems = 'd-flex justify-content-center'
-
-class PCItemsView implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly class = classItems
-    public readonly children: ChildrenLike
-
     constructor() {
         this.children = [
-            {
-                tag: 'div',
-                class: 'mx-auto',
-                children: [
-                    new ItemView({
-                        text: 'User customizable',
-                        classes: 'fas fa-check fv-text-success',
-                    }),
-                    new ItemView({
-                        text: 'Widely accessible',
-                        classes: 'fas fa-times fv-text-error',
-                    }),
-                ],
-            },
-        ]
-    }
-}
+            new Cell({
+                imageName: 'laptop.png',
+                title: `Customizable, not accessible`,
+                text: `
+Personal Computers (PCs) are renowned for their customizable nature, allowing users to tailor hardware and software
+ configurations to their specific needs. However, this customization, while empowering for the individual user,
+  presents challenges in terms of accessibility for others.
 
-class ServersItemsView implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly class = classItems
-    public readonly children: ChildrenLike
+### Challenges in Accessibility:
 
-    constructor() {
-        this.children = [
-            {
-                tag: 'div',
-                class: 'mx-auto',
-                children: [
-                    new ItemView({
-                        text: 'User customizable',
-                        classes: 'fas fa-times fv-text-error',
-                    }),
-                    new ItemView({
-                        text: 'Widely accessible',
-                        classes: 'fas fa-check fv-text-success',
-                    }),
-                ],
-            },
-        ]
-    }
-}
+#### **Dependency Management:**
+   Customized environments often involve a myriad of dependencies. Sharing a project or software developed in such an
+    environment can become challenging, as others may need to invest time in replicating the exact dependencies to 
+    ensure the application runs as intended.
 
-class ServersView implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly class = 'w-50'
-    public readonly children: ChildrenLike
+#### **Installation Complexity:**
+   The process of installing and configuring a customized environment can be complex, especially for individuals who
+    are not familiar with the specific tools and settings used by the developer.
+     This complexity poses a barrier to accessibility for those who wish to collaborate or use the software.
 
-    constructor() {
-        this.children = [
-            {
-                tag: 'div',
-                class: 'd-flex justify-content-center',
-                children: [
-                    {
-                        tag: 'img',
-                        style: {
-                            height: '125px',
-                        },
-                        src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/servers.png`,
-                    },
-                ],
-            },
-            new ServersItemsView(),
-        ]
-    }
-}
+#### **Versioning and Compatibility:**
+   Customized environments may rely on specific versions of libraries or tools. Ensuring version compatibility across
+    different machines becomes crucial, and the absence of standardized configurations can lead to versioning 
+    conflicts and difficulties in maintaining consistency.
 
-class PCView implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly class = 'w-50'
-    public readonly children: ChildrenLike
+#### **Time and Learning Curve:**
+   Replicating a customized environment often requires a significant time investment and may involve a steep learning 
+   curve for those unfamiliar with the specific tools or development stacks used.
+    This can discourage collaboration and hinder the sharing of knowledge.
 
-    constructor() {
-        this.children = [
-            {
-                tag: 'div',
-                class: 'd-flex justify-content-center',
-                children: [
-                    {
-                        tag: 'img',
-                        style: {
-                            height: '125px',
-                        },
-                        src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/laptop.png`,
-                    },
-                ],
-            },
-            new PCItemsView(),
+`,
+            }),
+            new Cell({
+                imageName: 'servers.png',
+                title: 'Accessible, not customizable',
+                text: `
+Servers are designed to be accessible, allowing users to access and benefit from hosted services without the
+need for intricate installation processes. This accessibility is fundamental to the widespread availability of online platforms, applications, and data.
+
+### Challenges in Customization:
+
+#### **Limited User Control:**
+   While servers prioritize accessibility, the level of control granted to individual users is often limited. 
+   Backend services are typically managed by system administrators or hosting providers, restricting users' ability to 
+   customize underlying configurations or add new services.
+
+#### **Technical Expertise Requirements:**
+   Customizing or deploying backend services often demands a certain level of technical expertise.
+    Users without a background in server administration may find it challenging to implement specialized configurations 
+    or integrate custom functionalities.
+
+#### **Dependency on Service Providers:**
+   Users relying on servers are dependent on service providers for the customization and configuration of backend services. 
+   This dependency can be limiting for users who have specific requirements that fall outside the predefined offerings 
+   of the service provider.
+`,
+            }),
         ]
     }
 }

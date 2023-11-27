@@ -1,12 +1,14 @@
-import { VirtualDOM } from '@youwol/flux-view'
+import { VirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
 import { setup } from '../../auto-generated'
 
-export class ApplicationsSectionView {
+export class ApplicationsSectionView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'mx-auto d-flex flex-column align-items-center px-4'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor() {
         this.children = [
             {
+                tag: 'div',
                 class: 'w-50',
                 children: [
                     {
@@ -18,8 +20,9 @@ export class ApplicationsSectionView {
                         },
                         innerText: '... Up to complex applications',
                     },
-                    { style: { height: '2em' } },
+                    { tag: 'div', style: { height: '2em' } },
                     {
+                        tag: 'div',
                         class: 'px-4 text-justify',
                         innerHTML:
                             'The YouWol environment scales up on WebPM to facilitate the development and access of applications. ' +
@@ -27,6 +30,7 @@ export class ApplicationsSectionView {
                             'It is also entirely emulated on PC, including Mac, Windows, and Unix systems. ',
                     },
                     {
+                        tag: 'div',
                         class: 'px-4 text-justify',
                         innerHTML:
                             'Visit the <b>About us</b> page in the top banner for more information.',

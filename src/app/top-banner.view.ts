@@ -1,28 +1,28 @@
-import { child$, VirtualDOM } from '@youwol/flux-view'
+import { VirtualDOM, RxAttribute, ChildrenLike } from '@youwol/rx-vdom'
 import { BehaviorSubject, from, Subject } from 'rxjs'
 import { Topic } from './app.view'
 import { install } from '@youwol/webpm-client'
-import { RxAttribute } from '@youwol/rx-vdom'
 
 function installBootstrap$() {
     return from(install({ modules: ['bootstrap#^4.4.1'] }))
 }
 type ScreenMode = 'small' | 'large'
 
-export class Logo implements VirtualDOM {
+export class Logo implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly class = 'my-auto'
     public readonly style = {
         backgroundColor: 'black',
         letterSpacing: '0.3px',
         outlineOffset: '3px',
-        fontWeight: 'bold',
+        fontWeight: 'bold' as const,
         fontSize: '20px',
     }
     public readonly innerText = 'WebPM'
 }
 
-export class BannerItem implements VirtualDOM {
-    public readonly tag = 'div'
+export class BannerItem implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly class: RxAttribute<string, string>
     public readonly innerText: string
     onclick: (ev: MouseEvent) => void
@@ -47,9 +47,10 @@ export class BannerItem implements VirtualDOM {
         }
     }
 }
-export class DropDownBannerItem implements VirtualDOM {
+export class DropDownBannerItem implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly class = 'dropdown mx-auto '
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
 
     constructor({
         title,
@@ -76,6 +77,7 @@ export class DropDownBannerItem implements VirtualDOM {
                 innerText: title,
             },
             {
+                tag: 'div',
                 class: 'dropdown-menu fv-border-primary fv-bg-background fv-text-primary px-3',
                 style: { width: '200px' },
                 customAttributes: {
@@ -84,11 +86,10 @@ export class DropDownBannerItem implements VirtualDOM {
                 children: options.map((option) => {
                     if (option.type == 'link') {
                         return {
+                            tag: 'div',
                             class: 'd-flex align-items-center',
                             children: [
-                                {
-                                    innerText: option.title,
-                                },
+                                { tag: 'div', innerText: option.title },
                                 {
                                     tag: 'a',
                                     class: 'fas fa-external-link-square-alt mx-2',
@@ -99,6 +100,7 @@ export class DropDownBannerItem implements VirtualDOM {
                     }
                     if (option.type == 'delimiter') {
                         return {
+                            tag: 'div',
                             class: 'text-center mt-3 mb-2',
                             innerText: option.title,
                             style: {
@@ -112,12 +114,14 @@ export class DropDownBannerItem implements VirtualDOM {
     }
 }
 
-export class SeparatorView {
+export class SeparatorView implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     class = 'mx-4'
 }
-export class BannerItems implements VirtualDOM {
+export class BannerItems implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly class = 'd-flex px-5 my-auto'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor({ topic$ }: { topic$: BehaviorSubject<Topic> }) {
         this.children = [
             new BannerItem({ title: 'Home', topic$, target: 'Home' }),
@@ -140,7 +144,8 @@ export class BannerItems implements VirtualDOM {
     }
 }
 
-export class TopBannerView implements VirtualDOM {
+export class TopBannerView implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly id = 'top-banner'
     public readonly class = 'w-100 fv-text-primary'
     public readonly style = {
@@ -148,10 +153,10 @@ export class TopBannerView implements VirtualDOM {
         backgroundColor: 'black',
         letterSpacing: '0.3px',
         outlineOffset: '3px',
-        fontWeight: 'bold',
+        fontWeight: 'bold' as const,
     }
     public readonly screenMode$ = new Subject<ScreenMode>()
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     public readonly connectedCallback: (elem: HTMLDivElement) => void
     private htmlElement: HTMLDivElement
 
@@ -166,16 +171,18 @@ export class TopBannerView implements VirtualDOM {
         }
         installBootstrap$().subscribe()
         this.children = [
-            child$(installBootstrap$(), () => ({
-                class: 'w-75 d-flex justify-content-center mx-auto',
-                children: [
-                    new Logo(),
-                    {
-                        class: 'flex-grow-1',
-                    },
-                    new BannerItems({ topic$ }),
-                ],
-            })),
+            {
+                source$: installBootstrap$(),
+                vdomMap: () => ({
+                    tag: 'div',
+                    class: 'w-75 d-flex justify-content-center mx-auto',
+                    children: [
+                        new Logo(),
+                        { tag: 'div', class: 'flex-grow-1' },
+                        new BannerItems({ topic$ }),
+                    ],
+                }),
+            },
         ]
     }
 }
