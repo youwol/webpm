@@ -22,6 +22,7 @@ externals = {
     "@youwol/flux-view": "^1.2.0",
     "@youwol/fv-code-mirror-editors": "^0.3.1",
     "@youwol/rx-vdom": "^1.0.1",
+    "@youwol/rx-group-views": "^0.3.0",
     "rxjs": "^6.5.5",
     "@youwol/http-clients": "^2.0.5",
     "@youwol/http-primitives": "^0.1.2",
