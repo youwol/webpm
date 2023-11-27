@@ -5,6 +5,7 @@ const runTimeDependencies = {
         "@youwol/flux-view": "^1.2.0",
         "@youwol/fv-code-mirror-editors": "^0.3.1",
         "@youwol/rx-vdom": "^1.0.1",
+        "@youwol/rx-group-views": "^0.3.0",
         "rxjs": "^6.5.5",
         "@youwol/http-clients": "^2.0.5",
         "@youwol/http-primitives": "^0.1.2"
@@ -16,6 +17,7 @@ const externals = {
     "@youwol/flux-view": "window['@youwol/flux-view_APIv1']",
     "@youwol/fv-code-mirror-editors": "window['@youwol/fv-code-mirror-editors_APIv03']",
     "@youwol/rx-vdom": "window['@youwol/rx-vdom_APIv1']",
+    "@youwol/rx-group-views": "window['@youwol/rx-group-views_APIv03']",
     "rxjs": "window['rxjs_APIv6']",
     "@youwol/http-clients": "window['@youwol/http-clients_APIv2']",
     "@youwol/http-primitives": "window['@youwol/http-primitives_APIv01']",
@@ -38,6 +40,10 @@ const exportedSymbols = {
         "apiKey": "1",
         "exportedSymbol": "@youwol/rx-vdom"
     },
+    "@youwol/rx-group-views": {
+        "apiKey": "03",
+        "exportedSymbol": "@youwol/rx-group-views"
+    },
     "rxjs": {
         "apiKey": "6",
         "exportedSymbol": "rxjs"
@@ -59,6 +65,7 @@ const mainEntry : {entryFile: string,loadDependencies:string[]} = {
         "@youwol/flux-view",
         "@youwol/fv-code-mirror-editors",
         "@youwol/rx-vdom",
+        "@youwol/rx-group-views",
         "rxjs",
         "@youwol/http-clients",
         "@youwol/http-primitives"
