@@ -21,3 +21,8 @@ type DevTags =
     | 'iframe'
     | 'i'
     | 'a'
+    | 'input'
+    | 'span'
+    | 'button'
+    | 'select'
+    | 'option'
