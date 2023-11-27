@@ -1,27 +1,30 @@
-import { VirtualDOM } from '@youwol/flux-view'
+import { VirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
 import { setup } from '../../auto-generated'
 
-export class CdnSectionView {
+export class CdnSectionView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'mx-auto border-left border-bottom p-5'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor() {
         this.children = [
             {
+                tag: 'div',
                 innerText: 'Flexible and robust',
                 style: {
                     fontSize: '1.7rem',
                     fontWeight: 'bolder',
                 },
             },
-            { class: 'my-4' },
+            { tag: 'div', class: 'my-4' },
             new GridView(),
         ]
     }
 }
 
-class Cell implements VirtualDOM {
+class Cell implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'col-md-4 d-flex  align-items-center'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor({ imageName, text, title }) {
         this.children = [
             {
@@ -31,34 +34,38 @@ class Cell implements VirtualDOM {
                 src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/${imageName}`,
             },
             {
+                tag: 'div',
                 class: 'd-flex flex-column m-2',
                 children: [
                     {
                         tag: 'h6',
                         style: {
-                            fontWeight: '600',
+                            fontWeight: 600,
                         },
                         innerText: title,
                     },
-                    { class: 'text-justify', innerText: text },
+                    { tag: 'div', class: 'text-justify', innerText: text },
                 ],
             },
         ]
     }
 }
-class EmptyCell implements VirtualDOM {
+class EmptyCell implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'col-md-4 d-flex  align-items-center'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor() {
         this.children = []
     }
 }
-class GridView implements VirtualDOM {
+class GridView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'container mt-4'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor() {
         this.children = [
             {
+                tag: 'div',
                 class: 'row',
                 children: [
                     new EmptyCell(),
@@ -71,6 +78,7 @@ class GridView implements VirtualDOM {
                 ],
             },
             {
+                tag: 'div',
                 class: 'row',
                 children: [
                     new Cell({
@@ -87,6 +95,7 @@ class GridView implements VirtualDOM {
                 ],
             },
             {
+                tag: 'div',
                 class: 'row mt-5',
                 children: [
                     new EmptyCell(),

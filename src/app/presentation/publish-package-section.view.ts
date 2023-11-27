@@ -1,21 +1,24 @@
-import { VirtualDOM } from '@youwol/flux-view'
+import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 
-export class PublishPackagesSection implements VirtualDOM {
+export class PublishPackagesSection implements VirtualDOM<'div'> {
+    public readonly tag: 'div'
     public readonly class = 'text-center mx-auto'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
 
     constructor() {
         this.children = [
-            { class: 'my-5' },
+            { tag: 'div', class: 'my-5' },
             {
+                tag: 'div',
                 innerText: 'Package publication',
                 style: {
                     fontSize: '2rem',
-                    fontWeight: 'bolder',
+                    fontWeight: 'bolder' as const,
                 },
             },
-            { class: 'my-3' },
+            { tag: 'div', class: 'my-3' },
             {
+                tag: 'div',
                 class: 'text',
                 innerHTML:
                     'In order to exploit to the full extends the WebPM solution, packages have to be properly configured; ' +
@@ -23,8 +26,9 @@ export class PublishPackagesSection implements VirtualDOM {
                     " required (at least for ESM modules), and the WebPM configuration can be added separately from a 'regular' one. " +
                     ' We propose two options to publish a package.',
             },
-            { class: 'my-2' },
+            { tag: 'div', class: 'my-2' },
             {
+                tag: 'div',
                 class: 'text',
                 innerHTML:
                     'It is possible to directly publish packages that are available in the NPM repository: ' +
@@ -32,8 +36,9 @@ export class PublishPackagesSection implements VirtualDOM {
                     '<li> search for the package you want to make available in WebPM</li>' +
                     '<li> request publication if it is not already available</li></ul>',
             },
-            { class: 'my-2' },
+            { tag: 'div', class: 'my-2' },
             {
+                tag: 'div',
                 class: 'text',
                 innerHTML:
                     "The other options involve the installation of the <a href='https://pypi.org/project/youwol/'>youwol</a> python package." +

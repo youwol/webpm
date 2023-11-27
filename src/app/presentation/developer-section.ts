@@ -1,20 +1,22 @@
-import { VirtualDOM } from '@youwol/flux-view'
+import { VirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
 import { setup } from '../../auto-generated'
-export class DeveloperSectionView {
+export class DeveloperSectionView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'mx-auto border-left p-5'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor() {
         this.children = [new TitleView(), new GridView()]
     }
 }
 
-class TitleView implements VirtualDOM {
+class TitleView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'd-flex align-items-center'
     public readonly style = {
         fontSize: '1.7rem',
-        fontWeight: 'bolder',
+        fontWeight: 'bolder' as const,
     }
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
 
     constructor() {
         this.children = [
@@ -23,19 +25,19 @@ class TitleView implements VirtualDOM {
                 height: 60,
                 src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/dev.svg`,
             },
+            { tag: 'div', class: 'mx-2' },
             {
-                class: 'mx-2',
-            },
-            {
+                tag: 'div',
                 innerText: 'A solution that scales with your libraries ...',
             },
         ]
     }
 }
 
-class CellHeader implements VirtualDOM {
+class CellHeader implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'd-flex align-items-center'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor({ imageName, title }) {
         this.children = [
             {
@@ -48,34 +50,34 @@ class CellHeader implements VirtualDOM {
                 class: 'm-2',
                 tag: 'h6',
                 style: {
-                    fontWeight: '600',
+                    fontWeight: 600,
                 },
                 innerText: title,
             },
         ]
     }
 }
-class Cell implements VirtualDOM {
+class Cell implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class =
         'col-md-4 d-flex  flex-column align-items-center text-justify'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor({ imageName, text, title }) {
         this.children = [
             new CellHeader({ imageName, title }),
-            {
-                class: 'm-2',
-                innerHTML: text,
-            },
+            { tag: 'div', class: 'm-2', innerHTML: text },
         ]
     }
 }
 
-class GridView implements VirtualDOM {
+class GridView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'container mt-4'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor() {
         this.children = [
             {
+                tag: 'div',
                 class: 'row',
                 children: [
                     new Cell({
@@ -94,6 +96,7 @@ class GridView implements VirtualDOM {
                 ],
             },
             {
+                tag: 'div',
                 class: 'row',
                 children: [
                     new EmptyCell(),
@@ -109,9 +112,10 @@ class GridView implements VirtualDOM {
         ]
     }
 }
-class EmptyCell implements VirtualDOM {
+class EmptyCell implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
     public readonly class = 'col-md-4 d-flex  align-items-center'
-    public readonly children: VirtualDOM[]
+    public readonly children: ChildrenLike
     constructor() {
         this.children = []
     }

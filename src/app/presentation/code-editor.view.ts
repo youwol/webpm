@@ -1,5 +1,5 @@
 import { VirtualDOM, ChildrenLike, FluxViewVirtualDOM } from '@youwol/rx-vdom'
-import { Common } from '@youwol/fv-code-mirror-editors'
+import { Common } from '@youwol/rx-code-mirror-editors'
 import { examples } from './examples'
 import {
     BehaviorSubject,
@@ -45,7 +45,7 @@ class State {
     }
 
     execute() {
-        this.run$.next()
+        this.run$.next(undefined)
     }
 
     set(example) {
