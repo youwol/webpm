@@ -74,7 +74,7 @@ const entries = {
 export const setup = {
     name:'@youwol/webpm',
         assetId:'QHlvdXdvbC93ZWJwbQ==',
-    version:'0.2.0-wip',
+    version:'0.2.0',
     shortDescription:"WebPM web-site",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/webpm&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/webpm',
