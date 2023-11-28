@@ -5,8 +5,7 @@ import { ConceptView } from './concept.view'
 import { IdeaSectionView } from './idea.view'
 import { SdkView } from './sdk.view'
 import { FinalView } from './final.view'
-import { setup } from '../../auto-generated'
-
+import { maxColumnWidth } from './common'
 /**
  * 1 - the idea: a flexible and collaborative env for numerical sciences
  *
@@ -37,7 +36,10 @@ export class AboutView implements VirtualDOM<'div'> {
                     new IdeaSectionView(),
                     {
                         tag: 'div',
-                        class: 'w-100 d-flex flex-column align-items-center justify-content-center fv-text-primary',
+                        class: 'p-2 mx-auto',
+                        style: {
+                            maxWidth: maxColumnWidth,
+                        },
                         children: [
                             new SeparatorSectionFirst(),
                             new NeedSectionView(),

@@ -18,16 +18,26 @@ export class NeedSectionView implements VirtualDOM<'div'> {
             //     class: 'd-flex ',
             //     children: [new PCView(), new ServersView()],
             // },
-            new GridView(),
-            { tag: 'div', class: 'my-5' },
             {
-                class: 'w-75 mx-auto',
-                style: paragraphStyle,
-                tag: 'p',
-                innerHTML: `The need YouWol aims fulfill is to provide a computing solution that sits between traditional 
+                tag: 'div',
+                class: 'd-flex flex-column justify-content-around align-items-center',
+                children: [
+                    {
+                        tag: 'div',
+                        class: 'w-100',
+                        children: [new GridView()],
+                    },
+                    { tag: 'div', class: 'my-2' },
+                    {
+                        class: 'w-100',
+                        style: paragraphStyle,
+                        tag: 'p',
+                        innerHTML: `The need YouWol aims fulfill is to provide a computing solution that sits between traditional 
                 PCs and cloud platforms. 
                 It shall make runtime widely accessible while also ensuring that users, regardless of their expertise,
                  can easily customize and extend it to meet their specific needs.`,
+                    },
+                ],
             },
         ]
     }

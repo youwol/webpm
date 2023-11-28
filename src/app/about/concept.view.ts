@@ -15,22 +15,28 @@ export class ConceptView implements VirtualDOM<'div'> {
             }),
             { tag: 'div', class: 'my-4' },
             {
-                class: 'w-75 mx-auto',
-                style: paragraphStyle,
-                tag: 'p',
-                innerHTML: `Positioned between your PC and the cloud is capable of merging the customizability of PC with the accessibility of cloud solutions.
+                tag: 'div',
+                class: 'd-flex flex-column justify-content-around align-items-center',
+                children: [
+                    {
+                        class: 'w-100',
+                        style: paragraphStyle,
+                        tag: 'p',
+                        innerHTML: `Positioned between your PC and the cloud is capable of merging the customizability of PC with the accessibility of cloud solutions.
                  Also, it inherently possesses the capability to execute a variety of computations.`,
-            },
-            new GridView(),
-            { tag: 'div', class: 'my-5' },
-            {
-                class: 'w-75 mx-auto',
-                style: paragraphStyle,
-                tag: 'p',
-                innerHTML: `The concept? Extending local & cloud solutions by running and sharing code 
+                    },
+                    new GridView(),
+                    { tag: 'div', class: 'my-4' },
+                    {
+                        class: 'w-100',
+                        style: paragraphStyle,
+                        tag: 'p',
+                        innerHTML: `The concept? Extending local & cloud solutions by running and sharing code 
                  through web-browser. The only lacking component was a robust package manager able to install and link
                  runtimes dynamically directly into web-browsers. It is the essence of <a href="https://webpm.org" target="_blank">WebPM</a>:
                  promote an install-free, customizable & extendable runtime environment for browsers.`,
+                    },
+                ],
             },
         ]
     }

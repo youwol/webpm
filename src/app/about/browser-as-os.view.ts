@@ -16,30 +16,35 @@ export class BrowserAsOSSectionView implements VirtualDOM<'div'> {
             { tag: 'div', class: 'my-4' },
             {
                 tag: 'div',
-                class: 'w-75 mx-auto',
-                style: paragraphStyle,
+                class: 'd-flex flex-column justify-content-around align-items-center',
                 children: [
                     {
-                        tag: 'p',
-                        innerHTML: `WebPM establishes the groundwork for an emulated OS within browsers.
+                        tag: 'div',
+                        class: 'w-100',
+                        style: paragraphStyle,
+                        children: [
+                            {
+                                tag: 'p',
+                                innerHTML: `WebPM establishes the groundwork for an emulated OS within browsers.
                         Because applications encompass more than just installing runtimes (user management, persistent
                          storage, indexed databases, installers, environment, and more), YouWol offers for users and 
                          developers  a set of solutions to fully take advantage of this OS like environment.`,
+                            },
+                        ],
                     },
-                ],
-            },
-            new GridView(),
-
-            {
-                tag: 'div',
-                class: 'w-75 mx-auto',
-                style: paragraphStyle,
-                children: [
+                    new GridView(),
                     {
-                        tag: 'p',
-                        innerHTML: `For a comprehensive understanding and detailed insights into the broader spectrum 
+                        tag: 'div',
+                        class: 'w-100',
+                        style: paragraphStyle,
+                        children: [
+                            {
+                                tag: 'p',
+                                innerHTML: `For a comprehensive understanding and detailed insights into the broader spectrum 
                         of the topic, encompassing areas such as HTTP clients, assisting libraries, testing configurations, 
                         and more, we encourage readers to explore the <a href="">dedicated page</a>.`,
+                            },
+                        ],
                     },
                 ],
             },

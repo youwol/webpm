@@ -3,10 +3,13 @@ import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 export const paragraphStyle = {
     fontSize: '20px',
     lineHeight: '32px',
-    maxWidth: '800px',
+    minWidth: '300px',
+    maxWidth: '600px',
     textAlign: 'justify' as const,
     fontWeight: 400,
 }
+
+export const maxColumnWidth = '1040px'
 
 export class SectionTitle implements VirtualDOM<'div'> {
     public readonly tag = 'div'
