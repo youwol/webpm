@@ -1,5 +1,3 @@
-import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
-
 export const paragraphStyle = {
     fontSize: '20px',
     lineHeight: '32px',
@@ -10,36 +8,6 @@ export const paragraphStyle = {
 }
 
 export const maxColumnWidth = '1040px'
-
-export class SectionTitle implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly children: ChildrenLike
-    public readonly title: string
-    public readonly subtitle: string
-    constructor(params: { title: string; subtitle: string }) {
-        Object.assign(this, params)
-        this.children = [
-            {
-                tag: 'div',
-                innerText: this.title,
-                style: {
-                    fontSize: '1.7rem',
-                    fontWeight: 'bolder',
-                },
-                children: [
-                    {
-                        style: {
-                            fontSize: '1.5rem',
-                            fontWeight: 'bolder',
-                        },
-                        tag: 'div',
-                        innerText: this.subtitle,
-                    },
-                ],
-            },
-        ]
-    }
-}
 
 export const YouWolLogo =
     '<svg id="logo2bis" xmlns="http://www.w3.org/2000/svg" style="margin: auto" viewBox="0 0 109.58 121.1" width="150px" height="150px">\n' +
