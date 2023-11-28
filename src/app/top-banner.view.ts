@@ -126,6 +126,9 @@ export class BannerItems implements VirtualDOM<'div'> {
     public readonly tag: 'div'
     public readonly class = 'd-flex my-auto align-items-center flex-grow-1'
     public readonly children: ChildrenLike
+    public readonly style = {
+        maxWidth: '400px',
+    }
     constructor({ topic$ }: { topic$: BehaviorSubject<Topic> }) {
         this.children = [
             new BannerItem({ title: 'Home', topic$, target: 'Home' }),
@@ -185,8 +188,8 @@ export class TopBannerView implements VirtualDOM<'div'> {
                         new Logo(),
                         {
                             tag: 'div',
-                            class: 'flex-grow-1',
                             style: {
+                                flexGrow: 2,
                                 minWidth: '10px',
                             },
                         },
