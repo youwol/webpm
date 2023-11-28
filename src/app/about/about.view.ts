@@ -50,18 +50,6 @@ export class AboutView implements VirtualDOM<'div'> {
                             new FinalView(),
                         ],
                     },
-                    // Get the flexibility of PC, with the power of the cloud
-
-                    // {
-                    //     tag: 'div',
-                    //     class: 'text',
-                    //     innerHTML:
-                    //         'We are <b>YouWol</b>, a small passionate team dedicated to provide a new kind of online environment for engineering and science. ' +
-                    //         'Our approach complements traditional solutions that primarily focus on bringing logic into backend services. ' +
-                    //         'We aim to harness the full potential of your browser which already provides standardized APIs, enables peripheral access, ' +
-                    //         "supports the universal compilation target WebAssembly, and leverages the full power of your device's CPUs, GPUs, and RAM. " +
-                    //         'By enabling seamless sharing and usage of numerical tools developed from a wide range of languages and technology stacks, we foster a truly collaborative, open and elastic ecosystem',
-                    // },
                 ],
             },
         ]
