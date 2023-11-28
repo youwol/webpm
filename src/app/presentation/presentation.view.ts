@@ -31,9 +31,7 @@ export class PresentationView implements VirtualDOM<'div'> {
                     new SearchPackageView(),
                     new SeparatorSectionSecond(),
                     new CdnSectionView(),
-                    new SeparatorSectionRight(),
                     new CombineSectionView(),
-                    new SeparatorSectionLeft(),
                     new DeveloperSectionView(),
                     new SeparatorSectionLast(),
                     { tag: 'div', class: 'my-5' },
@@ -80,18 +78,4 @@ class SeparatorSectionLast implements VirtualDOM<'div'> {
     public readonly children: ChildrenLike = [
         { tag: 'div', class: 'w-50 border-right border-top' },
     ]
-}
-class SeparatorSectionLeft implements VirtualDOM<'div'> {
-    public readonly tag: 'div'
-    public readonly class = 'border-left'
-    public readonly style = {
-        height: '5em',
-    }
-}
-class SeparatorSectionRight implements VirtualDOM<'div'> {
-    public readonly tag: 'div'
-    public readonly class = 'border-right'
-    public readonly style = {
-        height: '5em',
-    }
 }
