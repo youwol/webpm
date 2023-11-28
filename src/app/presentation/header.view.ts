@@ -53,13 +53,15 @@ export class HeaderView implements VirtualDOM<'div'> {
                             new Card({
                                 title: 'NPM install in PC',
                                 code: 'npm.install ...',
-                                text: '<b>Can not</b> be used at runtime',
+                                icon: 'fas fa-times fv-text-error',
+                                text: 'Available at runtime',
                                 href: undefined,
                             }),
                             new Card({
                                 title: 'WebPM install in browsers',
                                 code: 'webpm.install ...',
-                                text: '<b>Can</b> be used at runtime',
+                                icon: 'fas fa-check fv-text-success',
+                                text: 'Available at runtime',
                                 href: `/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/%5E2.2.0/dist/docs/types/MainModule.InstallInputs.html`,
                             }),
                         ],
@@ -84,7 +86,7 @@ export class Card implements VirtualDOM<'div'> {
         width: '300px',
     }
     public readonly children: ChildrenLike
-    constructor({ title, code, text, href }) {
+    constructor({ title, code, icon, text, href }) {
         this.children = [
             {
                 tag: 'div',
@@ -110,8 +112,22 @@ export class Card implements VirtualDOM<'div'> {
             },
             {
                 tag: 'div',
-                class: 'w-100 text-center',
-                innerHTML: text,
+                class: 'w-100 text-center d-flex justify-content-center align-items-center',
+                children: [
+                    {
+                        tag: 'i',
+                        class: icon,
+                    },
+                    {
+                        tag: 'div',
+                        class: 'mx-1',
+                    },
+                    {
+                        tag: 'div',
+                        class: 'mx-2',
+                        innerHTML: text,
+                    },
+                ],
             },
         ]
     }
