@@ -1,4 +1,4 @@
-import { VirtualDOM, ChildrenLike, FluxViewVirtualDOM } from '@youwol/rx-vdom'
+import { VirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
 import { Common } from '@youwol/rx-code-mirror-editors'
 import { examples } from './examples'
 import {
@@ -115,7 +115,7 @@ export class CodeEditorView implements VirtualDOM<'div'> {
                                     : 'd-none',
                             ),
                         ),
-                        children: [ideView as FluxViewVirtualDOM],
+                        children: [ideView],
                     },
                     {
                         tag: 'div',

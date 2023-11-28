@@ -1,4 +1,4 @@
-import { ChildrenLike, FluxViewVirtualDOM, VirtualDOM } from '@youwol/rx-vdom'
+import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { CodeEditorView } from './code-editor.view'
 
 export class HeaderView implements VirtualDOM<'div'> {
@@ -76,7 +76,7 @@ export class HeaderView implements VirtualDOM<'div'> {
                         tag: 'div',
                         class: 'mx-auto px-2 border p-2',
                         style: { width: '1040px' },
-                        children: [new CodeEditorView() as FluxViewVirtualDOM],
+                        children: [new CodeEditorView()],
                     },
                 ],
             },
