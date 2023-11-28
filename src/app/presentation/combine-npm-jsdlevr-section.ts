@@ -1,5 +1,6 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { setup } from '../../auto-generated'
+import { SectionView } from '../common/section.view'
 
 const checked = `<div class="w-100 d-flex justify-content-center"><i class=" mx-auto fas fa-check fv-text-success"></i></div>`
 const notChecked = `<div class="w-100 d-flex justify-content-center"><i class="mx-auto fas fa-times fv-text-error"></i></div>`
@@ -52,19 +53,21 @@ const table = `<table>
     </tbody>
 </table>
 `
-export class CombineSectionView implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly class = 'mx-auto border-right border-bottom p-5'
-    public readonly children: ChildrenLike
+
+export class CombineSectionView extends SectionView {
     constructor() {
-        this.children = [
-            new TitleView(),
-            {
-                tag: 'div',
-                class: 'd-flex justify-content-center ',
-                children: [new TableComparisonView()],
-            },
-        ]
+        super({
+            title: new TitleView(),
+            subtitle: '',
+            withClasses: 'border-right border-bottom',
+            paragraphs: [
+                {
+                    tag: 'div',
+                    class: 'd-flex justify-content-center ',
+                    children: [new TableComparisonView()],
+                },
+            ],
+        })
     }
 }
 

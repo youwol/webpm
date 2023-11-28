@@ -1,12 +1,16 @@
 import { VirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
 import { setup } from '../../auto-generated'
 import { CardView, EmptyCard } from '../common/card.view'
-export class DeveloperSectionView implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly class = 'mx-auto border-left p-5'
-    public readonly children: ChildrenLike
+import { SectionView } from '../common/section.view'
+
+export class DeveloperSectionView extends SectionView {
     constructor() {
-        this.children = [new TitleView(), new GridView()]
+        super({
+            title: new TitleView(),
+            subtitle: '',
+            withClasses: 'border-left',
+            paragraphs: [new GridView()],
+        })
     }
 }
 

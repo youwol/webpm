@@ -1,4 +1,4 @@
-import { VirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
+import { VirtualDOM, ChildrenLike, AnyVirtualDOM } from '@youwol/rx-vdom'
 
 export class SectionTitle implements VirtualDOM<'div'> {
     public readonly tag = 'div'
@@ -40,17 +40,19 @@ export class SectionView implements VirtualDOM<'div'> {
         paragraphs,
         withClasses,
     }: {
-        title: string
+        title: string | AnyVirtualDOM
         subtitle: string
         paragraphs: ChildrenLike
         withClasses: string
     }) {
         this.class += withClasses
         this.children = [
-            new SectionTitle({
-                title,
-                subtitle,
-            }),
+            typeof title === 'string'
+                ? new SectionTitle({
+                      title,
+                      subtitle,
+                  })
+                : title,
             { tag: 'div', class: 'my-4' },
             {
                 tag: 'div',
