@@ -1,45 +1,32 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
-import { paragraphStyle, SectionTitle } from './common'
+import { paragraphStyle } from './common'
 import { CardView } from '../common/card.view'
+import { SectionView } from '../common/section.view'
 
-export class NeedSectionView implements VirtualDOM<'div'> {
-    public readonly tag: 'div'
-    public readonly class = 'mx-auto border-right border-bottom p-5'
-    public readonly children: ChildrenLike
+export class NeedSectionView extends SectionView {
     constructor() {
-        this.children = [
-            new SectionTitle({
-                title: 'The need',
-                subtitle: 'Customization of PC, accessibility of servers',
-            }),
-            { tag: 'div', class: 'my-4' },
-            // {
-            //     tag: 'div',
-            //     class: 'd-flex ',
-            //     children: [new PCView(), new ServersView()],
-            // },
-            {
-                tag: 'div',
-                class: 'd-flex flex-column justify-content-around align-items-center',
-                children: [
-                    {
-                        tag: 'div',
-                        class: 'w-100',
-                        children: [new GridView()],
-                    },
-                    { tag: 'div', class: 'my-2' },
-                    {
-                        class: 'w-100',
-                        style: paragraphStyle,
-                        tag: 'p',
-                        innerHTML: `The need YouWol aims fulfill is to provide a computing solution that sits between traditional 
+        super({
+            title: 'The need',
+            subtitle: 'Customization of PC, accessibility of servers',
+            withClasses: 'border-right border-bottom',
+            paragraphs: [
+                {
+                    tag: 'div',
+                    class: 'w-100',
+                    children: [new GridView()],
+                },
+                { tag: 'div', class: 'my-2' },
+                {
+                    class: 'w-100',
+                    style: paragraphStyle,
+                    tag: 'p',
+                    innerHTML: `The need YouWol aims fulfill is to provide a computing solution that sits between traditional 
                 PCs and cloud platforms. 
                 It shall make runtime widely accessible while also ensuring that users, regardless of their expertise,
                  can easily customize and extend it to meet their specific needs.`,
-                    },
-                ],
-            },
-        ]
+                },
+            ],
+        })
     }
 }
 
