@@ -1,6 +1,10 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { setup } from '../../auto-generated'
-import { SectionView } from '../common/section.view'
+import {
+    ParagraphSeparator,
+    SectionView,
+    TextParagraphView,
+} from '../common/section.view'
 
 const checked = `<div class="w-100 d-flex justify-content-center"><i class=" mx-auto fas fa-check fv-text-success"></i></div>`
 const notChecked = `<div class="w-100 d-flex justify-content-center"><i class="mx-auto fas fa-times fv-text-error"></i></div>`
@@ -61,6 +65,10 @@ export class CombineSectionView extends SectionView {
             subtitle: '',
             withClasses: 'border-right border-bottom',
             paragraphs: [
+                new TextParagraphView({
+                    innerHTML: `Just like NPM running in a browser ... or just like jsDelivr properly managing dependencies.`,
+                }),
+                new ParagraphSeparator(),
                 {
                     tag: 'div',
                     class: 'd-flex justify-content-center ',

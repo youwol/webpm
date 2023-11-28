@@ -6,8 +6,7 @@ export class ConceptView extends SectionView {
     constructor() {
         super({
             title: 'The concept',
-            subtitle:
-                'Browsers: customizable, accessible, connected & performant',
+            subtitle: 'Abuse web-browsers',
             withClasses: 'border-left border-bottom',
             paragraphs: [
                 new TextParagraphView({

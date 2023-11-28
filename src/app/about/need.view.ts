@@ -6,7 +6,7 @@ export class NeedSectionView extends SectionView {
     constructor() {
         super({
             title: 'The need',
-            subtitle: 'Customization of PC, accessibility of servers',
+            subtitle: 'Customization, accessibility',
             withClasses: 'border-right border-bottom',
             paragraphs: [
                 {
@@ -72,7 +72,7 @@ class PropertiesView implements VirtualDOM<'div'> {
         const separator = { tag: 'div' as const, class: 'mx-2' }
         const child = (innerText: string, mode: 0 | 1): VirtualDOM<'div'> => ({
             tag: 'div' as const,
-            class: 'd-flex',
+            class: 'd-flex align-items-center',
             children: [
                 {
                     tag: 'i',

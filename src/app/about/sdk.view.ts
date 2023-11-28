@@ -6,7 +6,7 @@ export class SdkView extends SectionView {
     constructor() {
         super({
             title: 'Getting wild',
-            subtitle: 'Access local data/programs, custom backends, SDK',
+            subtitle: 'Local resources, custom backends, SDK',
             withClasses: 'border-left',
             paragraphs: [
                 new TextParagraphView({

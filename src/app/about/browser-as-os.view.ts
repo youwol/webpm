@@ -6,7 +6,7 @@ export class BrowserAsOSSectionView extends SectionView {
     constructor() {
         super({
             title: 'Extending the concept',
-            subtitle: 'Turn browsers into OS',
+            subtitle: 'Turn web-browsers into OS',
             withClasses: 'border-right border-bottom',
             paragraphs: [
                 new TextParagraphView({
@@ -18,8 +18,7 @@ export class BrowserAsOSSectionView extends SectionView {
                 new GridView(),
                 new TextParagraphView({
                     innerHTML: `For a comprehensive understanding and detailed insights into the broader spectrum 
-                        of the topic, encompassing areas such as HTTP clients, assisting libraries, testing configurations, 
-                        and more, we encourage readers to explore the <a href="">dedicated page</a>.`,
+                        of the topic, we encourage readers to explore the <a href="">dedicated page</a>.`,
                 }),
             ],
         })

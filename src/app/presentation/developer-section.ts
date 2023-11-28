@@ -1,41 +1,26 @@
 import { VirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
-import { setup } from '../../auto-generated'
-import { CardView, EmptyCard } from '../common/card.view'
-import { SectionView } from '../common/section.view'
+import { CardView } from '../common/card.view'
+import {
+    ParagraphSeparator,
+    SectionView,
+    TextParagraphView,
+} from '../common/section.view'
 
 export class DeveloperSectionView extends SectionView {
     constructor() {
         super({
-            title: new TitleView(),
+            title: 'A solution that scales with your libraries ...',
             subtitle: '',
             withClasses: 'border-left',
-            paragraphs: [new GridView()],
+            paragraphs: [
+                new TextParagraphView({
+                    innerHTML: `Our goal is to offer a supportive environment for developers that is the least intrusive 
+                    and maximize development cycle efficiency.`,
+                }),
+                new ParagraphSeparator(),
+                new GridView(),
+            ],
         })
-    }
-}
-
-class TitleView implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly class = 'd-flex align-items-center'
-    public readonly style = {
-        fontSize: '1.7rem',
-        fontWeight: 'bolder' as const,
-    }
-    public readonly children: ChildrenLike
-
-    constructor() {
-        this.children = [
-            {
-                tag: 'img',
-                height: 60,
-                src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/dev.svg`,
-            },
-            { tag: 'div', class: 'mx-2' },
-            {
-                tag: 'div',
-                innerText: 'A solution that scales with your libraries ...',
-            },
-        ]
     }
 }
 

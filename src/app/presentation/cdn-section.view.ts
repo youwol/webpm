@@ -1,6 +1,10 @@
 import { VirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
 import { CardView } from '../common/card.view'
-import { SectionView } from '../common/section.view'
+import {
+    ParagraphSeparator,
+    SectionView,
+    TextParagraphView,
+} from '../common/section.view'
 
 export class CdnSectionView extends SectionView {
     constructor() {
@@ -8,7 +12,15 @@ export class CdnSectionView extends SectionView {
             title: 'Flexible and robust',
             subtitle: '',
             withClasses: 'border-left border-bottom',
-            paragraphs: [new GridView()],
+            paragraphs: [
+                new TextParagraphView({
+                    innerHTML: `The overarching goal is to offer a robust solution for installing and linking libraries
+                     at runtime within a web browser. While it is crucial in many scenarios (involving installing 
+                     features that relies on user actions), webPM is the only existing solution (to our knowledge).`,
+                }),
+                new ParagraphSeparator(),
+                new GridView(),
+            ],
         })
     }
 }
@@ -48,7 +60,7 @@ class GridView implements VirtualDOM<'div'> {
             }),
             new CardView({
                 imageName: 'multi-versions.png',
-                title: 'Mixin versions',
+                title: 'Versions mixin',
                 abstract: {
                     tag: 'div',
                     innerText:
