@@ -1,6 +1,6 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { paragraphStyle, SectionTitle } from './common'
-import { Cell } from './cell.view'
+import { CardView } from '../common/card.view'
 
 export class NeedSectionView implements VirtualDOM<'div'> {
     public readonly tag: 'div'
@@ -45,19 +45,75 @@ export class NeedSectionView implements VirtualDOM<'div'> {
 
 class GridView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = ' d-flex justify-content-center flex-wrap mt-4'
+    public readonly class = 'd-flex flex-wrap justify-content-around '
     public readonly children: ChildrenLike
     constructor() {
         this.children = [
-            new Cell({
+            new CardView({
                 imageName: 'laptop.png',
-                title: `Customizable, not accessible`,
-                text: `
+                title: 'PC',
+                abstract: new PropertiesView({
+                    accessible: 0,
+                    customizable: 1,
+                }),
+                more: morePC,
+            }),
+            new CardView({
+                imageName: 'servers.png',
+                title: 'Servers',
+                abstract: new PropertiesView({
+                    accessible: 1,
+                    customizable: 0,
+                }),
+                more: moreServers,
+            }),
+        ]
+    }
+}
+
+class PropertiesView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
+    public readonly class = 'd-flex flex-column'
+    public readonly children: ChildrenLike
+    constructor({
+        accessible,
+        customizable,
+    }: {
+        accessible: 0 | 1
+        customizable: 0 | 1
+    }) {
+        const classes = {
+            1: 'fa-check fv-text-success',
+            0: 'fa-times fv-text-error',
+        }
+        const separator = { tag: 'div' as const, class: 'mx-2' }
+        const child = (innerText: string, mode: 0 | 1): VirtualDOM<'div'> => ({
+            tag: 'div' as const,
+            class: 'd-flex',
+            children: [
+                {
+                    tag: 'i',
+                    class: `fas ${classes[mode]} align-items-center`,
+                },
+                separator,
+                {
+                    tag: 'div',
+                    innerText,
+                },
+            ],
+        })
+
+        this.children = [
+            child('Customizable', customizable),
+            child('Accessible', accessible),
+        ]
+    }
+}
+
+const morePC = `
 Personal Computers (PCs) are renowned for their customizable nature, allowing users to tailor hardware and software
  configurations to their specific needs. However, this customization, while empowering for the individual user,
   presents challenges in terms of accessibility for others.
-
-### Challenges in Accessibility:
 
 #### **Dependency Management:**
    Customized environments often involve a myriad of dependencies. Sharing a project or software developed in such an
@@ -78,17 +134,12 @@ Personal Computers (PCs) are renowned for their customizable nature, allowing us
    Replicating a customized environment often requires a significant time investment and may involve a steep learning 
    curve for those unfamiliar with the specific tools or development stacks used.
     This can discourage collaboration and hinder the sharing of knowledge.
+`
 
-`,
-            }),
-            new Cell({
-                imageName: 'servers.png',
-                title: 'Accessible, not customizable',
-                text: `
+const moreServers = `
 Servers are designed to be accessible, allowing users to access and benefit from hosted services without the
-need for intricate installation processes. This accessibility is fundamental to the widespread availability of online platforms, applications, and data.
-
-### Challenges in Customization:
+need for intricate installation processes. 
+ However, this accessibility comes at the price of challenges in terms of customization.
 
 #### **Limited User Control:**
    While servers prioritize accessibility, the level of control granted to individual users is often limited. 
@@ -104,8 +155,4 @@ need for intricate installation processes. This accessibility is fundamental to 
    Users relying on servers are dependent on service providers for the customization and configuration of backend services. 
    This dependency can be limiting for users who have specific requirements that fall outside the predefined offerings 
    of the service provider.
-`,
-            }),
-        ]
-    }
-}
+`

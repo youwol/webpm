@@ -1,6 +1,6 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { paragraphStyle, SectionTitle } from './common'
-import { Cell } from './cell.view'
+import { CardView } from '../common/card.view'
 
 export class BrowserAsOSSectionView implements VirtualDOM<'div'> {
     public readonly tag: 'div'
@@ -54,15 +54,45 @@ export class BrowserAsOSSectionView implements VirtualDOM<'div'> {
 
 class GridView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = ' d-flex justify-content-center flex-wrap mt-4'
+    public readonly class = 'd-flex flex-wrap justify-content-around '
     public readonly children: ChildrenLike
     constructor() {
         this.children = [
-            new Cell({
+            new CardView({
                 imageName: 'os-applications.png',
-                title: `Essentials Apps`,
-                text: `
+                title: 'Essentials Apps.',
+                abstract: {
+                    tag: 'div',
+                    innerText:
+                        'Purpose-built applications to deliver essential functionalities ',
+                },
+                more: moreEssentialApps,
+            }),
+            new CardView({
+                imageName: 'os-backends.png',
+                title: 'Backend APIs',
+                abstract: {
+                    tag: 'div',
+                    innerText:
+                        '@devs: APIs for essential backend functionalities',
+                },
+                more: moreBackends,
+            }),
+            new CardView({
+                imageName: 'os-projects.png',
+                title: 'Domain Data',
+                abstract: {
+                    tag: 'div',
+                    innerText:
+                        '@devs: define your own domain model to conceptualize projects/assets  ',
+                },
+                more: moreCustomProject,
+            }),
+        ]
+    }
+}
 
+const moreEssentialApps = `
 Our innovative solution redefines the traditional computing paradigm by transforming a web browser into a 
 fully functional operating system. This approach brings forth a collection of purpose-built applications, 
 each designed to deliver essential functionalities within a familiar and intuitive user experience.
@@ -94,17 +124,9 @@ each designed to deliver essential functionalities within a familiar and intuiti
    Beyond individual applications, our solution fosters collaboration and integration. 
    Users can seamlessly switch between applications, share files, and collaborate in real-time, creating a cohesive and
     interconnected computing experience.
-<!--
-## 2. **Advantages of Browser-Based OS:**
-   - **Platform Agnostic:** Accessible across different devices and operating systems.
-   - **Easy Updates:** Applications and features are updated seamlessly without requiring manual intervention.
-   - **Collaborative Workspace:** Facilitates collaborative work with shared documents and applications.
--->`,
-            }),
-            new Cell({
-                imageName: 'os-backends.png',
-                title: 'Backend APIs',
-                text: `
+`
+
+const moreBackends = `
 Backend APIs play a pivotal role in empowering developers to construct new apps seamlessly.
  By providing a comprehensive set of APIs for essential backend functionalities, developers gain the foundation
   needed to create robust and feature-rich applications. 
@@ -122,13 +144,9 @@ Through the concept of asset (or custom domain project), developers can effortle
     enhancing the customization potential of applications.
 #### **webPM Discovery API:**
    The webPM Discovery API streamlines content delivery by providing developers with a dynamic approach to discover
-    and install libraries or applications. 
-`,
-            }),
-            new Cell({
-                imageName: 'os-projects.png',
-                title: 'Custom Domain Project',
-                text: `
+    and install libraries or applications. `
+
+const moreCustomProject = `
 The point of a custom domain project (or custom asset) is to provide developers and users with the flexibility to define and
  structure their projects according to their unique requirements, workflows, and objectives.
 
@@ -146,14 +164,4 @@ to be included in the user's environment.
 #### **Personalized Workflows**
  The concept enables users to establish workflows that align with their preferences and the nature of the project.
   This personalization can enhance efficiency and streamline the process of managing and collaborating on project-related tasks.
- `,
-            }),
-            // new Cell({
-            //     imageName: 'os-tools.png',
-            //     title: 'Various helpers for developpers',
-            //     text: `The webOS ecosystem is also about a various set of HTTP-clients, helping libraries,
-            //     testing configurations, and more. `,
-            // }),
-        ]
-    }
-}
+ `

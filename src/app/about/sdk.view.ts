@@ -1,6 +1,6 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { paragraphStyle, SectionTitle } from './common'
-import { Cell } from './cell.view'
+import { CardView } from '../common/card.view'
 
 export class SdkView implements VirtualDOM<'div'> {
     public readonly tag: 'div'
@@ -53,14 +53,43 @@ export class SdkView implements VirtualDOM<'div'> {
 
 class GridView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = ' d-flex justify-content-center flex-wrap mt-4'
+    public readonly class = 'd-flex flex-wrap justify-content-around '
     public readonly children: ChildrenLike
     constructor() {
         this.children = [
-            new Cell({
+            new CardView({
                 imageName: 'youwol-in-pc.png',
-                title: `Bring YouWol in your PC`,
-                text: `
+                title: 'YouWol in PC',
+                abstract: {
+                    tag: 'div',
+                    innerText: 'Running the entire infrastructure locally',
+                },
+                more: moreYwInPC,
+            }),
+            new CardView({
+                imageName: 'bring-pc-pieces.png',
+                title: 'Local resources',
+                abstract: {
+                    tag: 'div',
+                    innerText:
+                        'Open the opportunity to consume whatever is available in your PC',
+                },
+                more: moreLocalResources,
+            }),
+            new CardView({
+                imageName: 'os-tools.png',
+                title: 'SDK',
+                abstract: {
+                    tag: 'div',
+                    innerText: 'Code as you like, deploy when you want',
+                },
+                more: moreSDK,
+            }),
+        ]
+    }
+}
+
+const moreYwInPC = `
 Running the entire infrastructure locally offers several practical benefits:
 
 #### **Local Development Empowerment:**
@@ -78,24 +107,17 @@ Unlike the online version, the local setup enables the transparent use of custom
 #### **Configurability of Local Servers:**
 Local servers are highly configurable, allowing users to adapt them to specific needs through middleware options, 
    custom commands, and flexible configuration adjustments.
-`,
-            }),
-            new Cell({
-                imageName: 'bring-pc-pieces.png',
-                title: 'Use local resources',
-                text: `
+`
+
+const moreLocalResources = `
 Because the local server run in your own PC, it opens up the ability to use in your workflow 
 data, softwares or environments that are only available in your computer (or that can not be shared).
 It is particularly relevant for instance to use data that can not be published online for security reasons,
 use programs that can not be shared with others through webpm or a custom backends, or interacting with
 your OS to provide access to development tools. 
-                 `,
-            }),
-            new Cell({
-                imageName: 'os-tools.png',
-                title: 'Software Development Kit',
-                text: `
-In addition to the online services, the local iteration of YouWol introduces the concept of 
+`
+
+const moreSDK = `In addition to the online services, the local iteration of YouWol introduces the concept of 
 projects, representing a versatile formalization of an executable designed to run within the YouWol 
 environment. These projects are backed by pipelines, which explicitly outline the procedures for
 building, testing, publishing, and more. This framework offers a flexible and collaborative approach, 
@@ -104,8 +126,5 @@ simplifying the definition of development configurations.
 Executables within projects fall into two categories: 
 *  **browser-compatible**: derived from languages
                    like JavaScript or TypeScript that transpile to JavaScript or WebAssembly and can be executed in a browser, 
-*  **browser-incompatible**: formalized as backend services but currently unavailable online (yet installed transparently in the local version of youwol).`,
-            }),
-        ]
-    }
-}
+*  **browser-incompatible**: formalized as backend services but currently unavailable online (yet installed transparently in the local version of youwol).
+`
