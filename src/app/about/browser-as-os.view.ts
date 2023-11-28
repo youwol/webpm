@@ -1,7 +1,6 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
-import { paragraphStyle } from './common'
 import { CardView } from '../common/card.view'
-import { SectionView } from '../common/section.view'
+import { SectionView, TextParagraphView } from '../common/section.view'
 
 export class BrowserAsOSSectionView extends SectionView {
     constructor() {
@@ -10,34 +9,18 @@ export class BrowserAsOSSectionView extends SectionView {
             subtitle: 'Turn browsers into OS',
             withClasses: 'border-right border-bottom',
             paragraphs: [
-                {
-                    tag: 'div',
-                    class: 'w-100',
-                    style: paragraphStyle,
-                    children: [
-                        {
-                            tag: 'p',
-                            innerHTML: `WebPM establishes the groundwork for an emulated OS within browsers.
+                new TextParagraphView({
+                    innerHTML: `WebPM establishes the groundwork for an emulated OS within browsers.
                         Because applications encompass more than just installing runtimes (user management, persistent
                          storage, indexed databases, installers, environment, and more), YouWol offers for users and 
                          developers  a set of solutions to fully take advantage of this OS like environment.`,
-                        },
-                    ],
-                },
+                }),
                 new GridView(),
-                {
-                    tag: 'div',
-                    class: 'w-100',
-                    style: paragraphStyle,
-                    children: [
-                        {
-                            tag: 'p',
-                            innerHTML: `For a comprehensive understanding and detailed insights into the broader spectrum 
+                new TextParagraphView({
+                    innerHTML: `For a comprehensive understanding and detailed insights into the broader spectrum 
                         of the topic, encompassing areas such as HTTP clients, assisting libraries, testing configurations, 
                         and more, we encourage readers to explore the <a href="">dedicated page</a>.`,
-                        },
-                    ],
-                },
+                }),
             ],
         })
     }

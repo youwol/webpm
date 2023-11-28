@@ -1,4 +1,5 @@
 import { VirtualDOM, ChildrenLike, AnyVirtualDOM } from '@youwol/rx-vdom'
+import { paragraphStyle } from '../about/common'
 
 export class SectionTitle implements VirtualDOM<'div'> {
     public readonly tag = 'div'
@@ -58,6 +59,22 @@ export class SectionView implements VirtualDOM<'div'> {
                 tag: 'div',
                 class: 'd-flex flex-column justify-content-around align-items-center',
                 children: paragraphs,
+            },
+        ]
+    }
+}
+
+export class TextParagraphView implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
+    public readonly class = 'w-100'
+    public readonly style = paragraphStyle
+    public readonly children: ChildrenLike
+
+    constructor({ innerHTML }: { innerHTML: string }) {
+        this.children = [
+            {
+                tag: 'div',
+                innerHTML,
             },
         ]
     }

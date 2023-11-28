@@ -1,7 +1,6 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
-import { paragraphStyle } from './common'
 import { CardView } from '../common/card.view'
-import { SectionView } from '../common/section.view'
+import { SectionView, TextParagraphView } from '../common/section.view'
 
 export class ConceptView extends SectionView {
     constructor() {
@@ -11,24 +10,18 @@ export class ConceptView extends SectionView {
                 'Browsers: customizable, accessible, connected & performant',
             withClasses: 'border-left border-bottom',
             paragraphs: [
-                {
-                    class: 'w-100',
-                    style: paragraphStyle,
-                    tag: 'p',
+                new TextParagraphView({
                     innerHTML: `Positioned between your PC and the cloud is capable of merging the customizability of PC with the accessibility of cloud solutions.
                  Also, it inherently possesses the capability to execute a variety of computations.`,
-                },
+                }),
                 new GridView(),
                 { tag: 'div', class: 'my-4' },
-                {
-                    class: 'w-100',
-                    style: paragraphStyle,
-                    tag: 'p',
+                new TextParagraphView({
                     innerHTML: `The concept? Extending local & cloud solutions by running and sharing code 
                  through web-browser. The only lacking component was a robust package manager able to install and link
                  runtimes dynamically directly into web-browsers. It is the essence of <a href="https://webpm.org" target="_blank">WebPM</a>:
                  promote an install-free, customizable & extendable runtime environment for browsers.`,
-                },
+                }),
             ],
         })
     }

@@ -1,7 +1,6 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
-import { paragraphStyle } from './common'
 import { CardView } from '../common/card.view'
-import { SectionView } from '../common/section.view'
+import { SectionView, TextParagraphView } from '../common/section.view'
 
 export class SdkView extends SectionView {
     constructor() {
@@ -10,33 +9,17 @@ export class SdkView extends SectionView {
             subtitle: 'Access local data/programs, custom backends, SDK',
             withClasses: 'border-left',
             paragraphs: [
-                {
-                    tag: 'div',
-                    class: 'w-100',
-                    style: paragraphStyle,
-                    children: [
-                        {
-                            tag: 'div',
-                            innerHTML: `Because everything can not run in a browser, be it for technical or security reasons,
+                new TextParagraphView({
+                    innerHTML: `Because everything can not run in a browser, be it for technical or security reasons,
                         the all youwol environment can run in a personal computer. 
                         You get the best of what a hybrid local/cloud environment can provide.`,
-                        },
-                    ],
-                },
+                }),
                 new GridView(),
                 { tag: 'div', class: 'my-4' },
-                {
-                    tag: 'div',
-                    class: 'w-100',
-                    style: paragraphStyle,
-                    children: [
-                        {
-                            tag: 'div',
-                            innerHTML: `Want to get started? Execute the command: <pre><b><i>pipx run youwol</i></b></pre>
+                new TextParagraphView({
+                    innerHTML: `Want to get started? Execute the command: <pre><b><i>pipx run youwol</i></b></pre>
  and visit our interactive tours presented <a href="">here</a>`,
-                        },
-                    ],
-                },
+                }),
             ],
         })
     }

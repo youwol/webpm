@@ -1,7 +1,6 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
-import { paragraphStyle } from './common'
 import { CardView } from '../common/card.view'
-import { SectionView } from '../common/section.view'
+import { SectionView, TextParagraphView } from '../common/section.view'
 
 export class NeedSectionView extends SectionView {
     constructor() {
@@ -16,15 +15,12 @@ export class NeedSectionView extends SectionView {
                     children: [new GridView()],
                 },
                 { tag: 'div', class: 'my-2' },
-                {
-                    class: 'w-100',
-                    style: paragraphStyle,
-                    tag: 'p',
+                new TextParagraphView({
                     innerHTML: `The need YouWol aims fulfill is to provide a computing solution that sits between traditional 
                 PCs and cloud platforms. 
                 It shall make runtime widely accessible while also ensuring that users, regardless of their expertise,
                  can easily customize and extend it to meet their specific needs.`,
-                },
+                }),
             ],
         })
     }
