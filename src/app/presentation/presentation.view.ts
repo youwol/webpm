@@ -34,7 +34,6 @@ export class PresentationView implements VirtualDOM<'div'> {
                     new CombineSectionView(),
                     new DeveloperSectionView(),
                     new SeparatorSectionLast(),
-                    { tag: 'div', class: 'my-5' },
                     new ApplicationsSectionView(),
                     { tag: 'div', class: 'my-5' },
                 ],
