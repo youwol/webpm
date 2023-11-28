@@ -20,7 +20,6 @@ export class PresentationView implements VirtualDOM<'div'> {
             {
                 tag: 'div',
                 id: 'background',
-                class: 'background py-3',
                 children: [new HeaderView()],
             },
             {
