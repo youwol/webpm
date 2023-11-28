@@ -86,18 +86,19 @@ export const textStyle = {
     fontSize: '16px',
     lineHeight: '32px',
     fontWeight: 400,
+    textAlign: 'justify' as const,
 }
 
+export const paragraphStyle = {
+    ...textStyle,
+    minWidth: '300px',
+    maxWidth: '600px',
+}
 export const maxColumnWidth = '1040px'
 
 export class TextParagraphView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = 'text-justify'
-    public readonly style = {
-        ...textStyle,
-        minWidth: '300px',
-        maxWidth: '600px',
-    }
+    public readonly style = paragraphStyle
     public readonly children: ChildrenLike
 
     constructor({ innerHTML }: { innerHTML: string }) {
