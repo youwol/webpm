@@ -34,29 +34,20 @@ class GridView implements VirtualDOM<'div'> {
             new CardView({
                 imageName: 'youwol-in-pc.png',
                 title: 'YouWol in PC',
-                abstract: {
-                    tag: 'div',
-                    innerText: 'Running the entire infrastructure locally',
-                },
+                abstract: 'Running the entire infrastructure locally',
                 more: moreYwInPC,
             }),
             new CardView({
                 imageName: 'bring-pc-pieces.png',
                 title: 'Local resources',
-                abstract: {
-                    tag: 'div',
-                    innerText:
-                        'Open the opportunity to consume whatever is available in your PC',
-                },
+                abstract:
+                    'Open the opportunity to consume whatever is available in your PC',
                 more: moreLocalResources,
             }),
             new CardView({
                 imageName: 'os-tools.png',
                 title: 'SDK',
-                abstract: {
-                    tag: 'div',
-                    innerText: 'Code as you like, deploy when you want',
-                },
+                abstract: 'Code as you like, deploy when you want',
                 more: moreSDK,
             }),
         ]

@@ -35,31 +35,21 @@ class GridView implements VirtualDOM<'div'> {
             new CardView({
                 imageName: 'os-applications.png',
                 title: 'Essentials Apps.',
-                abstract: {
-                    tag: 'div',
-                    innerText:
-                        'Purpose-built applications to deliver essential functionalities ',
-                },
+                abstract:
+                    'Purpose-built applications to deliver essential functionalities',
                 more: moreEssentialApps,
             }),
             new CardView({
                 imageName: 'os-backends.png',
                 title: 'Backend APIs',
-                abstract: {
-                    tag: 'div',
-                    innerText:
-                        '@devs: APIs for essential backend functionalities',
-                },
+                abstract: 'APIs for essential backend functionalities',
                 more: moreBackends,
             }),
             new CardView({
                 imageName: 'os-projects.png',
                 title: 'Domain Data',
-                abstract: {
-                    tag: 'div',
-                    innerText:
-                        '@devs: define your own domain model to conceptualize projects/assets  ',
-                },
+                abstract:
+                    'Define your own domain model to conceptualize projects/assets  ',
                 more: moreCustomProject,
             }),
         ]

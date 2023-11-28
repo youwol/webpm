@@ -36,39 +36,26 @@ class GridView implements VirtualDOM<'div'> {
             new CardView({
                 imageName: 'adaptor.png',
                 title: 'Standard',
-                abstract: {
-                    tag: 'div',
-                    innerText:
-                        'Standardized API & universal compilation target.',
-                },
+                abstract: 'Standardized API & universal compilation target.',
                 more: moreStandard,
             }),
             new CardView({
                 imageName: 'connected.png',
                 title: 'Connected',
-                abstract: {
-                    tag: 'div',
-                    innerText: 'PC, servers & peripherals.',
-                },
+                abstract: 'PC, servers & peripherals.',
                 more: moreConnected,
             }),
             new CardView({
                 imageName: 'siwss-knife.png',
                 title: 'Flexible',
-                abstract: {
-                    tag: 'div',
-                    innerText:
-                        'Just-in-time compilation, various languages support.',
-                },
+                abstract:
+                    'Just-in-time compilation, various languages support.',
                 more: moreFlexible,
             }),
             new CardView({
                 imageName: 'rocket.png',
                 title: 'Performant',
-                abstract: {
-                    tag: 'div',
-                    innerText: 'Multi-threading, GPU, Web-Assembly ...',
-                },
+                abstract: 'Multi-threading, GPU, Web-Assembly ...',
                 more: morePerformant,
             }),
         ]

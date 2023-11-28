@@ -10,6 +10,7 @@ import { Modal } from '@youwol/rx-group-views'
 import { from, merge } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { install } from '@youwol/webpm-client'
+import { textStyle } from './section.view'
 
 export class CellHeader implements VirtualDOM<'div'> {
     public readonly tag = 'div'
@@ -19,10 +20,12 @@ export class CellHeader implements VirtualDOM<'div'> {
         imageName,
         title,
         scaleFactor,
+        more,
     }: {
         imageName: string
         title: string
         scaleFactor?: number
+        more?: string
     }) {
         const s = scaleFactor || 1
         this.children = [
@@ -33,13 +36,22 @@ export class CellHeader implements VirtualDOM<'div'> {
                 src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/${imageName}`,
             },
             {
-                class: 'm-2',
-                tag: 'h6',
-                style: {
-                    fontWeight: 600,
-                    fontSize: `${s * 16}px`,
-                },
-                innerText: title,
+                tag: 'div',
+                class: 'd-flex flex-column align-items-center',
+                children: [
+                    {
+                        class: 'm-2',
+                        tag: 'h6',
+                        style: {
+                            fontWeight: 600,
+                            fontSize: `${s * 16}px`,
+                        },
+                        innerText: title,
+                    },
+                    more
+                        ? new MoreButton(title, more, imageName)
+                        : { tag: 'div' },
+                ],
             },
         ]
     }
@@ -47,10 +59,11 @@ export class CellHeader implements VirtualDOM<'div'> {
 export class CardView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
     public readonly class =
-        'd-flex  flex-column align-items-center text-justify p-2 m-2 rounded'
+        'd-flex  flex-column align-items-center text-justify p-2 m-3 rounded fv-border-left-focus fv-border-bottom-focus'
     public readonly children: ChildrenLike
     public readonly style = {
-        width: '250px',
+        ...textStyle,
+        width: '280px',
     }
     constructor({
         imageName,
@@ -59,21 +72,25 @@ export class CardView implements VirtualDOM<'div'> {
         more,
     }: {
         imageName: string
-        abstract: AnyVirtualDOM
+        abstract: string | AnyVirtualDOM
         title: string
         more?: string
     }) {
         this.children = [
-            new CellHeader({ imageName, title }),
+            new CellHeader({ imageName, title, more }),
             {
                 tag: 'div',
-                class: 'm-2 h-100 d-flex flex-column',
+                class: 'm-2 h-100',
                 children: [
-                    abstract,
-                    { tag: 'div', class: 'flex-grow-1' },
-                    more
-                        ? new MoreButton(title, more, imageName)
-                        : { tag: 'div' },
+                    typeof abstract === 'string'
+                        ? {
+                              tag: 'div',
+                              innerHTML: abstract,
+                              style: {
+                                  display: 'inline' as const,
+                              },
+                          }
+                        : abstract,
                 ],
             },
         ]
@@ -89,15 +106,10 @@ export class EmptyCard implements VirtualDOM<'div'> {
     }
 }
 
-class MoreButton implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly class = 'w-100 d-flex justify-content-center'
-    public readonly children = [
-        {
-            tag: 'div' as const,
-            class: 'text-center rounded fas fa-ellipsis-h fv-pointer border p-2',
-        },
-    ]
+class MoreButton implements VirtualDOM<'i'> {
+    public readonly tag = 'i'
+    public readonly class =
+        'text-center rounded fas fa-info-circle fv-pointer fv-bg-background fv-text-focus p-1 mx-1'
     public readonly onclick: (ev: MouseEvent) => void
     constructor(title: string, markdown: string, imageName: string) {
         this.onclick = () => {
