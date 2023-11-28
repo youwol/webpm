@@ -364,7 +364,12 @@ class ExplanationsView implements VirtualDOM<'div'> {
                         })
                         .pipe(
                             raiseHTTPErrors(),
-                            mergeMap((blob) => from(blob.text())),
+                            mergeMap((blob: string | Blob) =>
+                                // Somehow when serving with webpack dev-server, the content is already decoded
+                                typeof blob == 'string'
+                                    ? of(blob)
+                                    : from(blob.text()),
+                            ),
                         ),
                 ]),
                 vdomMap: ([{ marked }, markdown]) => {
