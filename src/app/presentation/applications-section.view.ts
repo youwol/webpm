@@ -9,7 +9,9 @@ export class ApplicationsSectionView implements VirtualDOM<'div'> {
         this.children = [
             {
                 tag: 'div',
-                class: 'w-50',
+                style: {
+                    maxWidth: '600px',
+                },
                 children: [
                     {
                         class: 'm-2 text-center',

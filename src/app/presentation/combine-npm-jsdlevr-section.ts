@@ -61,7 +61,7 @@ export class CombineSectionView implements VirtualDOM<'div'> {
             new TitleView(),
             {
                 tag: 'div',
-                class: 'px-5 d-flex justify-content-center ',
+                class: 'd-flex justify-content-center ',
                 children: [new TableComparisonView()],
             },
         ]
@@ -70,7 +70,7 @@ export class CombineSectionView implements VirtualDOM<'div'> {
 
 class TitleView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = 'd-flex align-items-center'
+    public readonly class = 'd-flex align-items-center flex-wrap'
     public readonly style = {
         fontSize: '1.7rem',
         fontWeight: 'bolder' as const,
@@ -101,7 +101,9 @@ class TitleView implements VirtualDOM<'div'> {
 
 class TableComparisonView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = 'w-50'
+    public readonly style = {
+        width: 'fit-content',
+    }
     public readonly children: ChildrenLike
     constructor() {
         this.children = [

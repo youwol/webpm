@@ -25,6 +25,10 @@ export class BannerItem implements VirtualDOM<'div'> {
     public readonly tag: 'div'
     public readonly class: RxAttribute<string, string>
     public readonly innerText: string
+    public readonly style = {
+        whiteSpace: 'nowrap' as const,
+    }
+
     onclick: (ev: MouseEvent) => void
     constructor({
         title,
@@ -40,7 +44,7 @@ export class BannerItem implements VirtualDOM<'div'> {
             source$: topic$,
             vdomMap: (selectedTopic) =>
                 selectedTopic === target ? 'fv-text-focus' : '',
-            wrapper: (d) => `${d} mx-3 my-auto fv-pointer`,
+            wrapper: (d) => `${d} mx-1 my-auto fv-pointer `,
         }
         this.onclick = () => {
             topic$.next(target)
@@ -116,11 +120,11 @@ export class DropDownBannerItem implements VirtualDOM<'div'> {
 
 export class SeparatorView implements VirtualDOM<'div'> {
     public readonly tag: 'div'
-    class = 'mx-4'
+    public readonly class = 'mx-1'
 }
 export class BannerItems implements VirtualDOM<'div'> {
     public readonly tag: 'div'
-    public readonly class = 'd-flex px-5 my-auto'
+    public readonly class = 'd-flex my-auto align-items-center flex-grow-1'
     public readonly children: ChildrenLike
     constructor({ topic$ }: { topic$: BehaviorSubject<Topic> }) {
         this.children = [
@@ -175,11 +179,19 @@ export class TopBannerView implements VirtualDOM<'div'> {
                 source$: installBootstrap$(),
                 vdomMap: () => ({
                     tag: 'div',
-                    class: 'w-75 d-flex justify-content-center mx-auto',
+                    class: 'w-100 d-flex justify-content-center mx-auto px-2',
                     children: [
-                        new Logo(),
                         { tag: 'div', class: 'flex-grow-1' },
+                        new Logo(),
+                        {
+                            tag: 'div',
+                            class: 'flex-grow-1',
+                            style: {
+                                minWidth: '10px',
+                            },
+                        },
                         new BannerItems({ topic$ }),
+                        { tag: 'div', class: 'flex-grow-1' },
                     ],
                 }),
             },

@@ -3,7 +3,7 @@ import { CodeEditorView } from './code-editor.view'
 
 export class HeaderView implements VirtualDOM<'div'> {
     public readonly tag: 'div'
-    public readonly class = 'mx-auto p-5'
+    public readonly class = 'mx-auto'
     public readonly children: ChildrenLike
     constructor() {
         this.children = [
@@ -22,7 +22,7 @@ export class HeaderView implements VirtualDOM<'div'> {
                     { tag: 'div', class: 'my-1' },
                     {
                         tag: 'div',
-                        class: 'w-100 text-justify text-column-width d-flex align-items-center justify-content-around',
+                        class: 'w-100 text-justify text-column-width d-flex align-items-center justify-content-around flex-wrap',
                         style: {
                             fontWeight: 400,
                             fontSize: '20px',
@@ -74,8 +74,8 @@ export class HeaderView implements VirtualDOM<'div'> {
                     { tag: 'div', class: 'my-2' },
                     {
                         tag: 'div',
-                        class: 'mx-auto px-2 border p-2',
-                        style: { width: '1040px' },
+                        class: 'mx-auto px-2 border p-2 w-100',
+                        style: { maxWidth: '1040px' },
                         children: [new CodeEditorView()],
                     },
                 ],
