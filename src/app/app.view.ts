@@ -1,4 +1,4 @@
-import { VirtualDOM, ChildrenLike, FluxViewVirtualDOM } from '@youwol/rx-vdom'
+import { VirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
 
 import { TopBannerView } from './top-banner.view'
 import { PresentationView } from './presentation/presentation.view'
@@ -19,15 +19,15 @@ export class AppView implements VirtualDOM<'div'> {
 
     constructor() {
         this.children = [
-            new TopBannerView({ topic$: this.topic$ }) as FluxViewVirtualDOM,
+            new TopBannerView({ topic$: this.topic$ }),
             {
                 source$: this.topic$,
                 vdomMap: (topic: Topic) => {
                     if (topic == 'Home') {
-                        return new PresentationView() as FluxViewVirtualDOM
+                        return new PresentationView()
                     }
                     if (topic == 'About') {
-                        return new AboutView() as FluxViewVirtualDOM
+                        return new AboutView()
                     }
                 },
             },

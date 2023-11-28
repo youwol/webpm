@@ -1,4 +1,4 @@
-import { VirtualDOM, ChildrenLike, FluxViewVirtualDOM } from '@youwol/rx-vdom'
+import { VirtualDOM, ChildrenLike, AttributeLike } from '@youwol/rx-vdom'
 import { Common } from '@youwol/rx-code-mirror-editors'
 import { examples } from './examples'
 import {
@@ -6,6 +6,7 @@ import {
     combineLatest,
     from,
     Observable,
+    of,
     ReplaySubject,
     Subject,
 } from 'rxjs'
@@ -15,6 +16,7 @@ import { install } from '@youwol/webpm-client'
 import { raiseHTTPErrors } from '@youwol/http-primitives'
 import { AssetsGateway } from '@youwol/http-clients'
 
+type Mode = 'code' | 'view' | 'video' | 'links'
 class State {
     public readonly currentExample$ = new BehaviorSubject(examples[0])
     public readonly ideState = new Common.IdeState({
@@ -28,9 +30,7 @@ class State {
     })
     public readonly run$ = new Subject()
     public readonly result$: Observable<string>
-    public readonly mode$ = new BehaviorSubject<
-        'code' | 'view' | 'video' | 'links'
-    >('code')
+    public readonly mode$ = new BehaviorSubject<Mode>('code')
 
     constructor() {
         this.result$ = this.run$.pipe(
@@ -68,7 +68,7 @@ class State {
 export class CodeEditorView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
     public readonly state = new State()
-    public readonly class = 'w-100 d-flex flex-column py-2 rounded'
+    public readonly class = 'w-100 d-flex flex-column rounded'
     public readonly children: ChildrenLike
     public readonly style = {
         position: 'relative' as const,
@@ -95,7 +95,7 @@ export class CodeEditorView implements VirtualDOM<'div'> {
         this.children = [
             new EditorBannerView({
                 state: this.state,
-            }) as FluxViewVirtualDOM,
+            }),
             {
                 tag: 'div',
                 class: 'w-100 overflow-auto',
@@ -115,7 +115,7 @@ export class CodeEditorView implements VirtualDOM<'div'> {
                                     : 'd-none',
                             ),
                         ),
-                        children: [ideView as FluxViewVirtualDOM],
+                        children: [ideView],
                     },
                     {
                         tag: 'div',
@@ -163,13 +163,6 @@ export class CodeEditorView implements VirtualDOM<'div'> {
                                 : { tag: 'div' }
                         },
                     },
-                    {
-                        source$: this.state.mode$,
-                        vdomMap: (mode: 'code' | 'view') =>
-                            mode == 'code'
-                                ? new MenuViewEdition(this.state)
-                                : new MenuViewRun(this.state),
-                    },
                 ],
             },
         ]
@@ -188,8 +181,7 @@ export class CodeEditorView implements VirtualDOM<'div'> {
 export class EditorBannerView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
     public readonly state: State
-    public readonly class =
-        'w-100 d-flex align-items-center justify-content-around py-1 mb-2'
+    public readonly class = 'w-100 mb-2'
     public readonly children: ChildrenLike
     public readonly style = {
         fontWeight: 600,
@@ -197,115 +189,103 @@ export class EditorBannerView implements VirtualDOM<'div'> {
     }
     constructor(params: { state: State }) {
         Object.assign(this, params)
-        this.children = examples.map((ex) => ({
-            tag: 'div',
-            class: {
-                source$: this.state.currentExample$,
-                vdomMap: (current) => (current == ex ? 'fv-text-focus' : ''),
-                wrapper: (classes) => `fv-pointer ${classes}`,
-            },
-            innerText: ex.title,
-            onclick: () => this.state.set(ex),
-        }))
-    }
-}
-
-const styleMenuEdition = {
-    position: 'absolute' as const,
-    top: '50px',
-    right: '0%',
-    zIndex: 1000,
-    width: '150px',
-}
-const classesMenuEdition = 'fv-text-primary px-3 py-4 fv-xx-lighter'
-const classesMenuItemEdition =
-    'w-100 fv-bg-background-alt border rounded p-2 d-flex align-items-center justify-content-around fv-hover-xx-lighter fv-pointer'
-class MenuViewEdition implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly children: ChildrenLike
-    public readonly class = classesMenuEdition
-    public readonly style = styleMenuEdition
-
-    constructor(state: State) {
+        const examplesHeader: VirtualDOM<'div'> =
+            window.innerWidth >= 600
+                ? {
+                      tag: 'div',
+                      class: 'w-100 d-flex align-items-center justify-content-around py-1',
+                      children: examples.map((ex) => ({
+                          tag: 'div',
+                          style: {},
+                          class: {
+                              source$: this.state.currentExample$,
+                              vdomMap: (current) =>
+                                  current == ex ? 'fv-text-focus' : '',
+                              wrapper: (classes) => `fv-pointer ${classes}`,
+                          },
+                          innerText: ex.title,
+                          onclick: () => this.state.set(ex),
+                      })),
+                  }
+                : {
+                      tag: 'div',
+                      class: 'w-100 d-flex justify-content-center py-1',
+                      children: [
+                          {
+                              tag: 'select' as const,
+                              class: 'mx-auto',
+                              onchange: (ev) => {
+                                  this.state.set(examples[ev.target['value']])
+                              },
+                              children: examples.map((ex, i) => ({
+                                  tag: 'option' as const,
+                                  style: {},
+                                  value: `${i}`,
+                                  innerText: ex.title,
+                              })),
+                          },
+                      ],
+                  }
         this.children = [
+            examplesHeader,
             {
                 tag: 'div',
-                class: classesMenuItemEdition,
-                onclick: () => state.execute(),
+                class: 'd-flex justify-content-center fv-bg-background fv-border-top-background-alt',
                 children: [
-                    {
-                        tag: 'i',
-                        class: 'fas fa-play fv-text-success',
-                    },
-                    {
-                        tag: 'div',
-                        innerText: 'Run',
-                    },
-                ],
-            },
-            { tag: 'div', class: 'my-3' },
-            {
-                tag: 'div',
-                class: classesMenuItemEdition,
-                onclick: () => state.displayVideo(),
-                children: [
-                    {
-                        tag: 'img',
-                        height: 25,
-                        src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/YouTube.png`,
-                    },
-                    {
-                        tag: 'div',
-                        innerText: 'Explain',
-                    },
-                ],
-            },
-            { tag: 'div', class: 'my-3' },
-            {
-                tag: 'div',
-                class: classesMenuItemEdition,
-                onclick: () => state.displayLinks(),
-                children: [
-                    {
-                        tag: 'i',
-                        class: 'fas fa-file-alt fv-text-success',
-                    },
-                    {
-                        tag: 'div',
-                        innerText: 'Explain',
-                    },
+                    new ActionMenuView({
+                        state: params.state,
+                        target: 'code',
+                        icon: 'fa-code',
+                        action: () => params.state.mode$.next('code'),
+                    }),
+                    new ActionMenuView({
+                        state: params.state,
+                        target: 'view',
+                        icon: 'fa-play',
+                        action: () => params.state.execute(),
+                    }),
+                    new ActionMenuView({
+                        state: params.state,
+                        target: 'links',
+                        icon: 'fa-file-alt',
+                        action: () => params.state.displayLinks(),
+                    }),
+                    new ActionMenuView({
+                        state: params.state,
+                        target: 'video',
+                        icon: 'fa-video',
+                        action: () => params.state.displayVideo(),
+                    }),
                 ],
             },
         ]
     }
 }
 
-class MenuViewRun implements VirtualDOM<'div'> {
+const classesMenuItemEdition = 'p-1 mx-2 fv-hover-xx-lighter fv-pointer'
+
+class ActionMenuView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
+    public readonly class: AttributeLike<string>
     public readonly children: ChildrenLike
-    public readonly class = classesMenuEdition
-    public readonly style = styleMenuEdition
-    constructor(state: State) {
+    public readonly onclick
+    constructor(params: { state: State; target: Mode; icon: string; action }) {
+        this.class = {
+            source$: params.state.mode$,
+            vdomMap: (mode: Mode) => {
+                return mode == params.target ? 'fv-border-bottom-focus' : ''
+            },
+            wrapper: (d) => `${d} ${classesMenuItemEdition}`,
+        }
         this.children = [
             {
-                tag: 'div',
-                class: classesMenuItemEdition,
-                onclick: () => state.mode$.next('code'),
-                children: [
-                    {
-                        tag: 'i',
-                        class: 'fas fa-pen mx-3 fv-text-success',
-                    },
-                    {
-                        tag: 'div',
-                        innerText: 'Edit',
-                    },
-                ],
+                tag: 'i',
+                class: `fas ${params.icon} fv-text-success`,
             },
         ]
+        this.onclick = params.action
     }
 }
-
 class EmbeddedYoutube implements VirtualDOM<'div'> {
     public readonly tag = 'div'
     public readonly class = 'flex-grow-1 text-left d-flex flex-column'
@@ -384,11 +364,15 @@ class ExplanationsView implements VirtualDOM<'div'> {
                         })
                         .pipe(
                             raiseHTTPErrors(),
-                            mergeMap((blob) => from(blob.text())),
+                            mergeMap((blob: string | Blob) =>
+                                // Somehow when serving with webpack dev-server, the content is already decoded
+                                typeof blob == 'string'
+                                    ? of(blob)
+                                    : from(blob.text()),
+                            ),
                         ),
                 ]),
                 vdomMap: ([{ marked }, markdown]) => {
-                    console.log('Marked', marked)
                     const parsed = marked.parse(markdown)
                     return { tag: 'div', innerHTML: parsed }
                 },

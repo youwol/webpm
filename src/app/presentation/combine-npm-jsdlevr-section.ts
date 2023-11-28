@@ -1,5 +1,10 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { setup } from '../../auto-generated'
+import {
+    ParagraphSeparator,
+    SectionView,
+    TextParagraphView,
+} from '../common/section.view'
 
 const checked = `<div class="w-100 d-flex justify-content-center"><i class=" mx-auto fas fa-check fv-text-success"></i></div>`
 const notChecked = `<div class="w-100 d-flex justify-content-center"><i class="mx-auto fas fa-times fv-text-error"></i></div>`
@@ -52,25 +57,31 @@ const table = `<table>
     </tbody>
 </table>
 `
-export class CombineSectionView implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly class = 'mx-auto border-right border-bottom p-5'
-    public readonly children: ChildrenLike
+
+export class CombineSectionView extends SectionView {
     constructor() {
-        this.children = [
-            new TitleView(),
-            {
-                tag: 'div',
-                class: 'px-5 d-flex justify-content-center ',
-                children: [new TableComparisonView()],
-            },
-        ]
+        super({
+            title: new TitleView(),
+            subtitle: '',
+            withClasses: 'border-right border-bottom',
+            paragraphs: [
+                new TextParagraphView({
+                    innerHTML: `Just like NPM running in a browser ... or just like jsDelivr properly managing dependencies.`,
+                }),
+                new ParagraphSeparator(),
+                {
+                    tag: 'div',
+                    class: 'd-flex justify-content-center ',
+                    children: [new TableComparisonView()],
+                },
+            ],
+        })
     }
 }
 
 class TitleView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = 'd-flex align-items-center'
+    public readonly class = 'd-flex align-items-center flex-wrap'
     public readonly style = {
         fontSize: '1.7rem',
         fontWeight: 'bolder' as const,
@@ -101,7 +112,9 @@ class TitleView implements VirtualDOM<'div'> {
 
 class TableComparisonView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = 'w-50'
+    public readonly style = {
+        width: 'fit-content',
+    }
     public readonly children: ChildrenLike
     constructor() {
         this.children = [

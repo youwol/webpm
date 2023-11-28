@@ -1,118 +1,113 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
-import { paragraphStyle, SectionTitle } from './common'
-import { Cell } from './cell.view'
+import { CardView } from '../common/card.view'
+import { SectionView, TextParagraphView } from '../common/section.view'
 
-export class ConceptView implements VirtualDOM<'div'> {
-    public readonly tag: 'div'
-    public readonly class = 'mx-auto border-left border-bottom p-5'
-    public readonly children: ChildrenLike
+export class ConceptView extends SectionView {
     constructor() {
-        this.children = [
-            new SectionTitle({
-                title: 'The concept',
-                subtitle:
-                    'Browsers: customizable, accessible, connected & performant',
-            }),
-            { tag: 'div', class: 'my-4' },
-            {
-                class: 'w-75 mx-auto',
-                style: paragraphStyle,
-                tag: 'p',
-                innerHTML: `Positioned between your PC and the cloud is capable of merging the customizability of PC with the accessibility of cloud solutions.
+        super({
+            title: 'The concept',
+            subtitle: 'Abuse web-browsers',
+            withClasses: 'border-left border-bottom',
+            paragraphs: [
+                new TextParagraphView({
+                    innerHTML: `Positioned between your PC and the cloud is capable of merging the customizability of PC with the accessibility of cloud solutions.
                  Also, it inherently possesses the capability to execute a variety of computations.`,
-            },
-            new GridView(),
-            { tag: 'div', class: 'my-5' },
-            {
-                class: 'w-75 mx-auto',
-                style: paragraphStyle,
-                tag: 'p',
-                innerHTML: `The concept? Extending local & cloud solutions by running and sharing code 
+                }),
+                new GridView(),
+                { tag: 'div', class: 'my-4' },
+                new TextParagraphView({
+                    innerHTML: `The concept? Extending local & cloud solutions by running and sharing code 
                  through web-browser. The only lacking component was a robust package manager able to install and link
                  runtimes dynamically directly into web-browsers. It is the essence of <a href="https://webpm.org" target="_blank">WebPM</a>:
                  promote an install-free, customizable & extendable runtime environment for browsers.`,
-            },
-        ]
+                }),
+            ],
+        })
     }
 }
 
 class GridView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = ' d-flex justify-content-center flex-wrap mt-4'
+    public readonly class = 'd-flex flex-wrap justify-content-around '
     public readonly children: ChildrenLike
     constructor() {
         this.children = [
-            new Cell({
+            new CardView({
                 imageName: 'adaptor.png',
-                title: `Standardized API & universal compilation target.`,
-                text: `
-Web browsers play a pivotal role in adhering to standardized practices, both in terms of APIs 
-(Application Programming Interfaces) and as compilation targets. 
-### Benefits:
-#### **Cross-Browser Compatibility:**
-   Standardized APIs ensure that web applications work consistently across different browsers, providing a seamless user experience without compatibility issues.
-#### **Language Diversity:**
-   With Wasm as a compilation target, developers can choose from a variety of languages to write performance-critical code, promoting language diversity and flexibility in web development.
-#### **Easier Maintenance:**
-   Standardized APIs simplify the maintenance of web applications, as developers can rely on a set of well-defined interfaces. This reduces the effort required for adapting code to different browser environments.
-#### **Innovation and Compatibility:**
-   Standards foster innovation by providing a stable foundation for web development. They enable developers to create cutting-edge applications while ensuring compatibility across diverse platforms and devices.
-`,
+                title: 'Standard',
+                abstract: 'Standardized API & universal compilation target.',
+                more: moreStandard,
             }),
-            new Cell({
+            new CardView({
                 imageName: 'connected.png',
-                title: 'Connection to PC, servers & peripherals.',
-                text: `
-Web browsers serve as versatile platforms that facilitate seamless connections to PC servers and peripherals.
-They provide a unified environment for connecting to PC, servers and peripherals. This unified approach streamlines 
-the development of web applications that need to interact with server-side resources and external devices.
-They also expose APIs that allow web applications to access hardware capabilities on the user's PC, including cameras,
- microphones, and sensors.
-### Benefits:
-#### a. **Remote Server Access:**
-   Web browsers enable users to access and interact with PC servers remotely. This is particularly advantageous for scenarios where centralized server resources need to be leveraged for processing or data storage.
-#### b. **Hardware Integration:**
-   The availability of APIs for hardware access allows web applications to integrate seamlessly with peripherals. This includes capturing audio or video input, accessing device sensors, and interacting with external devices connected to the PC.
-#### c. **Cross-Device Compatibility:**
-   The standardized approach of web browsers ensures that applications can connect to PC servers and peripherals consistently across different devices and operating systems, enhancing cross-device compatibility.
-#### d. **Real-Time Interactivity:**
-   Web browsers support real-time interactivity with PC servers and peripherals, facilitating dynamic and responsive user experiences. This is crucial for applications that require timely data updates or user interactions with connected devices.
-#### e. **Device Agnosticism:**
-   The browser environment abstracts underlying hardware complexities, allowing applications to be device-agnostic. Developers can create applications that seamlessly connect to various peripherals without the need for device-specific implementations.
-`,
+                title: 'Connected',
+                abstract: 'PC, servers & peripherals.',
+                more: moreConnected,
             }),
-            new Cell({
+            new CardView({
                 imageName: 'siwss-knife.png',
-                title: 'Just-in-time compilation, various languages support.',
-                text: `
-Web browsers exhibit remarkable flexibility through features such as just-in-time compilation and support for a diverse
- array of programming languages.
-Just-in-time compilation allows a dynamic translation of programs into machine code during runtime. 
-This dynamic optimization provides the opportunity to install new runtimes at any times during execution.
-Web browsers are also designed to support a variety of programming languages, extending beyond the traditional realm
- of JavaScript. This includes languages like C, C++, Rust, and others. 
- 
-### Benefits:
-#### **Runtime Optimization:**
-   JIT compilation optimizes code execution at runtime, significantly improving the flexibility of web applications.
-    This ensures that applications run efficiently, even when incorporating functionalities from languages other than JavaScript.
-#### **Web Assembly (Wasm):**
-   Wasm as a compilation target further expands the language choices for developers. It empowers them to utilize 
-   languages traditionally associated with system-level programming, unlocking new possibilities for high-performance 
-   computing directly within the browser.
-#### **Easier Integration:**
-   Web browsers seamlessly integrate code written in different languages, promoting interoperability. 
-   This allows developers to leverage the strengths of each language, contributing to a modular and extensible architecture.
-`,
+                title: 'Flexible',
+                abstract:
+                    'Just-in-time compilation, various languages support.',
+                more: moreFlexible,
             }),
-            new Cell({
+            new CardView({
                 imageName: 'rocket.png',
-                title: 'Multi-threading, GPU, Web-Assembly ...',
-                text: `
+                title: 'Performant',
+                abstract: 'Multi-threading, GPU, Web-Assembly ...',
+                more: morePerformant,
+            }),
+        ]
+    }
+}
+
+const moreStandard = `
+Web browsers play a pivotal role in adhering to standardized practices, both in terms of APIs 
+(Application Programming Interfaces) and as compilation targets. It provides multiple benefits.
+
+#### **Cross-Browser Compatibility:**
+   Standardized APIs ensure that web applications work consistently across different browsers, providing a seamless 
+   user experience without compatibility issues.
+#### **Language Diversity:**
+   With Wasm as a compilation target, developers can choose from a variety of languages to write performance-critical code,
+    promoting language diversity and flexibility in web development.
+#### **Easier Maintenance:**
+   Standardized APIs simplify the maintenance of web applications, as developers can rely on a set of well-defined interfaces. 
+   This reduces the effort required for adapting code to different browser environments.
+#### **Device Agnosticism:**
+   The browser environment abstracts underlying hardware complexities, allowing applications to be device-agnostic. 
+   Developers can create applications that seamlessly connect to various peripherals without the need for device-specific implementations.
+
+`
+
+const moreConnected = `
+Web browsers serve as versatile platforms that facilitate seamless connections to PC, servers and peripherals.
+#### **Remote Server Access:**
+   Web browsers enable users to access and interact with PC servers remotely. This is particularly advantageous for scenarios where centralized server resources need to be leveraged for processing or data storage.
+#### **Hardware Integration:**
+   The availability of APIs for hardware access allows web applications to integrate seamlessly with peripherals. This includes capturing audio or video input, accessing device sensors, and interacting with external devices connected to the PC.
+#### **Real-Time Interactivity:**
+   Web browsers support real-time interactivity with PC servers and peripherals, facilitating dynamic and responsive user experiences. This is crucial for applications that require timely data updates or user interactions with connected devices.
+`
+
+const moreFlexible = `
+Web browsers exhibit remarkable flexibility through features such as just-in-time (JIT) compilation and support for a diverse
+ array of programming languages using WebAssembly (WASM).
+#### **Just-in-time Compilation:**
+   JIT compilation optimizes code execution at runtime, significantly improving the flexibility of web applications.
+   It allows a dynamic translation of programs into machine code during runtime, providing the opportunity to dynamically install new runtimes during execution.
+#### **Web Assembly:**
+   Wasm as a compilation target further expands the language choices for developers (including languages like C, C++, 
+   Rust, and others). 
+   It empowers them to utilize languages traditionally associated with system-level programming, 
+   unlocking new possibilities for high-performance computing directly within the browser.
+   It also  allows developers to leverage the strengths of each language, contributing to a modular and extensible architecture.
+   
+`
+
+const morePerformant = `
 Web browsers leverage advanced technologies, including multi-threading, GPU support, and Web Assembly (Wasm), 
 to deliver enhanced performance and capabilities. 
-
-### Benefits:
 
 #### **Improved Responsiveness:**
    Web browsers implement multi-threading, allowing concurrent execution of tasks. This parallel processing enhances
@@ -131,14 +126,5 @@ to deliver enhanced performance and capabilities.
 
 #### **Efficient Resource Utilization:**
    Multi-threading and GPU support enable browsers to utilize system resources more efficiently, distributing
-    workloads across multiple cores and offloading graphics processing to specialized hardware.
-
-#### **Versatile Application Capabilities:**
-   The combination of multi-threading, GPU support, and Web Assembly broadens the scope of applications 
-   that can be run within the browser. From immersive graphics to complex calculations, web applications can deliver 
-   a wide range of functionalities with high performance.
-`,
-            }),
-        ]
-    }
-}
+    workloads across multiple cores and GPU units.
+`

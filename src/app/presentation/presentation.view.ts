@@ -1,5 +1,5 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
-import { CdnSectionView } from './cdn-section.view'
+import { FlexibleRobustView } from './flexible-robust.view'
 import { CombineSectionView } from './combine-npm-jsdlevr-section'
 import { DeveloperSectionView } from './developer-section'
 import { SearchPackageView } from './search-publish-section.view'
@@ -20,7 +20,6 @@ export class PresentationView implements VirtualDOM<'div'> {
             {
                 tag: 'div',
                 id: 'background',
-                class: 'background py-3',
                 children: [new HeaderView()],
             },
             {
@@ -31,13 +30,10 @@ export class PresentationView implements VirtualDOM<'div'> {
                     new SeparatorSectionFirst(),
                     new SearchPackageView(),
                     new SeparatorSectionSecond(),
-                    new CdnSectionView(),
-                    new SeparatorSectionRight(),
+                    new FlexibleRobustView(),
                     new CombineSectionView(),
-                    new SeparatorSectionLeft(),
                     new DeveloperSectionView(),
                     new SeparatorSectionLast(),
-                    { tag: 'div', class: 'my-5' },
                     new ApplicationsSectionView(),
                     { tag: 'div', class: 'my-5' },
                 ],
@@ -81,18 +77,4 @@ class SeparatorSectionLast implements VirtualDOM<'div'> {
     public readonly children: ChildrenLike = [
         { tag: 'div', class: 'w-50 border-right border-top' },
     ]
-}
-class SeparatorSectionLeft implements VirtualDOM<'div'> {
-    public readonly tag: 'div'
-    public readonly class = 'border-left'
-    public readonly style = {
-        height: '5em',
-    }
-}
-class SeparatorSectionRight implements VirtualDOM<'div'> {
-    public readonly tag: 'div'
-    public readonly class = 'border-right'
-    public readonly style = {
-        height: '5em',
-    }
 }
