@@ -18,12 +18,30 @@ export class HeaderView implements VirtualDOM<'div'> {
                     {
                         tag: 'h1',
                         class: 'text-center',
-                        innerText: 'Package manager for browsers',
+                        innerText: 'Package manager in browsers',
                         style: {
                             fontWeight: 600,
                         },
                     },
                     { tag: 'div', class: 'my-1' },
+                    {
+                        tag: 'div',
+                        style: {
+                            maxWidth: '500px',
+                            fontWeight: 400,
+                            fontSize: '16px',
+                        },
+                        class: 'w-100 text-justify text-column-width d-flex align-items-center justify-content-around flex-wrap',
+                        children: [
+                            {
+                                tag: 'div',
+                                class: 'text-center',
+                                innerText:
+                                    'Browser-based NPM equivalent for dynamic dependency handling.',
+                            },
+                        ],
+                    },
+                    { tag: 'div', class: 'my-3' },
                     {
                         tag: 'div',
                         class: 'w-100 text-justify text-column-width d-flex align-items-center justify-content-around flex-wrap',
@@ -32,50 +50,21 @@ export class HeaderView implements VirtualDOM<'div'> {
                             fontSize: '20px',
                         },
                         children: [
-                            {
-                                tag: 'div',
-                                children: [
-                                    {
-                                        tag: 'div',
-                                        innerText: 'NPM install packages in PC',
-                                    },
-                                    {
-                                        tag: 'pre',
-                                        class: 'fv-text-focus fv-bg-background-alt w-100 text-center mb-0',
-                                        innerText: 'npm install ...',
-                                    },
-                                ],
-                            },
-                            {
-                                tag: 'div',
-                                children: [
-                                    {
-                                        tag: 'div',
-                                        innerText:
-                                            'WebPM install packages in browsers',
-                                    },
-                                    {
-                                        tag: 'div',
-                                        class: 'd-flex fv-bg-background-alt align-items-center',
-                                        children: [
-                                            {
-                                                tag: 'pre',
-                                                class: 'mb-0 fv-text-focus fv-bg-background-alt w-100 text-center',
-                                                innerText: 'webpm.install ...',
-                                            },
-                                            {
-                                                tag: 'a',
-                                                class: 'h-100 fas fa-external-link-square-alt fv-bg-background-alt mx-1',
-                                                href: `/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/%5E2.2.0/dist/docs/types/MainModule.InstallInputs.html`,
-                                            },
-                                        ],
-                                    },
-                                ],
-                            },
+                            new Card({
+                                title: 'NPM install in PC',
+                                code: 'npm.install ...',
+                                text: '<b>Can not</b> be used at runtime',
+                                href: undefined,
+                            }),
+                            new Card({
+                                title: 'WebPM install in browsers',
+                                code: 'webpm.install ...',
+                                text: '<b>Can</b> be used at runtime',
+                                href: `/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/%5E2.2.0/dist/docs/types/MainModule.InstallInputs.html`,
+                            }),
                         ],
                     },
                     { tag: 'div', class: 'my-5' },
-                    { tag: 'div', class: 'my-2' },
                     {
                         tag: 'div',
                         class: 'mx-auto px-2 border p-2 w-100',
@@ -83,6 +72,46 @@ export class HeaderView implements VirtualDOM<'div'> {
                         children: [new CodeEditorView()],
                     },
                 ],
+            },
+        ]
+    }
+}
+
+export class Card implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
+    public readonly class = 'p-1 px-2 m-1 fv-border-left-primary'
+    public readonly style = {
+        width: '300px',
+    }
+    public readonly children: ChildrenLike
+    constructor({ title, code, text, href }) {
+        this.children = [
+            {
+                tag: 'div',
+                innerText: title,
+            },
+            {
+                tag: 'div',
+                class: 'd-flex fv-bg-background-alt align-items-center',
+                children: [
+                    {
+                        tag: 'pre',
+                        class: 'mb-0 fv-text-focus fv-bg-background-alt w-100 text-center',
+                        innerText: code,
+                    },
+                    href
+                        ? {
+                              tag: 'a',
+                              class: 'h-100 fas fa-external-link-square-alt fv-bg-background-alt mx-1',
+                              href,
+                          }
+                        : { tag: 'div' },
+                ],
+            },
+            {
+                tag: 'div',
+                class: 'w-100 text-center',
+                innerHTML: text,
             },
         ]
     }
