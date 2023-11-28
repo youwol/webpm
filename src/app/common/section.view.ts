@@ -1,11 +1,13 @@
 import { VirtualDOM, ChildrenLike, AnyVirtualDOM } from '@youwol/rx-vdom'
-import { paragraphStyle } from '../about/common'
 
 export class SectionTitle implements VirtualDOM<'div'> {
     public readonly tag = 'div'
     public readonly children: ChildrenLike
     public readonly title: string
     public readonly subtitle: string
+    public readonly style = {
+        width: 'fit-content',
+    }
     constructor(params: { title: string; subtitle: string }) {
         Object.assign(this, params)
         this.children = [
@@ -15,12 +17,14 @@ export class SectionTitle implements VirtualDOM<'div'> {
                 style: {
                     fontSize: '1.7rem',
                     fontWeight: 'bolder',
+                    width: 'fit-content',
                 },
                 children: [
                     {
                         style: {
                             fontSize: '1.5rem',
                             fontWeight: 'bolder',
+                            width: 'fit-content',
                         },
                         tag: 'div',
                         innerText: this.subtitle,
@@ -30,9 +34,10 @@ export class SectionTitle implements VirtualDOM<'div'> {
         ]
     }
 }
+
 export class SectionView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = 'mx-auto p-5 '
+    public readonly class = 'mx-auto py-4 px-1'
     public readonly children: ChildrenLike
 
     constructor({
@@ -46,14 +51,27 @@ export class SectionView implements VirtualDOM<'div'> {
         paragraphs: ChildrenLike
         withClasses: string
     }) {
-        this.class += withClasses
+        this.class += ' ' + withClasses
         this.children = [
-            typeof title === 'string'
-                ? new SectionTitle({
-                      title,
-                      subtitle,
-                  })
-                : title,
+            {
+                tag: 'div',
+                class: 'd-flex',
+                children: [
+                    {
+                        tag: 'div',
+                        class: 'rounded mr-1',
+                        style: {
+                            borderLeft: '10px solid #ffbb00',
+                        },
+                    },
+                    typeof title === 'string'
+                        ? new SectionTitle({
+                              title,
+                              subtitle,
+                          })
+                        : title,
+                ],
+            },
             { tag: 'div', class: 'my-4' },
             {
                 tag: 'div',
@@ -64,10 +82,22 @@ export class SectionView implements VirtualDOM<'div'> {
     }
 }
 
+export const textStyle = {
+    fontSize: '16px',
+    lineHeight: '32px',
+    fontWeight: 400,
+}
+
+export const maxColumnWidth = '1040px'
+
 export class TextParagraphView implements VirtualDOM<'div'> {
     public readonly tag = 'div'
-    public readonly class = 'w-100'
-    public readonly style = paragraphStyle
+    public readonly class = 'text-justify'
+    public readonly style = {
+        ...textStyle,
+        minWidth: '300px',
+        maxWidth: '600px',
+    }
     public readonly children: ChildrenLike
 
     constructor({ innerHTML }: { innerHTML: string }) {
@@ -78,4 +108,9 @@ export class TextParagraphView implements VirtualDOM<'div'> {
             },
         ]
     }
+}
+
+export class ParagraphSeparator implements VirtualDOM<'div'> {
+    public readonly tag = 'div'
+    public readonly class = 'my-3'
 }
