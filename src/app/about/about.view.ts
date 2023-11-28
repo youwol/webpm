@@ -31,47 +31,10 @@ export class AboutView implements VirtualDOM<'div'> {
         this.children = [
             {
                 tag: 'div',
-                id: 'background',
-                children: [
-                    {
-                        tag: 'div',
-                        class: 'd-flex justify-content-center w-100',
-                        style: {
-                            opacity: '0.7',
-                            backgroundColor: '#dcdddc',
-                            position: 'absolute' as const,
-                            zIndex: -1,
-                        },
-                        children: [
-                            {
-                                tag: 'div',
-                                style: {
-                                    backgroundColor: 'black',
-                                },
-                                children: [
-                                    {
-                                        tag: 'img',
-                                        style: {
-                                            width: '100%',
-                                            height: '500px',
-                                            opacity: 0.4,
-                                        },
-                                        src: `/api/assets-gateway/raw/package/${setup.assetId}/${setup.version}/assets/youwol-bg.png`,
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
-            {
-                tag: 'div',
                 class: 'mx-auto',
-                style: {
-                    width: '1040px',
-                },
                 children: [
                     //{ tag: 'div', style: { height: '170px' } },
+                    new IdeaSectionView(),
                     {
                         tag: 'div',
                         class: 'w-100 d-flex flex-column align-items-center justify-content-center fv-text-primary',
