@@ -1,14 +1,3 @@
-export const paragraphStyle = {
-    fontSize: '20px',
-    lineHeight: '32px',
-    minWidth: '300px',
-    maxWidth: '600px',
-    textAlign: 'justify' as const,
-    fontWeight: 400,
-}
-
-export const maxColumnWidth = '1040px'
-
 export const YouWolLogo =
     '<svg id="logo2bis" xmlns="http://www.w3.org/2000/svg" style="margin: auto" viewBox="0 0 109.58 121.1" width="150px" height="150px">\n' +
     '<defs><style>.cls-2{fill:black;}</style></defs>\n' +

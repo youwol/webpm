@@ -2,10 +2,10 @@ import { VirtualDOM, AnyVirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
 import { NeedSectionView } from './need.view'
 import { BrowserAsOSSectionView } from './browser-as-os.view'
 import { ConceptView } from './concept.view'
-import { IdeaSectionView } from './idea.view'
-import { SdkView } from './sdk.view'
-import { FinalView } from './final.view'
-import { maxColumnWidth } from './common'
+import { HeaderView } from './header.view'
+import { GettingWildView } from './getting-wild.view'
+import { FooterView } from './footer.view'
+import { maxColumnWidth } from '../common/section.view'
 /**
  * 1 - the idea: a flexible and collaborative env for numerical sciences
  *
@@ -33,7 +33,7 @@ export class AboutView implements VirtualDOM<'div'> {
                 class: 'mx-auto',
                 children: [
                     //{ tag: 'div', style: { height: '170px' } },
-                    new IdeaSectionView(),
+                    new HeaderView(),
                     {
                         tag: 'div',
                         class: 'p-2 mx-auto',
@@ -45,9 +45,9 @@ export class AboutView implements VirtualDOM<'div'> {
                             new NeedSectionView(),
                             new ConceptView(),
                             new BrowserAsOSSectionView(),
-                            new SdkView(),
+                            new GettingWildView(),
                             new SeparatorSectionLast(),
-                            new FinalView(),
+                            new FooterView(),
                         ],
                     },
                 ],

@@ -1,5 +1,5 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
-import { CdnSectionView } from './cdn-section.view'
+import { FlexibleRobustView } from './flexible-robust.view'
 import { CombineSectionView } from './combine-npm-jsdlevr-section'
 import { DeveloperSectionView } from './developer-section'
 import { SearchPackageView } from './search-publish-section.view'
@@ -30,7 +30,7 @@ export class PresentationView implements VirtualDOM<'div'> {
                     new SeparatorSectionFirst(),
                     new SearchPackageView(),
                     new SeparatorSectionSecond(),
-                    new CdnSectionView(),
+                    new FlexibleRobustView(),
                     new CombineSectionView(),
                     new DeveloperSectionView(),
                     new SeparatorSectionLast(),

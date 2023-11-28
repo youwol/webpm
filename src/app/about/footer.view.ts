@@ -1,7 +1,7 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { YouWolLogo } from './common'
 
-export class FinalView implements VirtualDOM<'div'> {
+export class FooterView implements VirtualDOM<'div'> {
     public readonly tag: 'div'
     public readonly class = 'mx-auto p-2'
     public readonly children: ChildrenLike

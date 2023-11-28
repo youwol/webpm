@@ -2,7 +2,7 @@ import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { CardView } from '../common/card.view'
 import { SectionView, TextParagraphView } from '../common/section.view'
 
-export class SdkView extends SectionView {
+export class GettingWildView extends SectionView {
     constructor() {
         super({
             title: 'Getting wild',

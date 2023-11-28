@@ -6,7 +6,7 @@ import {
     TextParagraphView,
 } from '../common/section.view'
 
-export class CdnSectionView extends SectionView {
+export class FlexibleRobustView extends SectionView {
     constructor() {
         super({
             title: 'Flexible and robust',

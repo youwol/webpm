@@ -1,7 +1,7 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
-import { maxColumnWidth, paragraphStyle } from './common'
+import { maxColumnWidth, paragraphStyle } from '../common/section.view'
 
-export class IdeaSectionView implements VirtualDOM<'div'> {
+export class HeaderView implements VirtualDOM<'div'> {
     public readonly tag: 'div'
     public readonly class =
         'mx-auto border-bottom p-5 fv-text-primary d-flex justify-content-center'
@@ -22,7 +22,7 @@ export class IdeaSectionView implements VirtualDOM<'div'> {
                 children: [
                     {
                         class: 'w-100',
-                        style: paragraphStyle,
+                        style: { ...paragraphStyle, fontSize: '18px' },
                         tag: 'p',
                         innerHTML: `WebPM is part of the YouWol solution, it complements traditional cloud and local
                  computing by introducing a hybrid layer that operates within your web browser. 
@@ -31,7 +31,7 @@ export class IdeaSectionView implements VirtualDOM<'div'> {
                     },
                     {
                         class: 'w-100',
-                        style: paragraphStyle,
+                        style: { ...paragraphStyle, fontSize: '18px' },
                         tag: 'p',
                         innerHTML: `All the projects relevant to this environment are open source, they can be found
                 in YouWol's <a href='https://github.com/youwol'>GitHub</a>.`,
