@@ -96,7 +96,7 @@ class GridView implements VirtualDOM<'div'> {
             },
             {
                 tag: 'div',
-                class: 'row mt-5',
+                class: 'row',
                 children: [
                     new EmptyCell(),
                     new Cell({
