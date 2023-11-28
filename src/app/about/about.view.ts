@@ -76,44 +76,17 @@ export class AboutView implements VirtualDOM<'div'> {
                         tag: 'div',
                         class: 'w-100 d-flex flex-column align-items-center justify-content-center fv-text-primary',
                         children: [
-                            // {
-                            //     tag: 'div',
-                            //     innerHTML: YouWolLogo,
-                            // },
-                            // {
-                            //     tag: 'div',
-                            //     class: 'my-2',
-                            //     innerText: 'Turn your browser in an OS',
-                            //     style: {
-                            //         fontSize: '2.0rem',
-                            //         fontWeight: 'bolder',
-                            //     },
-                            // },
-                            // {
-                            //     tag: 'div',
-                            //     class: 'mt-3 mb-2',
-                            //     innerText:
-                            //         'Get the best of an hybrid local/cloud environment',
-                            //     style: {
-                            //         fontSize: '2.0rem',
-                            //         fontWeight: 'bolder',
-                            //     },
-                            // },
-                            new IdeaSectionView(),
+                            new SeparatorSectionFirst(),
+                            new NeedSectionView(),
+                            new ConceptView(),
+                            new BrowserAsOSSectionView(),
+                            new SdkView(),
+                            new SeparatorSectionLast(),
+                            new FinalView(),
                         ],
                     },
                     // Get the flexibility of PC, with the power of the cloud
-                    new SeparatorSectionFirst(),
-                    new SeparatorSectionRight(),
-                    new NeedSectionView(),
-                    new SeparatorSectionLeft(),
-                    new ConceptView(),
-                    new SeparatorSectionRight(),
-                    new BrowserAsOSSectionView(),
-                    new SeparatorSectionLeft(),
-                    new SdkView(),
-                    new SeparatorSectionLast(),
-                    new FinalView(),
+
                     // {
                     //     tag: 'div',
                     //     class: 'text',
@@ -140,20 +113,6 @@ class SeparatorSectionFirst implements VirtualDOM<'div'> {
         { tag: 'div', class: 'w-50' },
         { tag: 'div', class: 'w-50 border-left border-bottom' },
     ]
-}
-class SeparatorSectionLeft implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly class = 'border-left'
-    public readonly style = {
-        height: '5em',
-    }
-}
-class SeparatorSectionRight implements VirtualDOM<'div'> {
-    public readonly tag = 'div'
-    public readonly class = 'border-right'
-    public readonly style = {
-        height: '5em',
-    }
 }
 
 class SeparatorSectionLast implements VirtualDOM<'div'> {
