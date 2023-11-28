@@ -34,7 +34,7 @@ class GridView implements VirtualDOM<'div'> {
                 imageName: 'TS.png',
                 title: 'Typescript friendly',
                 abstract: `Dynamic does not mean "any": type checking, completion, <i>etc.</i> are 
-                            available transparently in your project. Check for instance <a href='https://github.com/youwol/todo-app-ts'>here </a>`,
+                            available transparently in your project. Check for instance <a href='https://github.com/youwol/webpm'>here</a>.`,
             }),
             new CardView({
                 imageName: 'laptop.png',
