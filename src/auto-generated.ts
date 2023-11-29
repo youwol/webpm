@@ -7,7 +7,8 @@ const runTimeDependencies = {
         "@youwol/rx-group-views": "^0.3.0",
         "rxjs": "^7.5.6",
         "@youwol/http-clients": "^3.0.0",
-        "@youwol/http-primitives": "^0.2.0"
+        "@youwol/http-primitives": "^0.2.0",
+        "@youwol/os-widgets": "^0.2.1"
     },
     "includedInBundle": {}
 }
@@ -19,6 +20,7 @@ const externals = {
     "rxjs": "window['rxjs_APIv7']",
     "@youwol/http-clients": "window['@youwol/http-clients_APIv3']",
     "@youwol/http-primitives": "window['@youwol/http-primitives_APIv02']",
+    "@youwol/os-widgets": "window['@youwol/os-widgets_APIv02']",
     "rxjs/operators": "window['rxjs_APIv7']['operators']"
 }
 const exportedSymbols = {
@@ -49,6 +51,10 @@ const exportedSymbols = {
     "@youwol/http-primitives": {
         "apiKey": "02",
         "exportedSymbol": "@youwol/http-primitives"
+    },
+    "@youwol/os-widgets": {
+        "apiKey": "02",
+        "exportedSymbol": "@youwol/os-widgets"
     }
 }
 
@@ -61,7 +67,8 @@ const mainEntry : {entryFile: string,loadDependencies:string[]} = {
         "@youwol/rx-group-views",
         "rxjs",
         "@youwol/http-clients",
-        "@youwol/http-primitives"
+        "@youwol/http-primitives",
+        "@youwol/os-widgets"
     ]
 }
 
@@ -74,7 +81,7 @@ const entries = {
 export const setup = {
     name:'@youwol/webpm',
         assetId:'QHlvdXdvbC93ZWJwbQ==',
-    version:'0.2.1-wip',
+    version:'0.2.2-wip',
     shortDescription:"WebPM web-site",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/webpm&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/webpm',
@@ -120,7 +127,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/webpm#0.2.1-wip~dist/@youwol/webpm/${entry.name}.js`
+            `@youwol/webpm#0.2.2-wip~dist/@youwol/webpm/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),

@@ -1362,6 +1362,33 @@
     "@youwol/rx-vdom" "^1.0.1"
     rxjs "^7.5.6"
 
+"@youwol/os-core@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@youwol/os-core/-/os-core-0.2.0.tgz#d0335f5bd6cae90ea3084f2d7a4401dc40276ce7"
+  integrity sha512-LfLD8WHdpB71xeeX0pQ9r4q/TSbt6GaEYWBspYkOzFOK7UDPEi+HxtFSAUOW5TG5dIptBL4GNBnHgRt2pHB49Q==
+  dependencies:
+    "@youwol/http-clients" "^3.0.0"
+    "@youwol/http-primitives" "^0.2.0"
+    "@youwol/rx-vdom" "^1.0.1"
+    "@youwol/webpm-client" "^3.0.0"
+    rxjs "^7.5.6"
+    uuid "^8.3.2"
+
+"@youwol/os-widgets@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@youwol/os-widgets/-/os-widgets-0.2.1.tgz#608af4780446597c15060730ba08cf3fd50decdb"
+  integrity sha512-KRZA1Lmkqc5Sfrw76kjDNh53QJ4bAm4GhvJBUWZ21jvprx0984+UHM0tK2vxBbke9EtYXjUJ/ohQMXlWA63luA==
+  dependencies:
+    "@youwol/http-clients" "^3.0.0"
+    "@youwol/http-primitives" "^0.2.0"
+    "@youwol/os-core" "^0.2.0"
+    "@youwol/rx-group-views" "^0.3.0"
+    "@youwol/rx-input-views" "^0.3.0"
+    "@youwol/rx-vdom" "^1.0.1"
+    "@youwol/webpm-client" "^3.0.0"
+    marked "^4.2.3"
+    rxjs "^7.5.6"
+
 "@youwol/prettier-config@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@youwol/prettier-config/-/prettier-config-1.0.0.tgz#f4ae9ec39793c66e5f3b7976c2da4b82e2c9ebe2"
@@ -1387,6 +1414,14 @@
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@youwol/rx-group-views/-/rx-group-views-0.3.0.tgz#68ad668dcf5f9677b153d1784c5d5f904dd440b2"
   integrity sha512-mKripB2QVkh09bavFeJHffLZVeglQT9G0DJYNBo1nguoWtPCsfIZmn5sHvwkwxcY2LCirl/J53mpQ08AvSd/dA==
+  dependencies:
+    "@youwol/rx-vdom" "^1.0.1"
+    rxjs "^7.5.6"
+
+"@youwol/rx-input-views@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@youwol/rx-input-views/-/rx-input-views-0.3.0.tgz#6faf163ba200b928abe1b2c8467b406c359101ee"
+  integrity sha512-tFDrZdHDzJgeIduE2FXketZMFsldAWkBGICktFplXuIiKworqHhjsLjqlAgvAu4V8GA3WtWfpg8zUdsRs0swww==
   dependencies:
     "@youwol/rx-vdom" "^1.0.1"
     rxjs "^7.5.6"
@@ -4444,7 +4479,7 @@ map-obj@^4.1.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-marked@^4.3.0:
+marked@^4.2.3, marked@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/marked/-/marked-4.3.0.tgz#796362821b019f734054582038b116481b456cf3"
   integrity sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==
