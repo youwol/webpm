@@ -7,7 +7,8 @@ const runTimeDependencies = {
         "@youwol/rx-group-views": "^0.3.0",
         "rxjs": "^7.5.6",
         "@youwol/http-clients": "^3.0.0",
-        "@youwol/http-primitives": "^0.2.0"
+        "@youwol/http-primitives": "^0.2.0",
+        "@youwol/os-widgets": "^0.2.1"
     },
     "includedInBundle": {}
 }
@@ -19,6 +20,7 @@ const externals = {
     "rxjs": "window['rxjs_APIv7']",
     "@youwol/http-clients": "window['@youwol/http-clients_APIv3']",
     "@youwol/http-primitives": "window['@youwol/http-primitives_APIv02']",
+    "@youwol/os-widgets": "window['@youwol/os-widgets_APIv02']",
     "rxjs/operators": "window['rxjs_APIv7']['operators']"
 }
 const exportedSymbols = {
@@ -49,6 +51,10 @@ const exportedSymbols = {
     "@youwol/http-primitives": {
         "apiKey": "02",
         "exportedSymbol": "@youwol/http-primitives"
+    },
+    "@youwol/os-widgets": {
+        "apiKey": "02",
+        "exportedSymbol": "@youwol/os-widgets"
     }
 }
 
@@ -61,7 +67,8 @@ const mainEntry : {entryFile: string,loadDependencies:string[]} = {
         "@youwol/rx-group-views",
         "rxjs",
         "@youwol/http-clients",
-        "@youwol/http-primitives"
+        "@youwol/http-primitives",
+        "@youwol/os-widgets"
     ]
 }
 

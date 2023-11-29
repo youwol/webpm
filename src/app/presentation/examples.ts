@@ -1,4 +1,4 @@
-const webpmUrl = 'https://webpm.org/^2.2.0/webpm-client.js'
+const webpmUrl = 'https://webpm.org/^3.0.0/webpm-client.js'
 const head = `<head><script src="${webpmUrl}"></script></head>`
 export const examples = [
     {

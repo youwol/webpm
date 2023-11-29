@@ -1,10 +1,7 @@
 import { ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
 import { setup } from '../../auto-generated'
-import {
-    ParagraphSeparator,
-    SectionView,
-    TextParagraphView,
-} from '../common/section.view'
+import { aboutYouwolModule } from '@youwol/os-widgets'
+const AboutYwModule = await aboutYouwolModule()
 
 const checked = `<div class="w-100 d-flex justify-content-center"><i class=" mx-auto fas fa-check fv-text-success"></i></div>`
 const notChecked = `<div class="w-100 d-flex justify-content-center"><i class="mx-auto fas fa-times fv-text-error"></i></div>`
@@ -58,17 +55,17 @@ const table = `<table>
 </table>
 `
 
-export class CombineSectionView extends SectionView {
+export class CombineSectionView extends AboutYwModule.SectionView {
     constructor() {
         super({
             title: new TitleView(),
             subtitle: '',
             withClasses: 'border-right border-bottom',
             paragraphs: [
-                new TextParagraphView({
+                new AboutYwModule.TextParagraphView({
                     innerHTML: `Just like NPM running in a browser ... or just like jsDelivr properly managing dependencies.`,
                 }),
-                new ParagraphSeparator(),
+                new AboutYwModule.ParagraphSeparator(),
                 {
                     tag: 'div',
                     class: 'd-flex justify-content-center ',

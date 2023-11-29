@@ -1,9 +1,9 @@
 import { VirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
 
 import { TopBannerView } from './top-banner.view'
-import { PresentationView } from './presentation/presentation.view'
+import { PresentationView } from './presentation'
 import { BehaviorSubject } from 'rxjs'
-import { AboutView } from './about/about.view'
+import { AboutYwModule } from './on-load'
 
 export type Topic = 'Home' | 'About'
 
@@ -27,7 +27,7 @@ export class AppView implements VirtualDOM<'div'> {
                         return new PresentationView()
                     }
                     if (topic == 'About') {
-                        return new AboutView()
+                        return new AboutYwModule.AboutView()
                     }
                 },
             },
