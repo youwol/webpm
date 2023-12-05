@@ -25,7 +25,7 @@ externals = {
     "rxjs": "^7.5.6",
     "@youwol/http-clients": "^3.0.0",
     "@youwol/http-primitives": "^0.2.0",
-    "@youwol/os-widgets": "^0.2.1",
+    "@youwol/os-widgets": "^0.2.2",
 }
 
 template = Template(
