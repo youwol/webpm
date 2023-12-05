@@ -5,6 +5,8 @@ import { DeveloperSectionView } from './developer-section'
 import { SearchPackageView } from './search-publish-section.view'
 import { ApplicationsSectionView } from './applications-section.view'
 import { HeaderView } from './header.view'
+import { install } from '@youwol/webpm-client'
+import { preload_deps } from './preloaded-dependencies'
 export {}
 
 export class PresentationView implements VirtualDOM<'div'> {
@@ -46,6 +48,10 @@ export class PresentationView implements VirtualDOM<'div'> {
                 },
             },
         ]
+        requestIdleCallback(() => {
+            console.log('Preload dependencies')
+            install(preload_deps).then()
+        })
     }
 }
 class SeparatorSectionFirst implements VirtualDOM<'div'> {
