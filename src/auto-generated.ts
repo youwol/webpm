@@ -8,7 +8,7 @@ const runTimeDependencies = {
         "rxjs": "^7.5.6",
         "@youwol/http-clients": "^3.0.0",
         "@youwol/http-primitives": "^0.2.0",
-        "@youwol/os-widgets": "^0.2.1"
+        "@youwol/os-widgets": "^0.2.2"
     },
     "includedInBundle": {}
 }
@@ -81,7 +81,7 @@ const entries = {
 export const setup = {
     name:'@youwol/webpm',
         assetId:'QHlvdXdvbC93ZWJwbQ==',
-    version:'0.2.2-wip',
+    version:'0.2.3-wip',
     shortDescription:"WebPM web-site",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/webpm&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/webpm',
@@ -127,7 +127,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/webpm#0.2.2-wip~dist/@youwol/webpm/${entry.name}.js`
+            `@youwol/webpm#0.2.3-wip~dist/@youwol/webpm/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),

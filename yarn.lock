@@ -1374,10 +1374,10 @@
     rxjs "^7.5.6"
     uuid "^8.3.2"
 
-"@youwol/os-widgets@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@youwol/os-widgets/-/os-widgets-0.2.1.tgz#608af4780446597c15060730ba08cf3fd50decdb"
-  integrity sha512-KRZA1Lmkqc5Sfrw76kjDNh53QJ4bAm4GhvJBUWZ21jvprx0984+UHM0tK2vxBbke9EtYXjUJ/ohQMXlWA63luA==
+"@youwol/os-widgets@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@youwol/os-widgets/-/os-widgets-0.2.2.tgz#e680e99cd783748e019c764308794749d1d48110"
+  integrity sha512-bz6qJ0AmXftBCfkrRIDN4avW+r3MWKaJxBUNCvGIv209HWRGSh8wRv+fpuKf2289c/oHzgu4DcKtaDE4FX82SQ==
   dependencies:
     "@youwol/http-clients" "^3.0.0"
     "@youwol/http-primitives" "^0.2.0"
