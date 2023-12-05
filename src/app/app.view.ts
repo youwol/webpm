@@ -1,9 +1,10 @@
 import { VirtualDOM, ChildrenLike } from '@youwol/rx-vdom'
 
-import { TopBannerView } from './top-banner.view'
 import { PresentationView } from './presentation'
 import { BehaviorSubject } from 'rxjs'
-import { AboutYwModule } from './on-load'
+
+import { aboutYouwolModule } from '@youwol/os-widgets'
+export const AboutYwModule = await aboutYouwolModule()
 
 export type Topic = 'Home' | 'About'
 
@@ -19,7 +20,19 @@ export class AppView implements VirtualDOM<'div'> {
 
     constructor() {
         this.children = [
-            new TopBannerView({ topic$: this.topic$ }),
+            new AboutYwModule.TopBannerView({
+                topic$: this.topic$,
+                productName: 'WebPM',
+                resources: [
+                    { type: 'link', title: 'Blog', url: '' },
+                    { type: 'delimiter', title: 'API Documentation' },
+                    {
+                        type: 'link',
+                        title: 'WebPM client',
+                        url: '/api/assets-gateway/raw/package/QHlvdXdvbC93ZWJwbS1jbGllbnQ=/^2.2.0/dist/docs/modules/MainModule.html',
+                    },
+                ],
+            }),
             {
                 source$: this.topic$,
                 vdomMap: (topic: Topic) => {
@@ -27,7 +40,9 @@ export class AppView implements VirtualDOM<'div'> {
                         return new PresentationView()
                     }
                     if (topic == 'About') {
-                        return new AboutYwModule.AboutView()
+                        return new AboutYwModule.AboutView({
+                            productName: 'WebPM',
+                        })
                     }
                 },
             },
