@@ -7,7 +7,7 @@ export const preload_deps = {
     ],
     customInstallers: [
         {
-            module: '@youwol/cdn-pyodide-loader#^0.1.2',
+            module: '@youwol/webpm-pyodide-loader#^0.2.0',
             installInputs: {
                 modules: ['numpy'],
                 exportedPyodideInstanceName: 'PY',
