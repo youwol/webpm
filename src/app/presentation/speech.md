@@ -51,14 +51,14 @@ On the bottom is the representation of the flowchart: basically a torus geometry
 
 In the code three sections:
 
--   first is installed the core libraries required by the low code solution, each libraries here comes with their dependencies.
--   second the construction of the low code algorithm, we can recognize the steps.
--   At the end we display the graphical element of the viewer on the top, and the flow chart on the bottom.
+- first is installed the core libraries required by the low code solution, each libraries here comes with their dependencies.
+- second the construction of the low code algorithm, we can recognize the steps.
+- At the end we display the graphical element of the viewer on the top, and the flow chart on the bottom.
 
--   going back to the second step. Behind the wood WebPM, when the module will be instantiated,
-    will install the required dependencies of each modules. It is not an easy task some of them are or will be already available with a
-    compatible, some others will have to be installed, and we may very end up with multiple version of one library.
-    This is the point of webpm: handling robust on the fly install in such complex scenatio.
+- going back to the second step. Behind the wood WebPM, when the module will be instantiated,
+  will install the required dependencies of each modules. It is not an easy task some of them are or will be already available with a
+  compatible, some others will have to be installed, and we may very end up with multiple version of one library.
+  This is the point of webpm: handling robust on the fly install in such complex scenatio.
 
 The important point here is that we install some dependencies that we did not know in advance.
 For such scenario in which you don't know the dependencies in advance you would not be able to use NPM, precisely because you don't
@@ -96,13 +96,13 @@ This is goal of this line of code.
 
 In the part next part of the code, we install the runtime of the main thread:
 
--   a library to create the views, here a library call rx-vdom
--   and rxjs used to manipulate streams of data.
+- a library to create the views, here a library call rx-vdom
+- and rxjs used to manipulate streams of data.
 
 Then is created a workers pool by specifying its runtime and its size:
 
--   like in the previous example we use the custom installer cdn-pyodide-loader to require the python runtime and the numpy packages, no js packages
--   its size: we want at least one worker ready, and a maximum of ten workers. That means we'll be able to run ten computation in // in maximum
+- like in the previous example we use the custom installer cdn-pyodide-loader to require the python runtime and the numpy packages, no js packages
+- its size: we want at least one worker ready, and a maximum of ten workers. That means we'll be able to run ten computation in // in maximum
 
 Next piece of code is the definition of one task: we use python to approximate PI using the same methode described in the previous example.
 
@@ -117,7 +117,7 @@ The next block of code is to prepare various observables from result$ to be disp
 
 And finally we can construct the view displayed on screen:
 
--   the button that trigger the thousand runs, it will be displayed as soon as at least one worker is ready,
-    and before that a waiting message is displayed
--   then display the various observables
--   and a view provided by the worker pool module, that basically displays the various workers state.
+- the button that trigger the thousand runs, it will be displayed as soon as at least one worker is ready,
+  and before that a waiting message is displayed
+- then display the various observables
+- and a view provided by the worker pool module, that basically displays the various workers state.
