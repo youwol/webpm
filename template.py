@@ -19,7 +19,7 @@ pkg_json = parse_json(folder_path / "package.json")
 
 externals = {
     "@youwol/webpm-client": "^3.0.0",
-    "@youwol/rx-code-mirror-editors": "^0.4.1",
+    "@youwol/rx-code-mirror-editors": "^0.5.0",
     "@youwol/rx-vdom": "^1.0.1",
     "@youwol/rx-group-views": "^0.3.0",
     "rxjs": "^7.5.6",

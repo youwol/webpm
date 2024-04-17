@@ -2,7 +2,7 @@
 const runTimeDependencies = {
     "externals": {
         "@youwol/webpm-client": "^3.0.0",
-        "@youwol/rx-code-mirror-editors": "^0.4.1",
+        "@youwol/rx-code-mirror-editors": "^0.5.0",
         "@youwol/rx-vdom": "^1.0.1",
         "@youwol/rx-group-views": "^0.3.0",
         "rxjs": "^7.5.6",
@@ -14,7 +14,7 @@ const runTimeDependencies = {
 }
 const externals = {
     "@youwol/webpm-client": "window['@youwol/webpm-client_APIv3']",
-    "@youwol/rx-code-mirror-editors": "window['@youwol/rx-code-mirror-editors_APIv04']",
+    "@youwol/rx-code-mirror-editors": "window['@youwol/rx-code-mirror-editors_APIv05']",
     "@youwol/rx-vdom": "window['@youwol/rx-vdom_APIv1']",
     "@youwol/rx-group-views": "window['@youwol/rx-group-views_APIv03']",
     "rxjs": "window['rxjs_APIv7']",
@@ -29,7 +29,7 @@ const exportedSymbols = {
         "exportedSymbol": "@youwol/webpm-client"
     },
     "@youwol/rx-code-mirror-editors": {
-        "apiKey": "04",
+        "apiKey": "05",
         "exportedSymbol": "@youwol/rx-code-mirror-editors"
     },
     "@youwol/rx-vdom": {
