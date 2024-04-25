@@ -1,4 +1,16 @@
-const webpmUrl = 'https://webpm.org/^3.0.0/webpm-client.js'
+const hostMap = {
+    'platform.youwol.com': 'https://webpm.org',
+    'platform.int.youwol.com': 'https://testing.webpm.org',
+}
+
+if (hostMap[location.hostname] === undefined) {
+    console.error(
+        `@youwol/webpm : The hostname ${location.hostname} is not known.
+        Fallback to webpm host 'https://webpm.org'.`,
+    )
+}
+const webpmHost = hostMap[location.hostname] || 'https://webpm.org'
+const webpmUrl = `${webpmHost}/^3.0.0/webpm-client.js`
 const head = `<head><script src="${webpmUrl}"></script></head>`
 export const examples = [
     {
